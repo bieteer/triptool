@@ -21,6 +21,8 @@
   --safeT:env(safe-area-inset-top,0px); --safeB:env(safe-area-inset-bottom,0px);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+button,[data-lp],.card,.vrow,.trow,.erow,.arow,.pitem,.srow,.nrow,.tcard,.dtab{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+input,textarea,select{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
 html,body{margin:0;padding:0;height:100%;overscroll-behavior-y:none}
 body{
   background:var(--ground); color:var(--ink);
@@ -45,8 +47,11 @@ a{color:var(--violet-deep)}
 .tlist{padding:4px 16px 0}
 .tlist h1{font-size:26px;font-weight:700;letter-spacing:-.5px;margin:6px 2px 4px}
 .tlist .sub{font-size:12.5px;color:var(--ink2);margin:0 2px 14px}
-.tcard{position:relative;display:flex;align-items:center;gap:12px;width:100%;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:10px}
+.tcardwrap{position:relative;margin-bottom:10px}
+.tcard{display:flex;align-items:center;gap:12px;width:100%;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px}
 .tcard.on{border-color:var(--violet)}
+.tcardwrap:has(.pop){z-index:5}
+.pwrap{position:relative}
 .tthumb{position:relative;flex:0 0 66px;width:66px;height:66px;border-radius:13px;background:var(--violet-hl);border:1px solid var(--violet-line);overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--violet-deep)}
 .tthumb img{width:100%;height:100%;object-fit:cover;display:block}
 .tthumb .stk{position:absolute;font-size:17px;line-height:1;filter:drop-shadow(0 1px 2px rgba(28,25,48,.3));transform:translate(-50%,-50%)}
@@ -136,7 +141,6 @@ a{color:var(--violet-deep)}
 .card{display:block;width:100%;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
 .card.now{background:var(--violet-hl);border-color:var(--violet)}
 .card.past{opacity:.66}
-.card.todo{border-style:dashed;border-color:var(--violet-line);background:#FDFCFF}
 .c-top{display:flex;align-items:flex-start;gap:9px}
 .c-place{flex:1;min-width:0;font-size:15px;font-weight:600;line-height:1.3;word-break:break-word}
 .c-chip{flex:0 0 auto;font-size:12.5px;font-weight:700;letter-spacing:.2px;padding:4px 10px;border-radius:9px;background:var(--violet-tint);color:var(--violet-deep)}
@@ -226,13 +230,20 @@ a{color:var(--violet-deep)}
 .empty{margin:14px 0;padding:22px 16px;text-align:center;color:var(--ink3);font-size:13px;line-height:1.7;background:var(--card);border:1px dashed var(--violet-line);border-radius:14px}
 .empty b{display:block;color:var(--ink2);font-size:13.5px;margin-bottom:4px}
 
-/* ── 行前行李 ── */
-.pbar{margin:0 16px 10px;padding:11px 13px;background:var(--card);border:1px solid var(--line);border-radius:13px}
-.pbar .l1{display:flex;align-items:baseline;gap:8px}
-.pbar .l1 .t{font-size:13px;font-weight:700}
-.pbar .l1 .v{margin-left:auto;font-size:13px;font-weight:700;color:var(--mint-deep)}
-.pbar .track{height:6px;border-radius:3px;background:var(--line);margin-top:9px;overflow:hidden}
-.pbar .fill{height:100%;background:var(--mint);border-radius:3px;transition:width .2s}
+/* ── 地址分类条 / 交通分组 / 行李进度 ── */
+.catbar{display:flex;gap:7px;margin-bottom:9px}
+.catbar button{flex:1;min-height:46px;border-radius:11px;border:1px solid var(--line);background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.catbar button .l{display:block;font-size:12.5px;font-weight:600}
+.catbar button .c{display:block;font-size:10px;color:var(--ink2)}
+.catbar button.on{background:var(--violet);border-color:var(--violet)}
+.catbar button.on .l{color:#fff}
+.catbar button.on .c{color:#DDD4FF}
+.modehead{display:flex;align-items:center;gap:6px;margin:10px 2px 7px;color:var(--ink2);font-size:11.5px;font-weight:600;letter-spacing:.3px}
+.track{height:6px;border-radius:3px;background:var(--line);margin:2px 0 10px;overflow:hidden}
+.track .fill{height:100%;background:var(--mint);border-radius:3px;transition:width .2s}
+.pcat .h .ico{flex:0 0 28px;width:28px;height:28px;border-radius:8px;background:var(--violet-hl);color:var(--violet-deep);display:flex;align-items:center;justify-content:center}
+.pcat .h .ico.all{background:var(--mint-tint);color:var(--mint-deep)}
+.pcat .h .n.all{color:var(--mint-deep);font-weight:600}
 .pcat{background:var(--card);border:1px solid var(--line);border-radius:13px;margin-bottom:8px;overflow:hidden}
 .pcat .h{display:flex;align-items:center;gap:9px;width:100%;padding:11px 13px}
 .pcat .h .t{flex:1;font-size:14px;font-weight:600}
@@ -240,7 +251,7 @@ a{color:var(--violet-deep)}
 .pcat .h .cv{color:var(--ink3);transition:transform .16s}
 .pcat.open .h .cv{transform:rotate(180deg)}
 .pcat .b{border-top:1px solid var(--line);padding:4px 13px 8px}
-.pitem{display:flex;align-items:center;gap:10px;width:100%;min-height:42px;padding:2px 6px;border-radius:9px;position:relative}
+.pitem{display:flex;align-items:center;gap:10px;width:100%;min-height:42px;padding:2px 6px;border-radius:9px}
 .pbox{flex:0 0 20px;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--ink3);display:flex;align-items:center;justify-content:center;color:#fff}
 .pitem.done .pbox{background:var(--mint);border-color:var(--mint)}
 .pitem .tx{flex:1;min-width:0;font-size:13.5px;line-height:1.45;word-break:break-word}
@@ -464,10 +475,10 @@ function pic(k){return k&&IMGS[k]?IMGS[k]:'';}
 function T(){return DB.trips.find(t=>t.id===DB.cur)||null;}
 
 /* ══════════ 界面状态 ══════════ */
-const S={screen:'trips',tab:'plan',day:0,cat:'住宿',menu:'',sheet:'',arg:null,open:'',err:'',vshow:null,pcat:'',wxTried:false,stk:'',buf:null,pick:''};
+const S={screen:'trips',tab:'plan',day:0,acat:'住宿',aopen:'',popen:'',menu:'',sheet:'',arg:null,open:'',err:'',vshow:null,wxTried:false,stk:'',buf:null,pick:''};
 function setS(o){Object.assign(S,o);render();}
-const THEMES=['起床','游玩','吃饭','逛街','住宿','办事','移动','待办','睡觉'];
-const CHIP={'移动':['#F0EEF7','#6B6585'],'待办':['#FFF3E0','#9A5A1C'],'住宿':['#E4F8F4','#0E7C6F'],'吃饭':['#FFF1E6','#9A5A1C'],'起床':['#FFF4D9','#8A6A12'],'睡觉':['#E6E2F7','#5B4BA8']};
+const THEMES=['起床','游玩','吃饭','逛街','住宿','办事','移动','睡觉'];
+const CHIP={'移动':['#F0EEF7','#6B6585'],'住宿':['#E4F8F4','#0E7C6F'],'吃饭':['#FFF1E6','#9A5A1C'],'起床':['#FFF4D9','#8A6A12'],'睡觉':['#E6E2F7','#5B4BA8']};
 function chipOf(th){const c=CHIP[th]||['#EFEBFF','#4B2FB8'];return 'background:'+c[0]+';color:'+c[1];}
 const CUR=['EUR','CNY','USD','JPY'];
 const CURNAME={EUR:'欧元',CNY:'人民币',USD:'美元',JPY:'日元'};
@@ -585,20 +596,21 @@ function viewTrips(){
       const m=t.meta,d=nDays(m.start,m.end);
       const img=pic(m.routeImage);
       const stk=(t.stickers||[]).slice(0,4).map(s=>'<span class="stk" style="left:'+s.x+'%;top:'+s.y+'%;transform:translate(-50%,-50%) rotate('+(s.rot||0)+'deg)">'+s.e+'</span>').join('');
-      return '<button class="tcard'+(t.id===DB.cur?' on':'')+'" data-a="openTrip" data-v="'+t.id+'" data-lp="trip:'+t.id+'">'+
+      return '<div class="tcardwrap">'+
+        '<button class="tcard'+(t.id===DB.cur?' on':'')+'" data-a="openTrip" data-v="'+t.id+'" data-lp="trip:'+t.id+'">'+
         '<span class="tthumb">'+(img?'<img src="'+img+'" alt="">':svg(I.pin,22))+stk+'</span>'+
         '<span class="tmeta">'+
           '<span class="t">'+h(m.title)+'</span>'+
           '<span class="d mono">'+md(m.start)+' – '+md(m.end)+(d?' · '+d+' 天':'')+'</span>'+
           '<span class="w">'+h(m.participants||m.country||'')+'</span>'+
         '</span>'+
-        '<span class="tgo">'+svg(I.go,18)+'</span>'+
+        '<span class="tgo">'+svg(I.go,18)+'</span></button>'+
         (S.menu==='trip:'+t.id?pop('editTrip','delTrip',t.id):'')+
-      '</button>';
+      '</div>';
     }).join('')+
     '<button class="dash" data-a="newTrip" style="margin-top:6px">'+svg(I.plus,16)+' 新建一段旅程</button>'+
-    '<button class="dash" data-a="sheet" data-v="settings" style="margin-top:9px;border-style:solid;border-color:var(--line);background:var(--card);color:var(--ink2)">'+svg(I.gear,15)+' 设置 · 导入导出</button>'+
-    '<div class="hint" style="margin:14px 2px 0">行程只存在这台手机上。出门前记得在设置里导出一份存到网盘或者发给自己，换机也好、手滑清了数据也好，导回来就行。</div>'+
+    '<button class="dash" data-a="sheet" data-v="settings" style="margin-top:9px;border-style:solid;border-color:var(--line);background:var(--card);color:var(--ink2)">'+svg(I.gear,15)+' 设置</button>'+
+    '<div class="hint" style="margin:14px 2px 0">行程只存在这台手机上。换手机、清缓存、重装都会丢，定期导出一份。</div>'+
   '</div>';
 }
 function pop(ea,da,id){
@@ -615,16 +627,20 @@ function overview(t){
   const img=pic(m.routeImage);
   const stk=(t.stickers||[]);
   return '<div class="ovwrap"><div class="ov" id="ov">'+
-    '<div class="ov-r1"><span class="ov-who">'+h(m.participants||'')+'</span>'+
+    '<div class="ov-r1"><span class="ov-who" data-lp="ovhead">'+h(m.participants||'')+'</span>'+
       '<span class="chip-season">'+seasonOf(m.start)+'</span></div>'+
-    '<div class="ov-r2"><div class="ov-title">'+h(m.title)+'</div>'+
+    '<div class="ov-r2"><div class="ov-title" data-lp="ovhead">'+h(m.title)+'</div>'+
       '<button class="ov-spend" data-a="sheet" data-v="tripSpend"><span class="lb">已花出去</span>'+
       '<span class="v">'+money(spentTotal())+svg(I.go,13)+'</span></button></div>'+
     '<div class="ov-hr"></div>'+
     '<div class="ov-r3">'+
-      '<button class="ov-map" data-a="sheet" data-v="cover">'+(img?'<img src="'+img+'" alt="">':'<span class="ph">'+svg(I.img,20)+'换张封面</span>')+'</button>'+
+      '<span style="position:relative;flex:0 0 88px">'+
+        '<button class="ov-map" data-lp="cover">'+(img?'<img src="'+img+'" alt="">':'<span class="ph">'+svg(I.img,20)+'长按换封面</span>')+'</button>'+
+        (S.menu==='cover'?'<span class="pop" style="right:auto;left:0;white-space:nowrap"><button data-a="coverPick">换成我的照片</button>'+
+          (m.routeImage?'<button data-a="coverClear">恢复自动地图</button>':'')+'</span>':'')+
+      '</span>'+
       '<div class="ov-facts">'+
-        '<div class="fact">'+svg(I.clock,14)+'<span class="t"><b class="mono">'+md(m.start)+' – '+md(m.end)+'</b> <em>'+n+' 天'+(n>1?' '+(n-1)+' 晚':'')+'</em></span></div>'+
+        '<div class="fact" data-lp="ovhead">'+svg(I.clock,14)+'<span class="t"><b class="mono">'+md(m.start)+' – '+md(m.end)+'</b> <em>'+n+' 天'+(n>1?' '+(n-1)+' 晚':'')+'</em></span></div>'+
         '<div class="fact">'+svg(I.pin,14)+'<span class="t">'+h(cities||m.country||'')+'</span></div>'+
         '<div class="fact">'+svg(I.wSun,14)+'<span class="t">'+h(temp)+'</span></div>'+
       '</div>'+
@@ -703,7 +719,7 @@ function card(x,d,isToday,nowKey,now,TD,last){
     '<div class="rtime"><span class="mono" style="color:'+(state==='past'?'var(--ink3)':(state==='now'?'var(--violet-deep)':'var(--ink)'))+'">'+h(x.time||'')+'</span></div>'+
     '<div class="rrail"><span class="dot" style="background:'+(state==='past'?'var(--mint)':(state==='now'?'var(--violet)':'#D6D1E8'))+'"></span>'+(last?'':'<span class="line"></span>')+'</div>'+
     '<div class="rbody">'+
-      '<button class="card '+state+(x.todo?' todo':'')+'" data-a="openItem" data-v="'+x.id+'" data-lp="item:'+x.id+'">'+
+      '<button class="card '+state+'" data-a="openItem" data-v="'+x.id+'" data-lp="item:'+x.id+'">'+
         '<span class="c-top"><span class="c-place">'+h(x.place)+'</span>'+
           '<span class="c-chip" style="'+chipOf(x.theme)+'">'+h(x.theme)+'</span></span>'+
         (x.note?'<span class="c-note">'+h(x.note)+'</span>':'')+
@@ -726,7 +742,7 @@ function card(x,d,isToday,nowKey,now,TD,last){
 function viewVou(){
   const t=T(),V=t.vouchers||[];
   const groups=[['stay','住宿',I.home],['move','交通',I.plane],['see','游览',I.ticket],['other','其他',I.ticket]];
-  let out='<div class="maskbar">'+svg(I.ticket,14)+'取票码只显示前几位，点进去看完整的</div>';
+  let out='<div class="maskbar">'+svg(I.ticket,14)+'姓名与证件号默认打码，出示时点一下才显示</div>';
   groups.forEach(([k,label,ic])=>{
     const rows=V.filter(v=>(v.cat||'other')===k);
     if(!rows.length)return;
@@ -748,71 +764,82 @@ function viewVou(){
   return out;
 }
 
-/* ── 速查 tab ── */
+/* ── 速查 tab：一页四块，和原型一致 ── */
+const ACATS=['住宿','美食','购物','景点'];
+const TCATS=[['飞机',I.plane],['火车',I.train],['当地',I.bus]];
 function viewEss(){
   const t=T(),E=t.essentials||{};
-  const CATS=['住宿','景点','餐厅','其他'];
-  let out='<div class="chips noscroll">'+
-    ['地址','交通','行李','紧急'].map(k=>'<button class="'+(S.cat===k||(S.cat==='住宿'&&k==='地址')?'on':'')+'" data-a="ecat" data-v="'+k+'">'+k+'</button>').join('')+'</div>';
-  const kind=S.cat==='住宿'?'地址':S.cat;
-  if(kind==='地址'){
-    const P=E.places||[];
-    out+='<div class="sec" style="margin-top:0">'+
-      '<div class="chips noscroll" style="padding-left:0;padding-right:0">'+
-      CATS.map(c=>'<button class="'+(S.pcat===c?'on':'')+'" data-a="pcat" data-v="'+c+'">'+c+'</button>').join('')+
-      '<button class="'+(S.pcat===''?'on':'')+'" data-a="pcat" data-v="">全部</button></div>'+
-      (P.filter(p=>!S.pcat||p.cat===S.pcat).map(p=>{
-        const op=S.open==='p:'+p.id;
-        return '<div class="arow'+(op?' open':'')+'">'+
-          '<button class="ahead" data-a="tog" data-v="p:'+p.id+'" data-lp="place:'+p.id+'">'+
-            '<span class="t">'+h(p.name)+'</span>'+(p.date?'<span class="d mono">'+h(p.date)+'</span>':'')+
-            '<span class="cv">'+svg(I.down,16)+'</span></button>'+
-          (op?'<div class="abody"><div class="ad">'+h(p.addr||'（没填地址）')+'</div>'+
-            (p.note?'<div class="an">'+h(p.note)+'</div>':'')+
-            '<div class="acts"><a href="'+h(p.map||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(p.addr||p.name)))+'" target="_blank" rel="noopener">'+svg(I.pin,14)+' 地图</a>'+
-            '<button data-a="copy" data-v="'+h(p.addr||p.name)+'">'+svg(I.card,14)+' 复制地址</button></div></div>':'')+
-          (S.menu==='place:'+p.id?pop('editPlace','delPlace',p.id):'')+
-        '</div>';
-      }).join('')||'<div class="empty"><b>这个分类还空着</b>底下加一条。</div>')+
+  return '<div class="sec" style="margin-top:12px">'+essAddr(E)+'</div>'+
+    '<div class="sec">'+essTransit(E)+'</div>'+
+    '<div class="sec">'+essPack(t)+'</div>'+
+    '<div class="sec">'+essSos(t,E)+'</div>'+
+    '<button class="addbtn" data-a="sheet" data-v="ess">'+svg(I.plus,16)+' 添加到速查</button>';
+}
+function essAddr(E){
+  const P=E.places||[],cat=S.acat||ACATS[0];
+  const rows=P.filter(p=>p.cat===cat);
+  return '<div class="sec-h"><span class="t">地址</span><span class="n">长按条目可改可删</span></div>'+
+    '<div class="catbar">'+ACATS.map(c=>{
+      const on=c===cat,n=P.filter(p=>p.cat===c).length;
+      return '<button class="'+(on?'on':'')+'" data-a="acat" data-v="'+c+'"><span class="l">'+c+'</span><span class="c">'+n+' 处</span></button>';
+    }).join('')+'</div>'+
+    (rows.length?rows.map(p=>{
+      const op=S.aopen===p.id;
+      return '<div class="arow'+(op?' open':'')+'">'+
+        '<button class="ahead" data-a="aopen" data-v="'+p.id+'" data-lp="place:'+p.id+'">'+
+          '<span class="t">'+h(p.name)+'</span>'+(p.date?'<span class="d mono">'+h(p.date)+'</span>':'')+
+          '<span class="cv">'+svg(I.down,16)+'</span></button>'+
+        (op?'<div class="abody"><div class="ad">'+h(p.addr||'（没填地址）')+'</div>'+
+          '<div class="an">'+h(p.note||'—')+'</div>'+
+          '<div class="acts"><button data-a="copy" data-v="'+h(p.addr||p.name)+'">'+svg(I.card,14)+' 复制地址</button>'+
+          '<a href="'+h(p.map||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(p.addr||p.name)))+'" target="_blank" rel="noopener">'+svg(I.pin,14)+' 地图</a></div></div>':'')+
+        (S.menu==='place:'+p.id?pop('editPlace','delPlace',p.id):'')+
       '</div>';
-  }else if(kind==='交通'){
-    const TR=E.transport||[];
-    const g=[['飞机',I.plane],['火车',I.train],['当地',I.bus]];
-    out+=g.map(([k,ic])=>{
-      const rows=TR.filter(x=>x.cat===k);if(!rows.length)return'';
-      return '<div class="sec"><div class="sec-h"><span class="t">'+k+'</span><span class="n">'+rows.length+' 项</span></div>'+
-        rows.map(x=>'<div class="trow" data-lp="tr:'+x.id+'"><span class="tico">'+svg(ic,17)+'</span>'+
-          '<span class="tmain2"><span class="t">'+h(x.name)+'</span>'+(x.meta?'<span class="m">'+h(x.meta)+'</span>':'')+'</span>'+
-          (x.no?'<span class="tno">'+h(x.no)+'</span>':'')+
-          (S.menu==='tr:'+x.id?pop('editTr','delTr',x.id):'')+'</div>').join('')+'</div>';
-    }).join('')||'<div class="sec"><div class="empty"><b>还没有交通</b></div></div>';
-  }else if(kind==='行李'){
-    const P=t.packing||[],st=packStat();
-    out+='<div class="pbar"><div class="l1"><span class="t">行前行李</span><span class="v mono">'+st.done+' / '+st.all+'</span></div>'+
-      '<div class="track"><div class="fill" style="width:'+(st.all?Math.round(st.done/st.all*100):0)+'%"></div></div></div>'+
-      '<div class="sec" style="margin-top:0">'+P.map((c,ci)=>{
-        const op=S.open==='pk:'+ci, dn=c.items.filter(x=>x.done).length;
-        return '<div class="pcat'+(op?' open':'')+'">'+
-          '<button class="h" data-a="tog" data-v="pk:'+ci+'"><span class="t">'+h(c.cat)+'</span>'+
-            '<span class="n mono">'+dn+'/'+c.items.length+'</span><span class="cv">'+svg(I.down,16)+'</span></button>'+
-          (op?'<div class="b">'+c.items.map(x=>
+    }).join(''):'<div class="empty"><b>这一类还空着</b>底下「添加到速查」加一处。</div>');
+}
+function essTransit(E){
+  const TR=E.transport||[];
+  let out='<div class="sec-h"><span class="t">交通</span><span class="n">长按条目可改可删</span></div>';
+  let any=false;
+  TCATS.forEach(([k,ic])=>{
+    const rows=TR.filter(x=>x.cat===k);if(!rows.length)return;any=true;
+    out+='<div class="modehead">'+svg(ic,14)+'<span>'+k+'</span></div>'+
+      rows.map(x=>'<div class="trow" data-lp="tr:'+x.id+'">'+
+        '<span class="tmain2"><span class="t">'+h(x.name)+'</span>'+(x.meta?'<span class="m">'+h(x.meta)+'</span>':'')+'</span>'+
+        (x.no?'<span class="tno">'+h(x.no)+'</span>':'')+
+        (S.menu==='tr:'+x.id?pop('editTr','delTr',x.id):'')+'</div>').join('');
+  });
+  return any?out:out+'<div class="empty"><b>还没有交通</b>航班、火车、当地票都能记这里。</div>';
+}
+function essPack(t){
+  const P=t.packing||[],st=packStat();
+  return '<div class="sec-h"><span class="t">行前行李</span><span class="n">已备 '+st.done+' / '+st.all+'</span></div>'+
+    '<div class="track"><div class="fill" style="width:'+(st.all?Math.round(st.done/st.all*100):0)+'%"></div></div>'+
+    P.map((c,ci)=>{
+      const op=S.popen===c.cat,dn=c.items.filter(x=>x.done).length,all=c.items.length>0&&dn===c.items.length;
+      return '<div class="pcat'+(op?' open':'')+'">'+
+        '<button class="h" data-a="popen" data-v="'+h(c.cat)+'">'+
+          '<span class="ico'+(all?' all':'')+'">'+svg(all?I.check:I.bag,15)+'</span>'+
+          '<span class="t">'+h(c.cat)+'</span>'+
+          '<span class="n mono'+(all?' all':'')+'">'+dn+'/'+c.items.length+'</span>'+
+          '<span class="cv">'+svg(I.down,16)+'</span></button>'+
+        (op?'<div class="b">'+(c.items.length?c.items.map(x=>
+          '<div class="pwrap">'+
             '<button class="pitem'+(x.done?' done':'')+'" data-a="pk" data-v="'+x.id+'" data-lp="pk:'+x.id+'">'+
-              '<span class="pbox">'+(x.done?svg(I.check,12):'')+'</span><span class="tx">'+h(x.t)+'</span>'+
-              (S.menu==='pk:'+x.id?pop('editPk','delPk',x.id):'')+'</button>').join('')+'</div>':'')+
-        '</div>';
-      }).join('')+'</div>';
-  }else{
-    const EM=E.emergency||[],quick=(t.meta.sos||[]);
-    out+='<div class="sec" style="margin-top:0">'+
-      (quick.length?'<div class="emg">'+quick.map(s=>'<a href="tel:'+h(s.n)+'"><span class="n mono">'+h(s.n)+'</span><span class="l">'+h(s.l)+'</span></a>').join('')+'</div>':'')+
-      EM.map(x=>'<div class="erow" data-lp="em:'+x.id+'"><span class="m"><span class="t">'+h(x.name)+'</span>'+
-        (x.note?'<span class="n">'+h(x.note)+'</span>':'')+'</span>'+
-        (x.contact?'<a class="call" href="tel:'+h(String(x.contact).replace(/\s/g,''))+'">拨号</a>':'')+
-        (S.menu==='em:'+x.id?pop('editEm','delEm',x.id):'')+'</div>').join('')+
-      '<div class="hint">长按任意一条可以改或删。保险单号这类空着的，长按补上。</div></div>';
-  }
-  out+='<button class="addbtn" data-a="sheet" data-v="ess">'+svg(I.plus,16)+' 添加到速查</button>';
-  return out;
+            '<span class="pbox">'+(x.done?svg(I.check,12):'')+'</span><span class="tx">'+h(x.t)+'</span></button>'+
+            (S.menu==='pk:'+x.id?pop('editPk','delPk',x.id):'')+'</div>').join('')
+          :'<div class="note" style="padding:8px 6px">这一类还空着</div>')+'</div>':'')+
+      '</div>';
+    }).join('');
+}
+function essSos(t,E){
+  const quick=(t.meta.sos||[]),EM=E.emergency||[];
+  return '<div class="sec-h"><span class="t">紧急联系</span><span class="n">长按任意一条可改可删</span></div>'+
+    (quick.length?'<div class="emg">'+quick.map(x=>'<a href="tel:'+h(x.n)+'"><span class="n mono">'+h(x.n)+'</span><span class="l">'+h(x.l)+'</span></a>').join('')+'</div>':'')+
+    EM.map(x=>'<div class="erow" data-lp="em:'+x.id+'"><span class="m"><span class="t">'+h(x.name)+'</span>'+
+      (x.note?'<span class="n">'+h(x.note)+'</span>':'')+'</span>'+
+      (x.contact?'<a class="call" href="tel:'+h(String(x.contact).replace(/\s/g,''))+'">'+h(x.contact)+'</a>':'')+
+      (S.menu==='em:'+x.id?pop('editEm','delEm',x.id):'')+'</div>').join('');
 }
 </script>
 <script>
@@ -866,7 +893,7 @@ function detail(){
         (notes.length?notes.map((n,i)=>'<div class="nrow lprow" data-lp="nt:'+i+'">'+
           '<span class="d"></span><span class="tx">'+h(n.text||n)+'</span>'+
           (S.menu==='nt:'+i?pop('editNote','delNote',String(i)):'')+'</div>').join('')
-          :'<div class="empty" style="margin:2px 0"><b>还没有注意点</b>排队技巧、要带的东西、攻略链接，都能记这里。</div>')+
+          :'<div class="empty" style="margin:2px 0"><b>还没有注意点</b>排队技巧、要带的东西、小红书攻略<br>都可以记在这里</div>')+
         '<button class="dash" style="min-height:42px;font-size:12.5px" data-a="sheet" data-v="note">'+svg(I.plus,14)+' 记个注意点</button>'+
       '</div>'+
 
@@ -978,7 +1005,6 @@ function sheetHTML(){
     case 'omap':return shOmap();
     case 'settings':return shSettings();
     case 'trip':return shTrip();
-    case 'cover':return shCover();
   }
   return'';
 }
@@ -1003,7 +1029,7 @@ function shItem(){
         '<div class="f"><div class="row2">'+
           '<div><label>开始<span class="req">必填</span></label>'+inp(i,'start',r.start,'','time')+'</div>'+
           '<div><label>结束<span class="opt">选填</span></label>'+inp(i,'end',r.end,'','time')+'</div>'+
-        '</div><div class="mini">'+(dur?'预计耗时 '+h(dur)+'，会自动算':'填完起止时间会自动算耗时')+'</div></div>'+
+        '</div><div class="mini" data-durhint="'+i+'">'+(dur?'预计耗时 '+h(dur)+'，会自动算':'填完起止时间会自动算耗时')+'</div></div>'+
         fld('一句话介绍',2,inp(i,'note',r.note,'选填'))+
         '<div class="f"><label>'+svg(I.ticket,12)+' 凭证<span class="opt">选填</span></label>'+
           vs.map(v=>'<div class="vtag"><span class="cp">'+h(VCAT[v.cat]||'其他')+'</span>'+
@@ -1086,21 +1112,22 @@ function shVou(){
     let inner='';
     if(op){
       inner='<div class="bb">'+
-        fld('分类',1,'<div class="fchips">'+CATS.map(([k,l])=>'<button class="'+(r.cat===k?'on':'')+'" data-a="bufSet" data-v="'+i+'" data-k="cat" data-x="'+k+'">'+l+'</button>').join('')+'</div>')+
-        fld('名称',1,inp(i,'title',r.title,'比如 银座蒙特利酒店 / NH956'))+
-        fld('副标题',2,inp(i,'sub',r.sub,'日期、房型、张数这些'))+
+        fld('类目',1,'<div class="fchips">'+CATS.map(([k,l])=>'<button class="'+(r.cat===k?'on':'')+'" data-a="bufSet" data-v="'+i+'" data-k="cat" data-x="'+k+'">'+l+'</button>').join('')+'</div>')+
+        fld('凭证名称',1,inp(i,'title',r.title,'酒店名 / 航班号 / 门票名'))+
+        fld('一句话说明',2,inp(i,'sub',r.sub,'日期、房型、张数这些'))+
         '<div class="f"><div class="row2">'+
-          '<div><label>编号类型</label>'+inp(i,'codeLabel',r.codeLabel,'确认号 / 取票码')+'</div>'+
-          '<div><label>编号</label>'+inp(i,'code',r.code,'')+'</div></div></div>'+
+          '<div><label>编号类型<span class="opt">选填</span></label>'+inp(i,'codeLabel',r.codeLabel,'确认号 / 兑换码')+'</div>'+
+          '<div><label>确认号 / 兑换码<span class="opt">选填</span></label>'+inp(i,'code',r.code,'')+'</div></div></div>'+
         fld('出行人',2,inp(i,'who',r.who,'票面上的名字'))+
-        fld('地址 / 备注',2,inp(i,'note',r.note,'选填'))+
-        '<div class="f"><label>凭证图<span class="opt">选填</span></label>'+
+        fld('备注',2,inp(i,'note',r.note,'选填'))+
+        '<div class="f"><label>凭证文件<span class="opt">选填</span></label>'+
           '<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px">'+
           (r.imgs||[]).map((k,j)=>'<span style="position:relative;width:52px;height:64px;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:var(--ground);display:flex;align-items:center;justify-content:center">'+
             (pic(k)?'<img src="'+pic(k)+'" style="width:100%;height:100%;object-fit:cover">':svg(I.img,16))+
             '<button data-a="imgDrop" data-v="'+i+'" data-x="'+j+'" style="position:absolute;right:2px;top:2px;width:18px;height:18px;border-radius:50%;background:var(--danger);color:#fff;display:flex;align-items:center;justify-content:center" aria-label="删图">'+svg(I.x,9)+'</button></span>').join('')+
           '</div>'+
-          '<button class="btn ghost" style="min-height:42px;font-size:13px" data-a="imgAdd" data-v="'+i+'">'+svg(I.up,14)+' 选图片或 PDF 截图</button></div>'+
+          '<button class="btn ghost" style="min-height:42px;font-size:13px" data-a="imgAdd" data-v="'+i+'">'+svg(I.up,14)+' 选文件</button>'+
+          '<div class="mini">图片可以一次选好几个。PDF 请先在手机上截图再传 —— 存成图片离线出示更快，过闸机也不用等加载。</div></div>'+
       '</div>';
     }
     return '<div class="blk'+(op?' on':'')+(ok?' ok':(op?'':' bad'))+'">'+
@@ -1127,7 +1154,7 @@ function shEss(){
   const t=T();
   let body='';
   if(kind==='place'){
-    const CATS=['住宿','景点','餐厅','其他'];
+    const CATS=ACATS;
     body=B.map((r,i)=>{
       const ok=okRow('place',r),op=S.buf.open===i;
       return '<div class="blk'+(op?' on':'')+(ok?' ok':(op?'':' bad'))+'"><div class="bh"><span class="num">'+(i+1)+'</span>'+
@@ -1143,7 +1170,7 @@ function shEss(){
         '</div>':'')+'</div>';
     }).join('');
   }else if(kind==='tr'){
-    const CATS=['飞机','火车','当地'];
+    const CATS=TCATS.map(x=>x[0]);
     body=B.map((r,i)=>{
       const ok=okRow('tr',r),op=S.buf.open===i;
       return '<div class="blk'+(op?' on':'')+(ok?' ok':(op?'':' bad'))+'"><div class="bh"><span class="num">'+(i+1)+'</span>'+
@@ -1244,7 +1271,7 @@ function shJournal(){
 }
 /* 贴纸面板 */
 function shStk(){
-  return wrap('贴纸','长按贴纸可以挪位置、改大小、撕掉',
+  return wrap('贴纸','点一个就贴到总览上。长按贴纸会亮起一圈虚线，这时按住就能拖；右上角红叉是撕掉。贴纸只在总览条这块范围里走。',
     EMOJI.map(row=>'<div class="emopanel" style="margin-bottom:6px">'+row.map(e=>
       '<button data-a="addStk" data-v="'+e+'">'+e+'</button>').join('')+'</div>').join(''),'');
 }
@@ -1264,25 +1291,15 @@ function shOmap(){
 function shTrip(){
   const r=S.buf.rows[0],edit=!!(S.arg&&S.arg.id);
   return wrap(edit?'编辑旅程':'新建一段旅程','',
-    fld('名称',1,inp(0,'title',r.title,'比如 意大利南部'))+
+    fld('旅程名称',1,inp(0,'title',r.title,'比如 意大利南部'))+
     '<div class="f"><div class="row2">'+
       '<div><label>出发<span class="req">必填</span></label>'+inp(0,'start',r.start,'','date')+'</div>'+
       '<div><label>回来<span class="req">必填</span></label>'+inp(0,'end',r.end,'','date')+'</div>'+
     '</div></div>'+
     fld('参与者',2,inp(0,'participants',r.participants,'和谁一起'))+
-    fld('目的地国家',2,inp(0,'country',r.country,'搜地图时会拼在地点名后面')),
+    fld('目的地国家 / 地区',2,inp(0,'country',r.country,'搜地图时会拼在地点名后面')),
     '<button class="btn" data-a="tripSave">'+(edit?'保存修改':'建好，开始排行程')+'</button>'+
     '<div class="tip">新建的旅程是空的，行程、凭证、速查都从里面自己加。</div>');
-}
-/* 封面 */
-function shCover(){
-  const t=T();
-  return wrap('旅程封面','会显示在总览和我的旅程列表上',
-    '<div style="text-align:center;padding:6px 0 14px">'+(pic(t.meta.routeImage)?
-      '<img src="'+pic(t.meta.routeImage)+'" style="width:140px;height:140px;object-fit:cover;border-radius:18px;border:1px solid var(--line)">':
-      '<div style="width:140px;height:140px;margin:0 auto;border-radius:18px;background:var(--violet-hl);border:1px dashed var(--violet-line);display:flex;align-items:center;justify-content:center;color:var(--violet-deep)">'+svg(I.img,28)+'</div>')+'</div>',
-    '<button class="btn ghost" data-a="coverPick">'+svg(I.up,15)+' 换一张</button>'+
-    (t.meta.routeImage?'<button class="btn danger" data-a="coverClear">去掉封面</button>':''));
 }
 /* 设置 */
 function shSettings(){
@@ -1293,34 +1310,47 @@ function shSettings(){
       '<button class="a" data-a="export" data-v="'+t.id+'">导出</button></div>';
   }).join('');
   return wrap('设置','行程只存在这台手机上',
-    '<div class="sec-h" style="margin-left:0"><span class="t">导出</span><span class="n">一段一个文件</span></div>'+
+    '<div class="sec-h" style="margin-left:0"><span class="t">按旅程导出</span><span class="n">一段一个文件</span></div>'+
     one+
     '<button class="btn ghost" data-a="exportAll" style="margin-top:4px">'+svg(I.dl,15)+' 全部导出（'+DB.trips.length+' 段）</button>'+
     '<div class="hint">一段一个文件，单独发给同行的人也方便。凭证图都在文件里，所以带图的那段会大一些。「全部导出」是兜底，换手机时导一个文件就全回来了。</div>'+
-    '<div class="sec-h" style="margin:20px 0 8px"><span class="t">导入</span></div>'+
-    '<button class="btn ghost" data-a="import">'+svg(I.up,15)+' 导入旅程文件</button>'+
+    '<div class="sec-h" style="margin:20px 0 8px"><span class="t">导入旅程</span></div>'+
+    '<button class="btn ghost" data-a="import">'+svg(I.up,15)+' 选一个行程文件导进来</button>'+
     '<div class="hint">同一段旅程再导一次会覆盖本机这一份。</div>'+
     '<div class="sec-h" style="margin:20px 0 8px"><span class="t">这台手机</span></div>'+
     '<div class="hint" style="margin-top:0">数据存在浏览器里，不上传也不同步。清理浏览器数据、卸载 App、换手机都会清空，所以出门前导一份放网盘。'+
-    (daysSinceExport()>=5?'<br><b style="color:#B8710F">上次导出已经是 '+daysSinceExport()+' 天前了。</b>':'')+'</div>','');
+    (daysSinceExport()>=99?'<br><b style="color:#B8710F">还没导出过，出门前记得导一份。</b>':(daysSinceExport()>=5?'<br><b style="color:#B8710F">上次导出已经是 '+daysSinceExport()+' 天前了。</b>':''))+'</div>','');
 }
 </script>
 <script>
 /* ══════════ 事件 ══════════ */
-let lpT=0,lpFired=false;
+let lpT=0,lpFired=false,lpX=0,lpY=0;
+// iOS 上长按容易被系统的文字选择/预览抢走，所以：
+// · CSS 里给可长按的元素关掉 -webkit-touch-callout 和 user-select
+// · 这里屏蔽 contextmenu
+// · 取消条件只看手指移动距离，不看 scroll —— 橡皮筋回弹也会发 scroll，会把长按误杀
+document.addEventListener('contextmenu',e=>{if(e.target.closest('[data-lp],[data-stkgrab]'))e.preventDefault();});
 document.addEventListener('pointerdown',e=>{
   lpFired=false;clearTimeout(lpT);
+  lpX=e.clientX;lpY=e.clientY;
   const g=e.target.closest('[data-stkgrab],[data-stksize]');
   if(g){stkDown(e,g);return;}
   const lp=e.target.closest('[data-lp]');
   if(!lp)return;
+  if(e.target.closest('input,textarea,select,a'))return;
   const key=lp.dataset.lp;
-  lpT=setTimeout(()=>{lpFired=true;if(navigator.vibrate)try{navigator.vibrate(12);}catch(_){}
-    snapBuf();setS({menu:S.menu===key?'':key});},450);
+  lpT=setTimeout(()=>{
+    lpFired=true;if(navigator.vibrate)try{navigator.vibrate(12);}catch(_){}
+    if(key==='ovhead'){ACT('editTrip',DB.cur);return;}
+    snapBuf();setS({menu:S.menu===key?'':key});
+  },450);
 },true);
-document.addEventListener('pointerup',()=>{clearTimeout(lpT);},true);
-document.addEventListener('pointercancel',()=>{clearTimeout(lpT);},true);
-document.addEventListener('scroll',()=>{clearTimeout(lpT);},true);
+document.addEventListener('pointermove',e=>{
+  if(!lpT)return;
+  if(Math.abs(e.clientX-lpX)>10||Math.abs(e.clientY-lpY)>10){clearTimeout(lpT);lpT=0;}
+},true);
+document.addEventListener('pointerup',()=>{clearTimeout(lpT);lpT=0;},true);
+document.addEventListener('pointercancel',()=>{clearTimeout(lpT);lpT=0;},true);
 
 document.addEventListener('click',e=>{
   if(lpFired){lpFired=false;e.preventDefault();e.stopPropagation();return;}
@@ -1344,8 +1374,17 @@ document.addEventListener('input',e=>{
 });
 document.addEventListener('change',e=>{
   const el=e.target.closest('[data-bi]');
-  if(el&&S.buf){const i=+el.dataset.bi,k=el.dataset.bk;if(S.buf.rows[i])S.buf.rows[i][k]=el.value;
-    if(S.sheet==='item'&&(k==='start'||k==='end')){snapBuf();render();}}
+  if(!el||!S.buf)return;
+  const i=+el.dataset.bi,k=el.dataset.bk;
+  if(S.buf.rows[i])S.buf.rows[i][k]=el.value;
+  // 改时间不能重画：iOS 上时间选择器还开着，一重画就被关掉、值也没了
+  if(S.sheet==='item'&&(k==='start'||k==='end')){
+    const r=S.buf.rows[i],d=durText(r.start,r.end);
+    const hint=document.querySelector('[data-durhint="'+i+'"]');
+    if(hint)hint.textContent=d?('预计耗时 '+d+'，会自动算'):'填完起止时间会自动算耗时';
+    const sv=document.querySelector('[data-a=bufSave]');
+    if(sv){const n=readyN();sv.className='btn'+(n>0?'':' dim');}
+  }
 });
 
 /* 横划切 tab */
@@ -1434,9 +1473,9 @@ function ACT(a,v,k,x,el){
   case 'openTrip':DB.cur=v;save();window.__scrollTop=0;return setS({screen:'trip',tab:'plan',day:defaultDay(v),menu:''});
   case 'tab':window.__scrollTop=0;return setS({tab:v,menu:''});
   case 'day':window.__scrollTop=0;return setS({day:+v,menu:''});
-  case 'ecat':return setS({cat:v,menu:'',open:''});
-  case 'pcat':return setS({pcat:v,menu:''});
-  case 'tog':return setS({open:S.open===v?'':v,menu:''});
+  case 'acat':return setS({acat:v,aopen:'',menu:''});
+  case 'aopen':return setS({aopen:S.aopen===v?'':v,menu:''});
+  case 'popen':return setS({popen:S.popen===v?'':v,menu:''});
   case 'copy':navigator.clipboard&&navigator.clipboard.writeText(v).then(()=>toast('地址复制好了'),()=>toast('复制失败'));return;
   case 'openItem':window.__scrollTop=null;return setS({open:v,menu:''});
   case 'closeItem':return setS({open:'',menu:''});
@@ -1450,7 +1489,7 @@ function ACT(a,v,k,x,el){
     else if(v==='spend')bufInit('spend'),S.arg=x?{itemId:x}:null;
     else if(v==='note')bufInit('note');
     else if(v==='vou')bufInit('vou');
-    else if(v==='ess')bufInit(S.cat==='交通'?'tr':(S.cat==='行李'?'pk':(S.cat==='紧急'?'em':'place')));
+    else if(v==='ess')bufInit('place');
     else if(v==='omap')bufInit('omap',[{map:(findItem(S.open)||{}).map||''}]);
     else S.buf=null;
     return setS({sheet:v,err:'',pick:'',menu:''});
@@ -1545,8 +1584,8 @@ function ACT(a,v,k,x,el){
   case 'delStk':t.stickers=(t.stickers||[]).filter(z=>z.id!==v);save();return setS({stk:''});
 
   /* ── 封面 / 导入导出 ── */
-  case 'coverPick':return pickImgs(keys=>{if(keys.length){t.meta.routeImage=keys[0];save();render();}},1);
-  case 'coverClear':t.meta.routeImage='';save();return render();
+  case 'coverPick':S.menu='';return pickImgs(keys=>{if(keys.length){t.meta.routeImage=keys[0];save();}render();},1);
+  case 'coverClear':t.meta.routeImage='';save();return setS({menu:''});
   case 'export':return doExport(v);
   case 'exportAll':return doExport(null);
   case 'import':return $('#pick').click();
@@ -1629,9 +1668,15 @@ function bufSave(){
       if(!c){c={cat:cat,items:[]};t.packing.push(c);}
       c.items.push({id:id||uid('k'),t:text,done:false});
     };
-    if(edit){let old=null;t.packing.forEach(c=>{const j=c.items.findIndex(z=>z.id===S.arg.id);
-        if(j>=0){old=c.items[j];c.items.splice(j,1);}});
-      put(rows[0].cat,rows[0].t.trim(),S.arg.id);}
+    if(edit){
+      let old=null,oc=null,oj=-1;
+      t.packing.forEach(c=>{const j=c.items.findIndex(z=>z.id===S.arg.id);if(j>=0){old=c.items[j];oc=c;oj=j;}});
+      if(old&&oc&&oc.cat===rows[0].cat){old.t=rows[0].t.trim();}       // 原地改，不动位置也不丢勾
+      else if(old){oc.items.splice(oj,1);
+        let c2=t.packing.find(z=>z.cat===rows[0].cat);
+        if(!c2){c2={cat:rows[0].cat,items:[]};t.packing.push(c2);}
+        c2.items.push({id:old.id,t:rows[0].t.trim(),done:old.done});}
+    }
     else rows.forEach(r=>put(r.cat,r.t.trim()));
   }
   else if(kind==='em'){
@@ -1706,7 +1751,7 @@ $('#pickimg').addEventListener('change',async e=>{
   const keys=[];
   for(const f of files){
     const url=await shrink(f,1500,0.78);
-    if(!url){toast('PDF 暂时存不了，先截个图再传');continue;}
+    if(!url){toast('PDF 请先截图再传');continue;}
     const k=uid('g');IMGS[k]=url;keys.push(k);
   }
   await saveImgs();
