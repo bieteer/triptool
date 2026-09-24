@@ -109,8 +109,16 @@ a{color:var(--violet-deep)}
 .tabs .sp{flex:1}
 .gear{padding:11px 0 9px;color:var(--ink3);position:relative}
 .gear .dot{position:absolute;top:10px;right:-3px;width:6px;height:6px;border-radius:50%;background:#E8A33D}
-.datestrip{display:flex;gap:7px;overflow-x:auto;padding:8px 16px}
-.dtab{flex:0 0 auto;min-width:70px;padding:6px 10px;border-radius:12px;border:1px solid var(--line);background:var(--card);text-align:center}
+.striprow{display:flex;align-items:center}
+.datestrip{flex:1;min-width:0;display:flex;gap:7px;overflow-x:auto;padding:8px 16px}
+.backtoday{flex:0 0 auto;margin:0 12px 0 2px;min-height:34px;display:flex;align-items:center;gap:4px;padding:0 10px;border-radius:999px;border:1px solid var(--violet-line);background:var(--violet-hl);font-size:11.5px;font-weight:600;color:var(--violet-deep);white-space:nowrap}
+.dtab{position:relative;flex:0 0 auto;min-width:70px;padding:6px 10px;border-radius:12px;border:1px solid var(--line);background:var(--card);text-align:center}
+.dtab.today{border-color:#9ACFC5}
+.dtab.today .n{color:var(--mint-deep);font-weight:700}
+.dtab.today .c{color:var(--mint-deep)}
+.dtab .tdot{position:absolute;top:5px;right:5px;width:5px;height:5px;border-radius:3px;background:var(--mint)}
+.dtab.on .tdot{background:#DDD4FF}
+.dtab.on.today .n,.dtab.on.today .c{color:#DDD4FF}
 .dtab .n{display:block;font-size:10.5px;color:var(--ink3);line-height:1.35}
 .dtab .d{display:block;font-size:14.5px;font-weight:700;line-height:1.3;margin:1px 0}
 .dtab .c{display:block;font-size:10.5px;color:var(--ink2);line-height:1.35;max-width:76px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -193,69 +201,115 @@ a{color:var(--violet-deep)}
 .vmain .s{display:block;font-size:11.5px;color:var(--ink2);margin-top:2px}
 .vmain .c{display:block;font-size:11.5px;color:var(--ink3);margin-top:2px}
 .vmain .c b{font-weight:600;color:var(--violet-deep);letter-spacing:.3px}
+.vmain .use{display:flex;align-items:center;gap:4px;margin-top:3px;color:var(--ink3)}
+.vmain .use.on{color:var(--mint-deep)}
+.vmain .use svg{flex:0 0 auto}
+.vmain .use span{font-size:10.5px;font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vmain .use.on span{font-weight:600}
 .vgo{flex:0 0 auto;min-height:40px;display:flex;align-items:center;padding:0 13px;border-radius:11px;background:var(--violet-tint);font-size:12.5px;font-weight:600;color:var(--violet-deep)}
 .addbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:calc(100% - 32px);margin:14px 16px 0;min-height:46px;border-radius:13px;border:1.5px dashed var(--violet-line);background:var(--violet-hl);color:var(--violet-deep);font-size:14px;font-weight:600}
 
-/* ── 速查 ── */
-.chips{display:flex;gap:7px;overflow-x:auto;padding:0 16px 10px}
-.chips button{flex:0 0 auto;padding:6px 13px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:13px;color:var(--ink2);min-height:32px}
-.chips button.on{background:var(--violet);border-color:var(--violet);color:#fff;font-weight:600}
-.arow{background:var(--card);border:1px solid var(--line);border-radius:13px;margin-bottom:8px;overflow:hidden;position:relative}
-.ahead{display:flex;align-items:center;gap:10px;width:100%;padding:12px 13px}
-.ahead .t{flex:1;min-width:0;font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ahead .d{font-size:11px;color:var(--ink3);flex:0 0 auto}
-.ahead .cv{flex:0 0 auto;color:var(--ink3);transition:transform .16s}
-.arow.open .ahead .cv{transform:rotate(180deg)}
-.abody{padding:0 13px 12px;border-top:1px solid var(--line)}
-.abody .ad{font-size:13px;line-height:1.5;margin-top:10px;word-break:break-word}
-.abody .an{font-size:12px;color:var(--ink2);margin-top:5px}
-.abody .acts{display:flex;gap:8px;margin-top:10px}
-.abody .acts button,.abody .acts a{flex:1;min-height:38px;border-radius:9px;border:1px solid var(--violet-line);background:var(--violet-hl);color:var(--violet-deep);font-size:12.5px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:5px;text-decoration:none}
-.trow{display:flex;gap:11px;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:11px 12px;margin-bottom:8px;position:relative}
-.tico{flex:0 0 34px;width:34px;height:34px;border-radius:9px;background:var(--violet-hl);color:var(--violet-deep);display:flex;align-items:center;justify-content:center}
-.tmain2{flex:1;min-width:0}
-.tmain2 .t{display:block;font-size:14px;font-weight:600;line-height:1.35}
-.tmain2 .m{display:block;font-size:11.5px;color:var(--ink2);margin-top:3px;line-height:1.45;word-break:break-word}
-.tno{flex:0 0 auto;font-size:12px;font-weight:700;color:var(--violet-deep);letter-spacing:.3px;padding-top:2px}
-.emg{display:flex;gap:8px;margin-bottom:8px}
-.emg a{flex:1;min-height:56px;border-radius:13px;background:var(--danger-tint);border:1px solid #F2D5D5;color:var(--danger);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;text-decoration:none}
-.emg a .n{font-size:19px;font-weight:700}
-.emg a .l{font-size:11px}
-.erow{display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:11px 12px;margin-bottom:8px;position:relative}
-.erow .m{flex:1;min-width:0}
-.erow .m .t{display:block;font-size:14px;font-weight:600}
-.erow .m .n{display:block;font-size:11.5px;color:var(--ink2);margin-top:2px;line-height:1.45;word-break:break-word}
-.erow a.call{flex:0 0 auto;min-height:36px;padding:0 13px;border-radius:9px;background:var(--violet-hl);border:1px solid var(--violet-line);color:var(--violet-deep);font-size:12.5px;font-weight:700;display:flex;align-items:center;text-decoration:none}
+/* ── 旧速查样式已被新版取代，只留空态 ── */
 .hint{margin:8px 2px 0;font-size:11.5px;color:var(--ink3);line-height:1.6}
 .empty{margin:14px 0;padding:22px 16px;text-align:center;color:var(--ink3);font-size:13px;line-height:1.7;background:var(--card);border:1px dashed var(--violet-line);border-radius:14px}
 .empty b{display:block;color:var(--ink2);font-size:13.5px;margin-bottom:4px}
 
-/* ── 地址分类条 / 交通分组 / 行李进度 ── */
-.catbar{display:flex;gap:7px;margin-bottom:9px}
-.catbar button{flex:1;min-height:46px;border-radius:11px;border:1px solid var(--line);background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
-.catbar button .l{display:block;font-size:12.5px;font-weight:600}
-.catbar button .c{display:block;font-size:10px;color:var(--ink2)}
-.catbar button.on{background:var(--violet);border-color:var(--violet)}
-.catbar button.on .l{color:#fff}
-.catbar button.on .c{color:#DDD4FF}
-.modehead{display:flex;align-items:center;gap:6px;margin:10px 2px 7px;color:var(--ink2);font-size:11.5px;font-weight:600;letter-spacing:.3px}
-.track{height:6px;border-radius:3px;background:var(--line);margin:2px 0 10px;overflow:hidden}
-.track .fill{height:100%;background:var(--mint);border-radius:3px;transition:width .2s}
-.pcat .h .ico{flex:0 0 28px;width:28px;height:28px;border-radius:8px;background:var(--violet-hl);color:var(--violet-deep);display:flex;align-items:center;justify-content:center}
-.pcat .h .ico.all{background:var(--mint-tint);color:var(--mint-deep)}
-.pcat .h .n.all{color:var(--mint-deep);font-weight:600}
-.pcat{background:var(--card);border:1px solid var(--line);border-radius:13px;margin-bottom:8px;overflow:hidden}
-.pcat .h{display:flex;align-items:center;gap:9px;width:100%;padding:11px 13px}
-.pcat .h .t{flex:1;font-size:14px;font-weight:600}
-.pcat .h .n{font-size:11.5px;color:var(--ink3)}
-.pcat .h .cv{color:var(--ink3);transition:transform .16s}
+/* ══ 速查：四张白卡 ══ */
+.esswrap{padding:11px 16px 0;display:flex;flex-direction:column;gap:10px;touch-action:pan-y}
+.escard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:11px 13px}
+.escard.p11{padding:11px}
+.escard .eh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 2px 8px}
+.escard .eh .t{font-size:11.5px;font-weight:600;color:var(--violet-deep);letter-spacing:.3px}
+.escard .eh .s{font-size:10px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.esempty{font-size:11.5px;color:var(--ink3);padding:10px 2px;line-height:1.6}
+
+/* 地址 */
+.acats{display:flex;gap:7px;margin-bottom:8px}
+.acats button{flex:1;min-height:44px;border-radius:11px;border:1px solid var(--line);background:var(--ground);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.acats button .l{display:block;font-size:12.5px;font-weight:600;color:var(--ink)}
+.acats button .c{display:block;font-size:10px;color:var(--ink2)}
+.acats button.on{background:var(--violet);border-color:var(--violet)}
+.acats button.on .l{color:#fff}
+.acats button.on .c{color:#DDD4FF}
+.alist{display:flex;flex-direction:column;gap:7px}
+.awrap{position:relative}
+.awrap:has(.pop){z-index:6}
+.arow{border-radius:13px;overflow:hidden;background:var(--ground);border:1px solid var(--line)}
+.arow.open{background:var(--violet-hl);border-color:#C9BFF2}
+.ahead{width:100%;min-height:44px;display:flex;align-items:center;gap:9px;padding:0 11px;background:transparent}
+.ahead>svg{flex:0 0 auto;color:var(--violet)}
+.ahead .t{flex:1;min-width:0;font-size:14px;font-weight:600;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ahead .w{flex:0 0 auto;font-size:10.5px;color:var(--ink2)}
+.ahead .cv{flex:0 0 auto;color:var(--ink3);transition:transform .16s;display:flex}
+.arow.open .ahead .cv{transform:rotate(180deg)}
+.abody{display:block;padding:0 11px 11px 35px}
+.abody .ad{display:block;font-size:15px;font-weight:600;line-height:1.4;word-break:break-word}
+.abody .an{display:block;font-size:11.5px;color:var(--ink2);line-height:1.4;margin-top:4px}
+.abody .acts{display:flex;gap:7px;padding-top:8px}
+.abody .cp{flex:1;min-height:44px;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:11px;background:var(--violet);color:#fff;font-size:12.5px;font-weight:600}
+.abody .mp{width:92px;flex:0 0 92px;min-height:44px;display:flex;align-items:center;justify-content:center;gap:5px;border-radius:11px;border:1px solid var(--line);background:var(--card);font-size:12.5px;font-weight:600;color:var(--violet-deep);text-decoration:none}
+.pop-a{right:6px;top:38px}
+
+/* 交通 */
+.twrap{position:relative}
+.twrap:has(.pop){z-index:6}
+.tmode{display:block;font-size:10.5px;font-weight:600;color:var(--violet-deep);padding:7px 0 2px}
+.trow2{width:100%;min-height:42px;display:flex;align-items:center;gap:9px;background:transparent}
+.trow2>svg{flex:0 0 auto;color:var(--ink3)}
+.trow2 .no{flex:0 0 auto;font-size:13px;font-weight:600}
+.trow2 .meta{flex:1;min-width:0;font-size:10.5px;color:var(--ink2);text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pop-b{right:0;top:100%;margin-top:-4px}
+
+/* 行李 */
+.ptrack{height:5px;border-radius:3px;background:var(--violet-tint);overflow:hidden;margin-bottom:9px}
+.ptrack .pfill{height:5px;background:var(--violet);border-radius:3px;transition:width .2s}
+.plist{display:flex;flex-direction:column;gap:6px}
+.pcat{border-radius:13px;background:var(--ground);border:1px solid var(--line)}
+.pcat.open{background:var(--violet-hl);border-color:#C9BFF2}
+.pcat .h{width:100%;min-height:44px;display:flex;align-items:center;gap:9px;padding:0 11px;background:transparent}
+.pcat .h .ico{flex:0 0 24px;width:24px;height:24px;border-radius:8px;background:var(--violet-tint);color:var(--violet-deep);display:flex;align-items:center;justify-content:center}
+.pcat.all .h .ico{background:var(--mint-tint);color:var(--mint-deep)}
+.pcat .h .t{flex:1;font-size:13.5px;font-weight:600}
+.pcat .h .n{flex:0 0 auto;font-size:10.5px;font-weight:600;color:var(--ink2)}
+.pcat.all .h .n{color:var(--mint-deep)}
+.pcat .h .cv{flex:0 0 auto;color:var(--ink3);transition:transform .16s;display:flex}
 .pcat.open .h .cv{transform:rotate(180deg)}
-.pcat .b{border-top:1px solid var(--line);padding:4px 13px 8px}
-.pitem{display:flex;align-items:center;gap:10px;width:100%;min-height:42px;padding:2px 6px;border-radius:9px}
-.pbox{flex:0 0 20px;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--ink3);display:flex;align-items:center;justify-content:center;color:#fff}
+.pcat .b{padding:0 11px 8px;display:flex;flex-direction:column;gap:1px}
+.pwrap{position:relative}
+.pwrap:has(.pop){z-index:6}
+.pitem{width:100%;min-height:40px;display:flex;align-items:center;gap:10px;background:transparent}
+.pbox{flex:0 0 21px;width:21px;height:21px;border-radius:7px;border:1.6px solid #D6D1E8;background:var(--card);display:flex;align-items:center;justify-content:center;color:#fff}
 .pitem.done .pbox{background:var(--mint);border-color:var(--mint)}
-.pitem .tx{flex:1;min-width:0;font-size:13.5px;line-height:1.45;word-break:break-word}
+.pitem .tx{flex:1;min-width:0;font-size:13px;line-height:1.35;word-break:break-word}
 .pitem.done .tx{color:var(--ink3);text-decoration:line-through}
+
+/* 紧急联系 */
+.qrow{display:flex;gap:8px;margin-bottom:8px}
+.qwrap{position:relative;flex:1}
+.qwrap:has(.pop){z-index:6}
+.qbtn{width:100%;min-height:56px;border-radius:13px;background:var(--danger-tint);border:1px solid #F2D5D5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.qbtn .no{display:block;font-size:19px;font-weight:700;color:var(--danger)}
+.qbtn .l{display:block;font-size:11px;color:var(--danger)}
+.pop-q{left:50%;right:auto;transform:translateX(-50%);top:100%;margin-top:4px}
+.swrap{position:relative}
+.swrap:has(.pop){z-index:6}
+.srow2{width:100%;min-height:42px;display:flex;align-items:center;gap:10px;background:transparent}
+.srow2 .g{flex:1;min-width:0}
+.srow2 .g .t{display:block;font-size:12.5px}
+.srow2 .g .n{display:block;font-size:10.5px;color:var(--ink3);line-height:1.4;word-break:break-word}
+.srow2 .no{flex:0 0 auto;font-size:13px;font-weight:600;color:var(--violet-deep)}
+.srow2>svg{flex:0 0 auto;color:var(--violet)}
+
+/* 置顶大号开关 */
+.qtog{display:flex;align-items:center;gap:9px;width:100%;min-height:46px;padding:0 12px;border-radius:11px;border:1px solid var(--line);background:var(--card)}
+.qtog .g{flex:1;min-width:0}
+.qtog .g .t{display:block;font-size:13px;font-weight:600}
+.qtog .g .s{display:block;font-size:10.5px;color:var(--ink3);margin-top:1px}
+.qtog .sw{flex:0 0 44px;width:44px;height:26px;border-radius:13px;background:#D6D1E8;position:relative;transition:background .16s}
+.qtog .sw i{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .16s}
+.qtog.on{border-color:var(--violet)}
+.qtog.on .sw{background:var(--violet)}
+.qtog.on .sw i{left:21px}
 
 /* ── 底部 sheet ── */
 .mask{position:fixed;inset:0;z-index:20;background:rgba(28,25,48,.4);opacity:0;animation:fade .18s forwards}
@@ -320,6 +374,14 @@ a{color:var(--violet-deep)}
 .rowline .rm{flex:0 0 26px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;color:var(--danger)}
 .rowline .cny{font-size:11px;color:var(--ink3);padding-left:2px}
 .rowline .cny.ok{color:var(--mint-deep);font-weight:600}
+.sprow{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.sprow input[type=text]{flex:1;min-width:0;min-height:42px;padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:var(--card);font-size:13px;outline:none}
+.sprow input[inputmode=decimal]{flex:0 0 84px;width:84px;font-size:14px;font-weight:700}
+.sprow select{flex:0 0 76px;width:76px;min-height:42px;padding:8px 6px;border-radius:9px;border:1px solid var(--line);background:var(--card);font-size:12px;outline:none}
+.sprow .rm{flex:0 0 26px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;color:var(--danger)}
+.sprow .spadd{flex:1;min-height:38px;border-radius:9px;border:1px dashed var(--violet-line);background:var(--violet-hl);color:var(--violet-deep);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:5px}
+.sprow .spsum{flex:0 0 auto;font-size:12px;font-weight:600;color:var(--ink3)}
+.sprow .spsum.ok{color:var(--mint-deep)}
 .morebtn{width:100%;min-height:46px;border-radius:12px;border:1px dashed var(--violet-line);background:var(--violet-hl);color:var(--violet-deep);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:9px}
 
 /* 凭证挑选 */
@@ -419,15 +481,18 @@ a{color:var(--violet-deep)}
 /* ══════════ 图标 ══════════ */
 function svg(d,w){return '<svg width="'+(w||16)+'" height="'+(w||16)+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+d+'</svg>';}
 const I={
-  back:'<path d="M14.5 5l-7 7 7 7"/>', go:'<path d="M9.5 5l7 7-7 7"/>',
+  back:'<path d="M14.5 5l-7 7 7 7"/>', back2:'<path d="M11 5l-7 7 7 7M4.5 12H20"/>', go:'<path d="M9.5 5l7 7-7 7"/>',
   down:'<path d="M6 9.5l6 6 6-6"/>', x:'<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
   plus:'<path d="M12 5.5v13M5.5 12h13"/>', check:'<path d="M5 12.5l5 5 9-11"/>',
   clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/>',
   pin:'<path d="M12 21.5s7-6.4 7-11.3a7 7 0 1 0-14 0c0 4.9 7 11.3 7 11.3z"/><circle cx="12" cy="10" r="2.6"/>',
+  cal:'<path d="M7 3.5v3M17 3.5v3M3.5 9.5h17"/><rect x="3.5" y="6" width="17" height="15" rx="2"/>',
+  warn:'<path d="M12 9v4.5M12 17h.01M12 3.5 21 20H3z"/>',
   card:'<path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h11A2.5 2.5 0 0 1 19 7.5M3 7.5v9A2.5 2.5 0 0 0 5.5 19h13a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-13A2.5 2.5 0 0 1 3 7.5zM16.8 13.5h.01"/>',
   ticket:'<path d="M3 9.5V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2.5a2.5 2.5 0 0 0 0 5V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2.5a2.5 2.5 0 0 0 0-5z"/>',
   img:'<rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="8.5" cy="10" r="1.8"/><path d="M3.5 17l4.8-4.2 3.4 3 3.2-2.6 5.6 4.6"/>',
   pen:'<path d="M4.5 19.5h4l10-10a2.1 2.1 0 0 0-3-3l-10 10z"/>',
+  copy:'<rect x="9" y="9" width="11.5" height="11.5" rx="2.5"/><path d="M5 15.5V5.5a2.5 2.5 0 0 1 2.5-2.5H17"/>',
   quote:'<path d="M9.5 6H7a1.5 1.5 0 0 0-1.5 1.5v2A1.5 1.5 0 0 0 7 11h2.5zM9.5 6v5c0 3.6-1.4 5.9-3.8 7M18.5 6H16a1.5 1.5 0 0 0-1.5 1.5v2A1.5 1.5 0 0 0 16 11h2.5zM18.5 6v5c0 3.6-1.4 5.9-3.8 7"/>',
   gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 14.5a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1v.3a2 2 0 1 1-4 0v-.2a1.6 1.6 0 0 0-2.8-1.1l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0-1.1-2.7h-.3a2 2 0 1 1 0-4h.2a1.6 1.6 0 0 0 1.1-2.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3h.1A1.6 1.6 0 0 0 10.2 4v-.3a2 2 0 1 1 4 0v.2a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7h.3a2 2 0 1 1 0 4h-.2a1.6 1.6 0 0 0-1.5 1z"/>',
   up:'<path d="M12 16.5V4M7.5 8.5L12 4l4.5 4.5M4.5 16.5v2a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-2"/>',
@@ -446,6 +511,7 @@ const I={
 const $=s=>document.querySelector(s);
 const h=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=p=>(p||'x')+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const pName=x=>(x&&x.place&&x.place.trim())?x.place:((x&&x.theme)||'');
 const pad=n=>String(n).padStart(2,'0');
 function todayISO(){const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
 function nowHM(){const d=new Date();return pad(d.getHours())+':'+pad(d.getMinutes());}
@@ -477,8 +543,8 @@ function T(){return DB.trips.find(t=>t.id===DB.cur)||null;}
 /* ══════════ 界面状态 ══════════ */
 const S={screen:'trips',tab:'plan',day:0,acat:'住宿',aopen:'',popen:'',menu:'',sheet:'',arg:null,open:'',err:'',vshow:null,wxTried:false,stk:'',buf:null,pick:''};
 function setS(o){Object.assign(S,o);render();}
-const THEMES=['起床','游玩','吃饭','逛街','住宿','办事','移动','睡觉'];
-const CHIP={'移动':['#F0EEF7','#6B6585'],'住宿':['#E4F8F4','#0E7C6F'],'吃饭':['#FFF1E6','#9A5A1C'],'起床':['#FFF4D9','#8A6A12'],'睡觉':['#E6E2F7','#5B4BA8']};
+const THEMES=['起床','游玩','吃饭','逛街','移动','睡觉','其他'];
+const CHIP={'移动':['#F0EEF7','#6B6585'],'其他':['#EFEDE8','#7B7060'],'吃饭':['#FFF1E6','#9A5A1C'],'起床':['#FFF4D9','#8A6A12'],'睡觉':['#E6E2F7','#5B4BA8'],'住宿':['#E4F8F4','#0E7C6F']};
 function chipOf(th){const c=CHIP[th]||['#EFEBFF','#4B2FB8'];return 'background:'+c[0]+';color:'+c[1];}
 const CUR=['EUR','CNY','USD','JPY'];
 const CURNAME={EUR:'欧元',CNY:'人民币',USD:'美元',JPY:'日元'};
@@ -505,6 +571,20 @@ function spentTotal(){const t=T();if(!t)return 0;return t.days.reduce((s,d)=>s+s
 function findItem(id){const t=T();if(!t)return null;for(const d of t.days){const x=d.items.find(i=>i.id===id);if(x)return x;}return null;}
 function findDayOf(id){const t=T();if(!t)return null;return t.days.find(d=>d.items.some(i=>i.id===id));}
 function vouById(id){const t=T();return (t&&t.vouchers||[]).find(v=>v.id===id)||null;}
+// 这张票挂在哪几程上 —— 站在闸机口不用靠名字猜
+function vouUse(id,title){
+  const t=T();if(!t)return [];
+  const out=[];
+  const tt=String(title||'').trim();
+  t.days.forEach((d,di)=>d.items.forEach(it=>{
+    if((it.vouchers||[]).indexOf(id)<0)return;
+    const nm=pName(it);
+    // 行程名和票名基本是同一个东西时就别再重复一遍，只留「第几天几点」
+    const echo=tt&&nm&&(nm.indexOf(tt)>=0||tt.indexOf(nm)>=0||nm.indexOf(tt.slice(0,8))>=0);
+    out.push('Day '+(di+1)+' '+(it.time||'')+(echo?'':' '+nm));
+  }));
+  return out;
+}
 function packStat(){const t=T();const P=(t&&t.packing)||[];let done=0,all=0;P.forEach(c=>c.items.forEach(x=>{all++;if(x.done)done++;}));return{done,all};}
 function daysSinceExport(){const t=T();if(!t||!t.lastExport)return 99;return Math.floor((Date.now()-new Date(t.lastExport).getTime())/864e5);}
 function mapHref(it){const t=T();if(it.map&&it.map.trim())return it.map.trim();const q=(it.place||'')+' '+((t&&t.meta.country)||'');return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q.trim());}
@@ -613,10 +693,11 @@ function viewTrips(){
     '<div class="hint" style="margin:14px 2px 0">行程只存在这台手机上。换手机、清缓存、重装都会丢，定期导出一份。</div>'+
   '</div>';
 }
-function pop(ea,da,id){
-  return '<span class="pop"><button data-a="'+ea+'" data-v="'+h(id)+'">编辑</button>'+
-    '<button class="del" data-a="'+da+'" data-v="'+h(id)+'">删除</button></span>';
+function popBtns(ea,da,id){
+  return '<button data-a="'+ea+'" data-v="'+h(id)+'">编辑</button>'+
+    '<button class="del" data-a="'+da+'" data-v="'+h(id)+'">删除</button>';
 }
+function pop(ea,da,id){return '<span class="pop">'+popBtns(ea,da,id)+'</span>';}
 
 /* ── 总览（含贴纸） ── */
 function overview(t){
@@ -676,10 +757,16 @@ function stickyBar(){
   '</div>';
   if(S.tab==='plan'){
     const D=t.days,TD=todayISO(),i=Math.min(S.day,D.length-1);
-    out+='<div class="datestrip noscroll">'+D.map((x,k)=>
-      '<button class="dtab '+(k===i?'on':(x.date<TD?'past':''))+'" data-a="day" data-v="'+k+'">'+
-        '<span class="n">Day '+(k+1)+'</span><span class="d mono">'+mdSlash(x.date)+'</span>'+
-        '<span class="c">'+h(x.city||'')+'</span></button>').join('')+'</div>';
+    const ti=D.findIndex(x=>x.date===TD);
+    out+='<div class="striprow"><div class="datestrip noscroll">'+D.map((x,k)=>{
+      const today=x.date===TD;
+      return '<button class="dtab '+(k===i?'on':(x.date<TD?'past':''))+(today?' today':'')+'" data-a="day" data-v="'+k+'">'+
+        (today?'<span class="tdot"></span>':'')+
+        '<span class="n">'+(today?'今天':('Day '+(k+1)))+'</span><span class="d mono">'+mdSlash(x.date)+'</span>'+
+        '<span class="c">'+h(x.city||'')+'</span></button>';
+    }).join('')+'</div>'+
+      (ti>=0&&ti!==i?'<button class="backtoday" data-a="day" data-v="'+ti+'">'+svg(I.back2,12)+' 今天</button>':'')+
+    '</div>';
   }
   return out+'</div>';
 }
@@ -720,7 +807,7 @@ function card(x,d,isToday,nowKey,now,TD,last){
     '<div class="rrail"><span class="dot" style="background:'+(state==='past'?'var(--mint)':(state==='now'?'var(--violet)':'#D6D1E8'))+'"></span>'+(last?'':'<span class="line"></span>')+'</div>'+
     '<div class="rbody">'+
       '<button class="card '+state+'" data-a="openItem" data-v="'+x.id+'" data-lp="item:'+x.id+'">'+
-        '<span class="c-top"><span class="c-place">'+h(x.place)+'</span>'+
+        '<span class="c-top"><span class="c-place">'+h(pName(x))+'</span>'+
           '<span class="c-chip" style="'+chipOf(x.theme)+'">'+h(x.theme)+'</span></span>'+
         (x.note?'<span class="c-note">'+h(x.note)+'</span>':'')+
         '<span class="c-bot">'+
@@ -742,7 +829,7 @@ function card(x,d,isToday,nowKey,now,TD,last){
 function viewVou(){
   const t=T(),V=t.vouchers||[];
   const groups=[['stay','住宿',I.home],['move','交通',I.plane],['see','游览',I.ticket],['other','其他',I.ticket]];
-  let out='<div class="maskbar">'+svg(I.ticket,14)+'姓名与证件号默认打码，出示时点一下才显示</div>';
+  let out='<div class="maskbar">'+svg(I.ticket,14)+'姓名与证件号默认打码，出示时点一下才显示。每张票底下那行绿字是它用在哪一程。</div>';
   groups.forEach(([k,label,ic])=>{
     const rows=V.filter(v=>(v.cat||'other')===k);
     if(!rows.length)return;
@@ -750,11 +837,15 @@ function viewVou(){
       rows.map(v=>{
         const im=pic((v.imgs||[])[0]);
         const code=v.code?('<span class="c">'+h(v.codeLabel||'编号')+' <b>'+h(String(v.code).slice(0,4))+'···</b></span>'):'';
+        const u=vouUse(v.id,v.title);
+        const use='<span class="use'+(u.length?' on':'')+'">'+
+          svg(u.length?I.cal:I.warn,11)+
+          '<span>'+h(u.length?(u[0]+(u.length>1?('  等 '+u.length+' 处'):'')):'还没挂到行程上')+'</span></span>';
         return '<div style="position:relative">'+
           '<button class="vrow" data-a="show" data-v="'+v.id+'" data-lp="vou:'+v.id+'">'+
           '<span class="vthumb">'+(im?'<img src="'+im+'" alt="">':svg(I.img,17))+'</span>'+
           '<span class="vmain"><span class="t">'+h(v.title)+'</span>'+
-            (v.sub?'<span class="s">'+h(v.sub)+'</span>':'')+code+'</span>'+
+            (v.sub?'<span class="s">'+h(v.sub)+'</span>':'')+code+use+'</span>'+
           '<span class="vgo">出示</span></button>'+
           (S.menu==='vou:'+v.id?pop('editVou','delVou',v.id):'')+'</div>';
       }).join('')+'</div>';
@@ -764,82 +855,109 @@ function viewVou(){
   return out;
 }
 
-/* ── 速查 tab：一页四块，和原型一致 ── */
+/* ── 速查 tab：一整页四张白卡，和原型一致 ── */
 const ACATS=['住宿','美食','购物','景点'];
 const TCATS=[['飞机',I.plane],['火车',I.train],['当地',I.bus]];
 function viewEss(){
   const t=T(),E=t.essentials||{};
-  return '<div class="sec" style="margin-top:12px">'+essAddr(E)+'</div>'+
-    '<div class="sec">'+essTransit(E)+'</div>'+
-    '<div class="sec">'+essPack(t)+'</div>'+
-    '<div class="sec">'+essSos(t,E)+'</div>'+
-    '<button class="addbtn" data-a="sheet" data-v="ess">'+svg(I.plus,16)+' 添加到速查</button>';
+  return '<div class="esswrap">'+essAddr(E)+essTransit(E)+essPack(t)+essSos(E)+
+    '<button class="dash" style="margin-bottom:18px" data-a="sheet" data-v="ess">'+svg(I.plus,15)+' 添加到速查</button></div>';
 }
+function essHead(l,r){
+  return '<div class="eh"><span class="t">'+h(l)+'</span>'+(r?'<span class="s">'+h(r)+'</span>':'')+'</div>';
+}
+/* 卡一 · 地址 */
 function essAddr(E){
   const P=E.places||[],cat=S.acat||ACATS[0];
   const rows=P.filter(p=>p.cat===cat);
-  return '<div class="sec-h"><span class="t">地址</span><span class="n">长按条目可改可删</span></div>'+
-    '<div class="catbar">'+ACATS.map(c=>{
-      const on=c===cat,n=P.filter(p=>p.cat===c).length;
-      return '<button class="'+(on?'on':'')+'" data-a="acat" data-v="'+c+'"><span class="l">'+c+'</span><span class="c">'+n+' 处</span></button>';
+  return '<div class="escard p11">'+essHead('地址','长按条目可改可删')+
+    '<div class="acats">'+ACATS.map(c=>{
+      const on=c===cat;
+      return '<button class="'+(on?'on':'')+'" data-a="acat" data-v="'+c+'">'+
+        '<span class="l">'+c+'</span><span class="c">'+P.filter(p=>p.cat===c).length+' 处</span></button>';
     }).join('')+'</div>'+
-    (rows.length?rows.map(p=>{
+    '<div class="alist">'+(rows.length?rows.map(p=>{
       const op=S.aopen===p.id;
-      return '<div class="arow'+(op?' open':'')+'">'+
-        '<button class="ahead" data-a="aopen" data-v="'+p.id+'" data-lp="place:'+p.id+'">'+
-          '<span class="t">'+h(p.name)+'</span>'+(p.date?'<span class="d mono">'+h(p.date)+'</span>':'')+
-          '<span class="cv">'+svg(I.down,16)+'</span></button>'+
-        (op?'<div class="abody"><div class="ad">'+h(p.addr||'（没填地址）')+'</div>'+
-          '<div class="an">'+h(p.note||'—')+'</div>'+
-          '<div class="acts"><button data-a="copy" data-v="'+h(p.addr||p.name)+'">'+svg(I.card,14)+' 复制地址</button>'+
-          '<a href="'+h(p.map||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(p.addr||p.name)))+'" target="_blank" rel="noopener">'+svg(I.pin,14)+' 地图</a></div></div>':'')+
-        (S.menu==='place:'+p.id?pop('editPlace','delPlace',p.id):'')+
+      return '<div class="awrap">'+
+        '<div class="arow'+(op?' open':'')+'">'+
+          '<button class="ahead" data-a="aopen" data-v="'+p.id+'" data-lp="place:'+p.id+'">'+
+            svg(I.pin,15)+'<span class="t">'+h(p.name)+'</span>'+
+            (p.date?'<span class="w mono">'+h(p.date)+'</span>':'')+
+            '<span class="cv">'+svg(I.down,14)+'</span></button>'+
+          (op?'<div class="abody">'+
+            '<span class="ad">'+h(p.addr||'（没填地址）')+'</span>'+
+            '<span class="an">'+h(p.note||'—')+'</span>'+
+            '<span class="acts"><button class="cp" data-a="copy" data-v="'+h(p.addr||p.name)+'">'+svg(I.copy,14)+' 复制地址</button>'+
+            '<a class="mp" href="'+h(p.map||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(p.addr||p.name)))+'" target="_blank" rel="noopener">'+svg(I.pin,14)+' 地图</a></span>'+
+          '</div>':'')+
+        '</div>'+
+        (S.menu==='place:'+p.id?'<span class="pop pop-a">'+popBtns('editPlace','delPlace',p.id)+'</span>':'')+
       '</div>';
-    }).join(''):'<div class="empty"><b>这一类还空着</b>底下「添加到速查」加一处。</div>');
+    }).join(''):'<div class="esempty">这一类还空着，底下「添加到速查」加一处。</div>')+'</div>'+
+  '</div>';
 }
+/* 卡二 · 交通 */
 function essTransit(E){
   const TR=E.transport||[];
-  let out='<div class="sec-h"><span class="t">交通</span><span class="n">长按条目可改可删</span></div>';
-  let any=false;
+  let body='',any=false;
   TCATS.forEach(([k,ic])=>{
     const rows=TR.filter(x=>x.cat===k);if(!rows.length)return;any=true;
-    out+='<div class="modehead">'+svg(ic,14)+'<span>'+k+'</span></div>'+
-      rows.map(x=>'<div class="trow" data-lp="tr:'+x.id+'">'+
-        '<span class="tmain2"><span class="t">'+h(x.name)+'</span>'+(x.meta?'<span class="m">'+h(x.meta)+'</span>':'')+'</span>'+
-        (x.no?'<span class="tno">'+h(x.no)+'</span>':'')+
-        (S.menu==='tr:'+x.id?pop('editTr','delTr',x.id):'')+'</div>').join('');
+    rows.forEach((x,i)=>{
+      body+='<div class="twrap">'+
+        (i===0?'<span class="tmode">'+k+'</span>':'')+
+        '<button class="trow2" data-a="none" data-lp="tr:'+x.id+'">'+svg(ic,14)+
+          '<span class="no">'+h(x.no||x.name)+'</span>'+
+          '<span class="meta mono">'+h(x.meta||x.name)+'</span></button>'+
+        (S.menu==='tr:'+x.id?'<span class="pop pop-b">'+popBtns('editTr','delTr',x.id)+'</span>':'')+
+      '</div>';
+    });
   });
-  return any?out:out+'<div class="empty"><b>还没有交通</b>航班、火车、当地票都能记这里。</div>';
+  return '<div class="escard">'+essHead('交通','')+
+    (any?body:'<div class="esempty">还没有交通，航班、火车、当地票都能记这里。</div>')+'</div>';
 }
+/* 卡三 · 行前行李 */
 function essPack(t){
   const P=t.packing||[],st=packStat();
-  return '<div class="sec-h"><span class="t">行前行李</span><span class="n">已备 '+st.done+' / '+st.all+'</span></div>'+
-    '<div class="track"><div class="fill" style="width:'+(st.all?Math.round(st.done/st.all*100):0)+'%"></div></div>'+
-    P.map((c,ci)=>{
+  return '<div class="escard">'+essHead('行前行李','已备 '+st.done+' / '+st.all)+
+    '<div class="ptrack"><div class="pfill" style="width:'+(st.all?Math.round(st.done/st.all*100):0)+'%"></div></div>'+
+    '<div class="plist">'+P.map(c=>{
       const op=S.popen===c.cat,dn=c.items.filter(x=>x.done).length,all=c.items.length>0&&dn===c.items.length;
-      return '<div class="pcat'+(op?' open':'')+'">'+
+      return '<div class="pcat'+(op?' open':'')+(all?' all':'')+'">'+
         '<button class="h" data-a="popen" data-v="'+h(c.cat)+'">'+
-          '<span class="ico'+(all?' all':'')+'">'+svg(all?I.check:I.bag,15)+'</span>'+
+          '<span class="ico">'+svg(all?I.check:I.bag,13)+'</span>'+
           '<span class="t">'+h(c.cat)+'</span>'+
-          '<span class="n mono'+(all?' all':'')+'">'+dn+'/'+c.items.length+'</span>'+
-          '<span class="cv">'+svg(I.down,16)+'</span></button>'+
+          '<span class="n mono">已备 '+dn+' / '+c.items.length+'</span>'+
+          '<span class="cv">'+svg(I.down,14)+'</span></button>'+
         (op?'<div class="b">'+(c.items.length?c.items.map(x=>
           '<div class="pwrap">'+
             '<button class="pitem'+(x.done?' done':'')+'" data-a="pk" data-v="'+x.id+'" data-lp="pk:'+x.id+'">'+
-            '<span class="pbox">'+(x.done?svg(I.check,12):'')+'</span><span class="tx">'+h(x.t)+'</span></button>'+
-            (S.menu==='pk:'+x.id?pop('editPk','delPk',x.id):'')+'</div>').join('')
-          :'<div class="note" style="padding:8px 6px">这一类还空着</div>')+'</div>':'')+
+              '<span class="pbox">'+(x.done?svg(I.check,12):'')+'</span>'+
+              '<span class="tx">'+h(x.t)+'</span></button>'+
+            (S.menu==='pk:'+x.id?'<span class="pop pop-b">'+popBtns('editPk','delPk',x.id)+'</span>':'')+
+          '</div>').join('')
+          :'<div class="esempty" style="margin:2px 0 6px">这一类还空着</div>')+'</div>':'')+
       '</div>';
-    }).join('');
+    }).join('')+'</div></div>';
 }
-function essSos(t,E){
-  const quick=(t.meta.sos||[]),EM=E.emergency||[];
-  return '<div class="sec-h"><span class="t">紧急联系</span><span class="n">长按任意一条可改可删</span></div>'+
-    (quick.length?'<div class="emg">'+quick.map(x=>'<a href="tel:'+h(x.n)+'"><span class="n mono">'+h(x.n)+'</span><span class="l">'+h(x.l)+'</span></a>').join('')+'</div>':'')+
-    EM.map(x=>'<div class="erow" data-lp="em:'+x.id+'"><span class="m"><span class="t">'+h(x.name)+'</span>'+
-      (x.note?'<span class="n">'+h(x.note)+'</span>':'')+'</span>'+
-      (x.contact?'<a class="call" href="tel:'+h(String(x.contact).replace(/\s/g,''))+'">'+h(x.contact)+'</a>':'')+
-      (S.menu==='em:'+x.id?pop('editEm','delEm',x.id):'')+'</div>').join('');
+/* 卡四 · 紧急联系 */
+function essSos(E){
+  const EM=E.emergency||[];
+  const quick=EM.filter(x=>x.quick),rows=EM.filter(x=>!x.quick);
+  return '<div class="escard">'+essHead('紧急联系','长按任意一条可改可删')+
+    (quick.length?'<div class="qrow">'+quick.map(x=>
+      '<div class="qwrap">'+
+        '<button class="qbtn" data-a="dial" data-v="'+h(x.contact)+'" data-lp="em:'+x.id+'">'+
+          '<span class="no mono">'+h(x.contact||'—')+'</span><span class="l">'+h(x.name)+'</span></button>'+
+        (S.menu==='em:'+x.id?'<span class="pop pop-q">'+popBtns('editEm','delEm',x.id)+'</span>':'')+
+      '</div>').join('')+'</div>':'')+
+    rows.map(x=>'<div class="swrap">'+
+      '<button class="srow2" data-a="dial" data-v="'+h(x.contact)+'" data-lp="em:'+x.id+'">'+
+        '<span class="g"><span class="t">'+h(x.name)+'</span>'+
+        (x.note?'<span class="n">'+h(x.note)+'</span>':'')+'</span>'+
+        '<span class="no mono">'+h(x.contact||'待补')+'</span>'+svg(I.phone,15)+'</button>'+
+      (S.menu==='em:'+x.id?'<span class="pop pop-b">'+popBtns('editEm','delEm',x.id)+'</span>':'')+
+    '</div>').join('')+
+  '</div>';
 }
 </script>
 <script>
@@ -863,17 +981,21 @@ function detail(){
       '<div class="dhead">'+
         '<div class="l1"><span class="c-chip" style="'+chipOf(it.theme)+'">'+h(it.theme)+'</span>'+
           '<span class="when mono">'+h(it.time||'')+(end?' – '+h(end):'')+(it.dur?' · 预计 '+h(it.dur):'')+'</span></div>'+
-        '<div class="pl">'+h(it.place)+'</div>'+
+        '<div class="pl">'+h(pName(it))+'</div>'+
         (it.note?'<div class="nt">'+h(it.note)+'</div>':'')+
         '<button class="ed" data-a="editItem" data-v="'+it.id+'">'+svg(I.pen,12)+' 编辑这一程</button>'+
       '</div>'+
 
       '<div class="dcard"><div class="ch"><span class="t">地点</span>'+
-        '<span class="pin'+(pinned?' on':'')+'">'+(pinned?'已钉住':'按名字搜')+'</span>'+
+        '<span class="pin'+(pinned?' on':'')+'">'+(pinned?'已钉住':(it.place.trim()?'按名字搜':'没填地点'))+'</span>'+
         '<span class="r"><button data-a="sheet" data-v="omap">改定位</button></span></div>'+
         (it.addr?'<div class="addr">'+h(it.addr)+'</div>':'')+
-        '<a class="gomap" href="'+h(mapHref(it))+'" target="_blank" rel="noopener">'+svg(I.pin,15)+' '+(pinned?'在 Google 地图打开':'到 Google 地图搜这里')+'</a>'+
-        '<div class="note">'+(pinned?'这一程存了地图链接，点上面直接跳到这个位置。':'没存链接，按「'+h(mapSearchText(it))+'」搜。要钉死某个门口就点「改定位」。')+'</div>'+
+        ((pinned||it.place.trim())
+          ?'<a class="gomap" href="'+h(mapHref(it))+'" target="_blank" rel="noopener">'+svg(I.pin,15)+' '+(pinned?'在 Google 地图打开':'到 Google 地图搜这里')+'</a>'
+          :'')+
+        '<div class="note">'+(pinned?'这一程存了地图链接，点上面直接跳到这个位置。'
+          :(it.place.trim()?('没存链接，按「'+h(mapSearchText(it))+'」搜。要钉死某个门口就点「改定位」。')
+                           :'这一程没填地点，也没存地图链接。补个地点就能直接搜，或者点「改定位」粘个链接。'))+'</div>'+
       '</div>'+
 
       '<div class="dcard"><div class="ch"><span class="t">凭证</span>'+
@@ -956,37 +1078,43 @@ function saveBar(n,total,label,hint){
 <script>
 /* ══════════ 批量缓冲区 ══════════ */
 function blank(kind){
-  if(kind==='item')return{theme:'游玩',place:'',start:'',end:'',note:'',map:'',vou:[]};
+  if(kind==='item')return{theme:'游玩',place:'',start:'',end:'',note:'',map:'',vou:[],sp:[{id:'p1',item:'',amount:'',cur:defCur()}]};
   if(kind==='spend')return{item:'',amount:'',cur:(T()&&T().meta.country==='意大利')?'EUR':'CNY'};
   if(kind==='note')return{text:''};
   if(kind==='vou')return{cat:'stay',title:'',sub:'',code:'',codeLabel:'确认号',who:'',note:'',addr:'',imgs:[]};
-  if(kind==='place')return{cat:'住宿',name:'',addr:'',date:'',note:''};
-  if(kind==='tr')return{cat:'飞机',name:'',no:'',meta:''};
-  if(kind==='pk')return{cat:(T()&&(T().packing||[])[0]||{}).cat||'其他',t:''};
-  if(kind==='em')return{name:'',contact:'',note:''};
+  if(kind==='place')return{cat:S.acat||'住宿',addr:'',name:'',note:'',date:''};
+  if(kind==='tr')return{cat:'飞机',no:'',meta:'',name:''};
+  if(kind==='pk')return{t:''};
+  if(kind==='em')return{name:'',contact:'',note:'',quick:false};
   return{};
 }
-function bufInit(kind,rows){S.buf={kind:kind,rows:rows||[blank(kind)],open:0};}
+function bufInit(kind,rows,cat){S.buf={kind:kind,rows:rows||[blank(kind)],open:0,cat:cat||''};}
+function putBuf(i,k,val){
+  const r=S.buf&&S.buf.rows[i];if(!r)return;
+  const m=/^sp(\d+)\.(\w+)$/.exec(k);
+  if(!m){r[k]=val;return;}
+  if(!r.sp||!r.sp.length)r.sp=[{id:'p1',item:'',amount:'',cur:defCur()}];
+  if(r.sp[+m[1]])r.sp[+m[1]][m[2]]=val;
+}
 function snapBuf(){
   if(!S.buf)return;
-  document.querySelectorAll('.sh-b [data-bi]').forEach(el=>{
-    const i=+el.dataset.bi,k=el.dataset.bk;
-    if(S.buf.rows[i])S.buf.rows[i][k]=el.value;
-  });
+  document.querySelectorAll('.sh-b [data-bi]').forEach(el=>putBuf(+el.dataset.bi,el.dataset.bk,el.value));
 }
 function okRow(kind,r){
-  if(kind==='item')return!!(r.theme&&r.place.trim()&&r.start);
+  if(kind==='item')return!!(r.theme&&r.start);
   if(kind==='spend')return!!(r.item.trim()&&parseFloat(String(r.amount).replace(/[^\d.]/g,''))>0);
   if(kind==='note')return!!r.text.trim();
   if(kind==='vou')return!!(r.title.trim());
-  if(kind==='place')return!!(r.name.trim()&&r.addr.trim());
-  if(kind==='tr')return!!r.name.trim();
+  if(kind==='place')return!!r.addr.trim();
+  if(kind==='tr')return!!r.no.trim();
   if(kind==='pk')return!!r.t.trim();
-  if(kind==='em')return!!r.name.trim();
+  if(kind==='em')return!!(r.name.trim()&&r.contact.trim());
   return false;
 }
 function readyN(){if(!S.buf)return 0;return S.buf.rows.filter(r=>okRow(S.buf.kind,r)).length;}
 const num=v=>{const n=parseFloat(String(v==null?'':v).replace(/[^\d.]/g,''));return n>0?n:0;};
+function defCur(){const t=T();return (t&&t.meta.country==='意大利')?'EUR':'CNY';}
+function spOk(q){return !!(String(q.item||'').trim()&&num(q.amount)>0);}
 
 /* ══════════ sheet ══════════ */
 function sheetHTML(){
@@ -1022,15 +1150,15 @@ function shItem(){
     if(op){
       inner='<div class="bb">'+
         fld('行程主题',1,'<div class="fchips">'+THEMES.concat(THEMES.indexOf(r.theme)<0&&r.theme?[r.theme]:[]).map(x=>'<button class="'+(r.theme===x?'on':'')+'" data-a="bufSet" data-v="'+i+'" data-k="theme" data-x="'+x+'">'+x+'</button>').join('')+'</div>')+
-        fld('涉及地点',1,inp(i,'place',r.place,'景点 / 餐厅 / A → B'))+
-        fld('地图定位',2,inp(i,'map',r.map,'粘贴 Google 地图链接'),
-          pinned?'<span style="color:var(--mint-deep)">已钉住，详情页点「在 Google 地图打开」直接跳这个位置</span>'
-                :'留空也行 —— 详情页会按「'+h(((r.place||'地点名').slice(0,16))+(r.place.length>16?'…':'')+' '+(t.meta.country||''))+'」到 Google 地图里搜')+
         '<div class="f"><div class="row2">'+
           '<div><label>开始<span class="req">必填</span></label>'+inp(i,'start',r.start,'','time')+'</div>'+
           '<div><label>结束<span class="opt">选填</span></label>'+inp(i,'end',r.end,'','time')+'</div>'+
         '</div><div class="mini" data-durhint="'+i+'">'+(dur?'预计耗时 '+h(dur)+'，会自动算':'填完起止时间会自动算耗时')+'</div></div>'+
         fld('一句话介绍',2,inp(i,'note',r.note,'选填'))+
+        fld('涉及地点',2,inp(i,'place',r.place,'景点 / 餐厅 / A → B'))+
+        fld('地图定位',2,inp(i,'map',r.map,'粘贴 Google 地图链接'),
+          pinned?'<span style="color:var(--mint-deep)">已钉住，详情页点「在 Google 地图打开」直接跳这个位置</span>'
+                :(r.place.trim()?('留空也行 —— 详情页会按「'+h(r.place.trim().slice(0,16)+(r.place.length>16?'…':'')+' '+(t.meta.country||''))+'」到 Google 地图里搜'):'地点和链接都空着的话，详情页就没有地图入口'))+
         '<div class="f"><label>'+svg(I.ticket,12)+' 凭证<span class="opt">选填</span></label>'+
           vs.map(v=>'<div class="vtag"><span class="cp">'+h(VCAT[v.cat]||'其他')+'</span>'+
             '<span class="g"><span class="t">'+h(v.title)+'</span>'+(v.sub?'<span class="s">'+h(v.sub)+'</span>':'')+'</span>'+
@@ -1045,6 +1173,21 @@ function shItem(){
               '<span class="g"><span class="t">'+h(v.title)+'</span>'+(v.sub?'<span class="s">'+h(v.sub)+'</span>':'')+'</span></button>';
           }).join('')+'</div>':'')+
         '</div>'+
+        (function(){
+          const sp=(r.sp&&r.sp.length)?r.sp:[{id:'p1',item:'',amount:'',cur:defCur()}];
+          let sum=0,n=0;sp.forEach(q=>{if(spOk(q)){n++;sum+=toCNY(num(q.amount),q.cur);}});
+          return '<div class="f"><label>'+svg(I.card,12)+' 这一程花了多少<span class="opt">选填</span></label>'+
+            sp.map((q,j)=>'<div class="sprow">'+
+              '<input data-bi="'+i+'" data-bk="sp'+j+'.item" type="text" value="'+h(q.item)+'" placeholder="'+(j===0?'事项，比如 门票 2 张':'再记一笔')+'">'+
+              '<input data-bi="'+i+'" data-bk="sp'+j+'.amount" type="text" inputmode="decimal" value="'+h(q.amount)+'" placeholder="0.00">'+
+              '<select data-bi="'+i+'" data-bk="sp'+j+'.cur">'+CUR.map(c=>'<option value="'+c+'"'+(c===q.cur?' selected':'')+'>'+CURNAME[c]+'</option>').join('')+'</select>'+
+              (sp.length>1?'<button class="rm" data-a="spDrop" data-v="'+i+'" data-x="'+j+'" aria-label="删掉这一笔">'+svg(I.x,12)+'</button>':'')+
+            '</div>').join('')+
+            '<div class="sprow" style="margin-bottom:0">'+
+              '<button class="spadd" data-a="spAdd" data-v="'+i+'">'+svg(I.plus,12)+' 再记一笔</button>'+
+              '<span class="spsum'+(n?' ok':'')+'">'+(n?('≈ '+money(sum)):'不花钱就空着')+'</span>'+
+            '</div></div>';
+        })()+
       '</div>';
     }
     return '<div class="blk'+(op?' on':'')+(ok?' ok':(op?'':' bad'))+'">'+
@@ -1052,7 +1195,7 @@ function shItem(){
         (op?'<button class="sum" data-a="bufFold"><span class="st">正在填 '+svg(I.down,13)+'</span></button>'
            :'<button class="sum" data-a="bufOpen" data-v="'+i+'"><span class="cp" style="'+chipOf(r.theme)+'">'+h(r.theme)+'</span>'+
              '<span class="wh mono">'+(r.start?(h(r.start)+(r.end?'–'+h(r.end):'')):'缺时间')+'</span>'+
-             '<span class="pl">'+h(r.place.trim()||'还没填地点')+'</span></button>')+
+             '<span class="pl">'+h(r.place.trim()||r.theme)+'</span></button>')+
         (B.length>1?'<button class="rm" data-a="bufDrop" data-v="'+i+'" aria-label="删掉这一程">'+svg(I.x,14)+'</button>':'')+
       '</div>'+inner+'</div>';
   }).join('');
@@ -1060,7 +1203,7 @@ function shItem(){
   return wrap(edit?'编辑行程':('Day '+(t.days.indexOf(d)+1)+' 添加行程'),edit?'':mdSlash(d.date)+' '+(d.city||''),
     body+(edit?'':moreBtn('再加一程')),
     saveBar(n,B.length,edit?'保存修改':(n>1?('保存 '+n+' 程'):'添加到时间轴'),
-      n>0?(B.length-n>0?('还有 '+(B.length-n)+' 程没填完，这次先不存'):'都填好了'):'主题、地点、开始时间填了就能存；结束时间留空就不算耗时'));
+      n>0?(B.length-n>0?('还有 '+(B.length-n)+' 程没填完，这次先不存'):'都填好了'):'主题和开始时间填了就能排进时间轴'));
 }
 
 /* 记一笔 */
@@ -1081,7 +1224,7 @@ function shSpend(){
       (B.length>1?'<button class="rm" data-a="bufDrop" data-v="'+i+'" aria-label="删掉这一笔">'+svg(I.x,13)+'</button>':'')+
     '</div>';
   }).join('');
-  const title=edit?'改这一笔':(scope?(scope.place+' 记一笔'):('Day '+(Math.min(S.day,t.days.length-1)+1)+' 记一笔'));
+  const title=edit?'改这一笔':(scope?(pName(scope)+' 记一笔'):('Day '+(Math.min(S.day,t.days.length-1)+1)+' 记一笔'));
   return wrap(title,scope?'记在这一程上':'',body+(edit?'':moreBtn('再记一笔'))+
     '<div class="hint" id="sumline">'+(n?('这次一共 '+money(sum)):'填了金额这里出合计')+'</div>',
     saveBar(n,B.length,edit?'保存修改':(n>1?('保存 '+n+' 笔'):'保存'),
@@ -1159,14 +1302,14 @@ function shEss(){
       const ok=okRow('place',r),op=S.buf.open===i;
       return '<div class="blk'+(op?' on':'')+(ok?' ok':(op?'':' bad'))+'"><div class="bh"><span class="num">'+(i+1)+'</span>'+
         (op?'<button class="sum" data-a="bufFold"><span class="st">正在填 '+svg(I.down,13)+'</span></button>'
-           :'<button class="sum" data-a="bufOpen" data-v="'+i+'"><span class="cp">'+h(r.cat)+'</span><span class="pl">'+h(r.name.trim()||'还没填名称')+'</span></button>')+
+           :'<button class="sum" data-a="bufOpen" data-v="'+i+'"><span class="cp">'+h(r.cat)+'</span><span class="pl">'+h(r.addr.trim()||r.name.trim()||'还没填')+'</span></button>')+
         (B.length>1?'<button class="rm" data-a="bufDrop" data-v="'+i+'">'+svg(I.x,14)+'</button>':'')+'</div>'+
         (op?'<div class="bb">'+
-          fld('分类',1,'<div class="fchips">'+CATS.map(c=>'<button class="'+(r.cat===c?'on':'')+'" data-a="bufSet" data-v="'+i+'" data-k="cat" data-x="'+c+'">'+c+'</button>').join('')+'</div>')+
-          fld('名称',1,inp(i,'name',r.name,'酒店 / 景点 / 餐厅名'))+
-          fld('地址',1,inp(i,'addr',r.addr,'当地语言的地址最好用'))+
+          fld('归到哪一类',1,'<div class="fchips">'+CATS.map(c=>'<button class="'+(r.cat===c?'on':'')+'" data-a="bufSet" data-v="'+i+'" data-k="cat" data-x="'+c+'">'+c+'</button>').join('')+'</div>')+
+          fld('详细地址',1,inp(i,'addr',r.addr,'给司机看的那种'))+
+          fld('名称',2,inp(i,'name',r.name,'选填'))+
+          fld('一句话说明',2,inp(i,'note',r.note,'选填'))+
           fld('日期',2,inp(i,'date',r.date,'比如 9/25 – 9/28'))+
-          fld('备注',2,inp(i,'note',r.note,'房东电话、门禁密码这些'))+
         '</div>':'')+'</div>';
     }).join('');
   }else if(kind==='tr'){
@@ -1175,33 +1318,39 @@ function shEss(){
       const ok=okRow('tr',r),op=S.buf.open===i;
       return '<div class="blk'+(op?' on':'')+(ok?' ok':(op?'':' bad'))+'"><div class="bh"><span class="num">'+(i+1)+'</span>'+
         (op?'<button class="sum" data-a="bufFold"><span class="st">正在填 '+svg(I.down,13)+'</span></button>'
-           :'<button class="sum" data-a="bufOpen" data-v="'+i+'"><span class="cp">'+h(r.cat)+'</span><span class="pl">'+h(r.name.trim()||'还没填')+'</span></button>')+
+           :'<button class="sum" data-a="bufOpen" data-v="'+i+'"><span class="cp">'+h(r.cat)+'</span><span class="pl">'+h(r.no.trim()||'还没填')+'</span></button>')+
         (B.length>1?'<button class="rm" data-a="bufDrop" data-v="'+i+'">'+svg(I.x,14)+'</button>':'')+'</div>'+
         (op?'<div class="bb">'+
-          fld('分类',1,'<div class="fchips">'+CATS.map(c=>'<button class="'+(r.cat===c?'on':'')+'" data-a="bufSet" data-v="'+i+'" data-k="cat" data-x="'+c+'">'+c+'</button>').join('')+'</div>')+
-          fld('名称',1,inp(i,'name',r.name,'比如 TK171 香港 → 伊斯坦布尔'))+
-          fld('班次号',2,inp(i,'no',r.no,'TK171 / 车次'))+
-          fld('说明',2,inp(i,'meta',r.meta,'时间、航站楼、PNR'))+
+          fld('类目',1,'<div class="fchips">'+CATS.map(c=>'<button class="'+(r.cat===c?'on':'')+'" data-a="bufSet" data-v="'+i+'" data-k="cat" data-x="'+c+'">'+c+'</button>').join('')+'</div>')+
+          fld('班次 / 名称',1,inp(i,'no',r.no,'比如 NH956'))+
+          fld('一句话说明',2,inp(i,'meta',r.meta,'时间、起讫、座位'))+
+          fld('备注',2,inp(i,'name',r.name,'选填'))+
         '</div>':'')+'</div>';
     }).join('');
   }else if(kind==='pk'){
     const CATS=(t.packing||[]).map(c=>c.cat);
-    body=B.map((r,i)=>{
-      const ok=okRow('pk',r);
-      return '<div class="rowline'+(ok?' ok':' bad')+'"><span class="num">'+(i+1)+'</span>'+
-        '<span class="g">'+
-        '<select data-bi="'+i+'" data-bk="cat">'+CATS.map(c=>'<option value="'+h(c)+'"'+(r.cat===c?' selected':'')+'>'+h(c)+'</option>').join('')+'</select>'+
-        inp(i,'t',r.t,'要带的东西')+'</span>'+
-        (B.length>1?'<button class="rm" data-a="bufDrop" data-v="'+i+'">'+svg(I.x,13)+'</button>':'')+'</div>';
-    }).join('');
+    const cat=S.buf.cat||CATS[0]||'其他';
+    body='<div class="f"><label>归到哪一类<span class="req">必填</span></label>'+
+      '<div class="fchips">'+CATS.map(c=>'<button class="'+(cat===c?'on':'')+'" data-a="pkCat" data-v="'+h(c)+'">'+h(c)+'</button>').join('')+'</div></div>'+
+      '<div class="f"><label>带什么<span class="req">必填</span></label>'+
+      B.map((r,i)=>{
+        const ok=okRow('pk',r);
+        return '<div class="rowline'+(ok?' ok':' bad')+'"><span class="num">'+(i+1)+'</span>'+
+          '<span class="g">'+inp(i,'t',r.t,i===0?'比如 转换插头':'再写一件')+'</span>'+
+          (B.length>1?'<button class="rm" data-a="bufDrop" data-v="'+i+'">'+svg(I.x,13)+'</button>':'')+'</div>';
+      }).join('')+'</div>';
   }else{
     body=B.map((r,i)=>{
       const ok=okRow('em',r);
-      return '<div class="rowline'+(ok?' ok':' bad')+'"><span class="num">'+(i+1)+'</span>'+
-        '<span class="g">'+inp(i,'name',r.name,'比如 旅行保险')+
-        inp(i,'contact',r.contact,'电话')+
-        inp(i,'note',r.note,'备注：保单号、服务时间')+'</span>'+
-        (B.length>1?'<button class="rm" data-a="bufDrop" data-v="'+i+'">'+svg(I.x,13)+'</button>':'')+'</div>';
+      return '<div class="rowline'+(ok?' ok':' bad')+'" style="align-items:flex-start"><span class="num" style="margin-top:11px">'+(i+1)+'</span>'+
+        '<span class="g">'+inp(i,'name',r.name,i===0?'名称，比如 旅行保险 报案':'再加一条')+
+        inp(i,'contact',r.contact,'号码')+
+        inp(i,'note',r.note,'备注：保单号、服务时间')+
+        '<button class="qtog'+(r.quick?' on':'')+'" data-a="bufQuick" data-v="'+i+'">'+
+          '<span class="g"><span class="t">置顶大号</span><span class="s">开了就上去当红色快拨按钮</span></span>'+
+          '<span class="sw"><i></i></span></button>'+
+        '</span>'+
+        (B.length>1?'<button class="rm" data-a="bufDrop" data-v="'+i+'" style="margin-top:9px">'+svg(I.x,13)+'</button>':'')+'</div>';
     }).join('');
   }
   const n=readyN();
@@ -1222,7 +1371,7 @@ function shDaySpend(){
     const sp=spendsOfItem(it.id);if(!sp.length)return;cnt+=sp.length;
     const sum=sp.reduce((s,x)=>s+toCNY(x.amount,x.cur),0);
     body+='<div class="dsgrp"><div class="gh"><span class="cp" style="'+chipOf(it.theme)+'">'+h(it.theme)+'</span>'+
-      '<span class="t">'+h(it.time||'')+' '+h(it.place)+'</span><span class="v mono">'+money(sum)+'</span></div>'+
+      '<span class="t">'+h(it.time||'')+' '+h(pName(it))+'</span><span class="v mono">'+money(sum)+'</span></div>'+
       sp.map(x=>spLine(x)).join('')+'</div>';
   });
   const loose=looseOfDate(d.date);
@@ -1366,7 +1515,13 @@ document.addEventListener('input',e=>{
   const el=e.target.closest('[data-bi]');
   if(!el||!S.buf)return;
   const i=+el.dataset.bi,k=el.dataset.bk;
-  if(S.buf.rows[i])S.buf.rows[i][k]=el.value;
+  putBuf(i,k,el.value);
+  if(S.sheet==='item'&&/^sp\d+\./.test(k)){
+    const r=S.buf.rows[i];let sum=0,n=0;
+    (r.sp||[]).forEach(q=>{if(spOk(q)){n++;sum+=toCNY(num(q.amount),q.cur);}});
+    const el2=document.querySelector('.sh-b .spsum');
+    if(el2){el2.textContent=n?('≈ '+money(sum)):'不花钱就空着';el2.className='spsum'+(n?' ok':'');}
+  }
   if(S.sheet==='spend'){
     let sum=0,n=0;S.buf.rows.forEach(r=>{if(okRow('spend',r)){n++;sum+=toCNY(num(r.amount),r.cur);}});
     const l=$('#sumline');if(l)l.textContent=n?('这次一共 '+money(sum)):'填了金额这里出合计';
@@ -1376,7 +1531,7 @@ document.addEventListener('change',e=>{
   const el=e.target.closest('[data-bi]');
   if(!el||!S.buf)return;
   const i=+el.dataset.bi,k=el.dataset.bk;
-  if(S.buf.rows[i])S.buf.rows[i][k]=el.value;
+  putBuf(i,k,el.value);
   // 改时间不能重画：iOS 上时间选择器还开着，一重画就被关掉、值也没了
   if(S.sheet==='item'&&(k==='start'||k==='end')){
     const r=S.buf.rows[i],d=durText(r.start,r.end);
@@ -1477,6 +1632,8 @@ function ACT(a,v,k,x,el){
   case 'aopen':return setS({aopen:S.aopen===v?'':v,menu:''});
   case 'popen':return setS({popen:S.popen===v?'':v,menu:''});
   case 'copy':navigator.clipboard&&navigator.clipboard.writeText(v).then(()=>toast('地址复制好了'),()=>toast('复制失败'));return;
+  case 'dial':if(v)location.href='tel:'+String(v).replace(/\s/g,'');else toast('这条还没填号码，长按补上');return;
+  case 'none':return;
   case 'openItem':window.__scrollTop=null;return setS({open:v,menu:''});
   case 'closeItem':return setS({open:'',menu:''});
   case 'show':return setS({vshow:v,menu:''});
@@ -1516,7 +1673,12 @@ function ACT(a,v,k,x,el){
   case 'bufOpen':snapBuf();S.buf.open=+v;return render();
   case 'bufFold':snapBuf();S.buf.open=-1;return render();
   case 'bufSet':snapBuf();S.buf.rows[+v][k]=x;return render();
-  case 'essKind':snapBuf();bufInit(v);return render();
+  case 'bufQuick':snapBuf();S.buf.rows[+v].quick=!S.buf.rows[+v].quick;return render();
+  case 'pkCat':snapBuf();S.buf.cat=v;return render();
+  case 'spAdd':{snapBuf();const r=S.buf.rows[+v];r.sp=(r.sp||[]).concat([{id:uid('p'),item:'',amount:'',cur:defCur()}]);return render();}
+  case 'spDrop':{snapBuf();const r=S.buf.rows[+v];r.sp.splice(+x,1);
+    if(!r.sp.length)r.sp=[{id:'p1',item:'',amount:'',cur:defCur()}];return render();}
+  case 'essKind':snapBuf();bufInit(v,null,v==='pk'?(((T().packing||[])[0]||{}).cat||''):'');return render();
   case 'bufSave':return bufSave();
 
   /* ── 凭证关联 ── */
@@ -1536,7 +1698,8 @@ function ACT(a,v,k,x,el){
   /* ── 编辑 / 删除 ── */
   case 'editItem':{const it=findItem(v);if(!it)return;
     bufInit('item',[{theme:it.theme,place:it.place,start:it.time,end:it.end||addMins(it.time,durMins(it.dur)),
-      note:it.note||'',map:it.map||'',vou:(it.vouchers||[]).slice()}]);
+      note:it.note||'',map:it.map||'',vou:(it.vouchers||[]).slice(),
+      sp:[{id:'p1',item:'',amount:'',cur:defCur()}]}]);
     return setS({sheet:'item',arg:{id:v},menu:'',err:''});}
   case 'delItem':{const d=findDayOf(v);if(d)d.items=d.items.filter(z=>z.id!==v);
     t.spends=t.spends.filter(z=>z.itemId!==v);save();return setS({menu:'',open:S.open===v?'':S.open});}
@@ -1547,20 +1710,20 @@ function ACT(a,v,k,x,el){
     t.days.forEach(d=>d.items.forEach(it=>{if(it.vouchers)it.vouchers=it.vouchers.filter(z=>z!==v);}));
     save();return setS({menu:''});}
   case 'editPlace':{const p=t.essentials.places.find(z=>z.id===v);
-    bufInit('place',[{cat:p.cat,name:p.name,addr:p.addr||'',date:p.date||'',note:p.note||''}]);
+    bufInit('place',[{cat:p.cat,addr:p.addr||'',name:p.name||'',note:p.note||'',date:p.date||''}]);
     return setS({sheet:'ess',arg:{id:v,kind:'place'},menu:'',err:''});}
   case 'delPlace':t.essentials.places=t.essentials.places.filter(z=>z.id!==v);save();return setS({menu:''});
   case 'editTr':{const p=t.essentials.transport.find(z=>z.id===v);
-    bufInit('tr',[{cat:p.cat,name:p.name,no:p.no||'',meta:p.meta||''}]);
+    bufInit('tr',[{cat:p.cat,no:p.no||'',meta:p.meta||'',name:p.name||''}]);
     return setS({sheet:'ess',arg:{id:v,kind:'tr'},menu:'',err:''});}
   case 'delTr':t.essentials.transport=t.essentials.transport.filter(z=>z.id!==v);save();return setS({menu:''});
   case 'editEm':{const p=t.essentials.emergency.find(z=>z.id===v);
-    bufInit('em',[{name:p.name,contact:p.contact||'',note:p.note||''}]);
+    bufInit('em',[{name:p.name,contact:p.contact||'',note:p.note||'',quick:!!p.quick}]);
     return setS({sheet:'ess',arg:{id:v,kind:'em'},menu:'',err:''});}
   case 'delEm':t.essentials.emergency=t.essentials.emergency.filter(z=>z.id!==v);save();return setS({menu:''});
   case 'pk':{for(const c of t.packing){const it=c.items.find(z=>z.id===v);if(it){it.done=!it.done;break;}}save();return render();}
   case 'editPk':{let hit=null,hc=null;t.packing.forEach(c=>c.items.forEach(z=>{if(z.id===v){hit=z;hc=c;}}));
-    if(!hit)return;bufInit('pk',[{cat:hc.cat,t:hit.t}]);return setS({sheet:'ess',arg:{id:v,kind:'pk'},menu:'',err:''});}
+    if(!hit)return;bufInit('pk',[{t:hit.t}],hc.cat);return setS({sheet:'ess',arg:{id:v,kind:'pk'},menu:'',err:''});}
   case 'delPk':t.packing.forEach(c=>{c.items=c.items.filter(z=>z.id!==v);});save();return setS({menu:''});
   case 'editNote':{const it=findItem(S.open);bufInit('note',[{text:(it.notes[+v].text||it.notes[+v])}]);
     return setS({sheet:'note',arg:{idx:+v},menu:'',err:''});}
@@ -1607,14 +1770,25 @@ function bufSave(){
 
   if(kind==='item'){
     const d=t.days[Math.min(S.day,t.days.length-1)];
+    // 表单里顺手记的花费，跟着这一程一起存
+    const money2=(r,itemId)=>(r.sp||[]).forEach(q=>{
+      if(!spOk(q))return;
+      t.spends.push({id:uid('s'),date:d.date,item:String(q.item).trim(),
+        amount:num(q.amount),cur:q.cur,itemId:itemId});
+    });
     if(edit){
       const it=findItem(S.arg.id),r=rows[0];
       Object.assign(it,{theme:r.theme,place:r.place.trim(),time:r.start,end:r.end,
         dur:durText(r.start,r.end),note:r.note.trim(),map:(r.map||'').trim(),vouchers:r.vou.slice()});
+      money2(r,it.id);
     }else{
-      rows.forEach(r=>d.items.push({id:uid('i'),time:r.start,end:r.end,theme:r.theme,place:r.place.trim(),
-        note:r.note.trim(),dur:durText(r.start,r.end),addr:'',map:(r.map||'').trim(),
-        vouchers:r.vou.slice(),notes:[],spends:[]}));
+      rows.forEach(r=>{
+        const id=uid('i');
+        d.items.push({id:id,time:r.start,end:r.end,theme:r.theme,place:r.place.trim(),
+          note:r.note.trim(),dur:durText(r.start,r.end),addr:'',map:(r.map||'').trim(),
+          vouchers:r.vou.slice(),notes:[],spends:[]});
+        money2(r,id);
+      });
     }
   }
   else if(kind==='spend'){
@@ -1649,17 +1823,17 @@ function bufSave(){
   else if(kind==='place'){
     const E=t.essentials;E.places=E.places||[];
     if(edit){const p=E.places.find(z=>z.id===S.arg.id),r=rows[0];
-      Object.assign(p,{cat:r.cat,name:r.name.trim(),addr:r.addr.trim(),date:r.date.trim(),note:r.note.trim(),
+      Object.assign(p,{cat:r.cat,name:r.name.trim()||r.addr.trim(),addr:r.addr.trim(),date:r.date.trim(),note:r.note.trim(),
         map:'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(r.addr.trim()||r.name.trim())});}
-    else rows.forEach(r=>E.places.push({id:uid('p'),cat:r.cat,name:r.name.trim(),addr:r.addr.trim(),
+    else rows.forEach(r=>E.places.push({id:uid('p'),cat:r.cat,name:r.name.trim()||r.addr.trim(),addr:r.addr.trim(),
       date:r.date.trim(),note:r.note.trim(),
       map:'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(r.addr.trim()||r.name.trim())}));
   }
   else if(kind==='tr'){
     const E=t.essentials;E.transport=E.transport||[];
     if(edit){const p=E.transport.find(z=>z.id===S.arg.id),r=rows[0];
-      Object.assign(p,{cat:r.cat,name:r.name.trim(),no:r.no.trim(),meta:r.meta.trim()});}
-    else rows.forEach(r=>E.transport.push({id:uid('t'),cat:r.cat,name:r.name.trim(),no:r.no.trim(),meta:r.meta.trim()}));
+      Object.assign(p,{cat:r.cat,name:r.name.trim()||r.no.trim(),no:r.no.trim(),meta:r.meta.trim()});}
+    else rows.forEach(r=>E.transport.push({id:uid('t'),cat:r.cat,name:r.name.trim()||r.no.trim(),no:r.no.trim(),meta:r.meta.trim()}));
   }
   else if(kind==='pk'){
     t.packing=t.packing||[];
@@ -1668,22 +1842,23 @@ function bufSave(){
       if(!c){c={cat:cat,items:[]};t.packing.push(c);}
       c.items.push({id:id||uid('k'),t:text,done:false});
     };
+    const cat=S.buf.cat||(t.packing[0]||{}).cat||'其他';
     if(edit){
       let old=null,oc=null,oj=-1;
       t.packing.forEach(c=>{const j=c.items.findIndex(z=>z.id===S.arg.id);if(j>=0){old=c.items[j];oc=c;oj=j;}});
-      if(old&&oc&&oc.cat===rows[0].cat){old.t=rows[0].t.trim();}       // 原地改，不动位置也不丢勾
+      if(old&&oc&&oc.cat===cat){old.t=rows[0].t.trim();}       // 原地改，不动位置也不丢勾
       else if(old){oc.items.splice(oj,1);
-        let c2=t.packing.find(z=>z.cat===rows[0].cat);
-        if(!c2){c2={cat:rows[0].cat,items:[]};t.packing.push(c2);}
+        let c2=t.packing.find(z=>z.cat===cat);
+        if(!c2){c2={cat:cat,items:[]};t.packing.push(c2);}
         c2.items.push({id:old.id,t:rows[0].t.trim(),done:old.done});}
     }
-    else rows.forEach(r=>put(r.cat,r.t.trim()));
+    else rows.forEach(r=>put(cat,r.t.trim()));
   }
   else if(kind==='em'){
     const E=t.essentials;E.emergency=E.emergency||[];
     if(edit){const p=E.emergency.find(z=>z.id===S.arg.id),r=rows[0];
-      Object.assign(p,{name:r.name.trim(),contact:r.contact.trim(),note:r.note.trim()});}
-    else rows.forEach(r=>E.emergency.push({id:uid('e'),name:r.name.trim(),contact:r.contact.trim(),note:r.note.trim()}));
+      Object.assign(p,{name:r.name.trim(),contact:r.contact.trim(),note:r.note.trim(),quick:!!r.quick});}
+    else rows.forEach(r=>E.emergency.push({id:uid('e'),name:r.name.trim(),contact:r.contact.trim(),note:r.note.trim(),quick:!!r.quick}));
   }
   save();
   const skipped=S.buf.rows.length-rows.length;
@@ -1759,6 +1934,15 @@ $('#pickimg').addEventListener('change',async e=>{
 });
 
 /* ══════════ 导入 / 导出 ══════════ */
+function normEss(E,sos){
+  const o=Object.assign({places:[],transport:[],emergency:[]},E||{});
+  // 老格式：快拨号码单独放在 trip.sos 里；合并成一份带 quick 的列表
+  if(o.emergency.length&&!o.emergency.some(x=>'quick' in x)){
+    const pre=(sos||[]).map(x=>({id:uid('e'),name:x.l,contact:x.n,note:'',quick:true}));
+    o.emergency=pre.concat(o.emergency.map(x=>Object.assign({quick:false},x)));
+  }
+  return o;
+}
 function normalize(f){
   const m=f.trip||{};
   return {id:m.id||uid('t'),created:m.created||Date.now(),
@@ -1767,7 +1951,7 @@ function normalize(f){
       rate:m.rate||{CNY:1},rateAsOf:m.rateAsOf||'',spots:m.spots||{}},
     days:(f.days||[]).map(d=>Object.assign({items:[]},d)),
     vouchers:f.vouchers||[],spends:f.spends||[],
-    essentials:Object.assign({places:[],transport:[],emergency:[]},f.essentials||{}),
+    essentials:normEss(f.essentials,(f.trip||{}).sos),
     packing:f.packing||[],journal:f.journal||{},stickers:f.stickers||[],weather:f.weather||{},
     lastExport:f.lastExport||''};
 }
