@@ -328,6 +328,14 @@ a{color:var(--violet-deep)}
 .sh-h .t em{display:block;font-style:normal;font-size:11px;color:var(--ink3);font-weight:400;margin-top:2px}
 .sh-h .x{width:32px;height:32px;border-radius:50%;background:var(--ground);display:flex;align-items:center;justify-content:center;color:var(--ink2);flex:0 0 auto}
 .sh-b{flex:1 1 auto;overflow-y:auto;padding:14px 16px 6px;-webkit-overflow-scrolling:touch}
+.tplbar{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.tplbar .l{font-size:10.5px;color:var(--ink2)}
+.tplbar .l i{font-style:normal;color:var(--ink3)}
+.tplbar .r{display:flex;gap:7px}
+.tplbar button{flex:1;min-height:46px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  border-radius:11px;border:1px dashed #C9BFF2;background:var(--ground);font-family:inherit;cursor:pointer}
+.tplbar button b{font-size:12.5px;font-weight:600;color:var(--violet-deep)}
+.tplbar button i{font-style:normal;font-size:10px;color:var(--ink2)}
 .sh-f{flex:0 0 auto;padding:10px 16px calc(16px + var(--safeB));border-top:1px solid var(--line)}
 .sh-f .tip{font-size:10.5px;color:var(--ink3);text-align:center;margin-top:6px;line-height:1.5}
 
@@ -470,6 +478,9 @@ a{color:var(--violet-deep)}
 #gate h1{font-size:21px;font-weight:700;margin:0}
 #gate p{font-size:13.5px;color:var(--ink2);line-height:1.7;margin:4px 0 20px;max-width:320px}
 #gate .btn{max-width:300px}
+#gate .btn2{width:100%;max-width:300px;box-sizing:border-box;margin-top:9px;min-height:46px;display:flex;align-items:center;justify-content:center;gap:7px;
+  border-radius:12px;border:1px solid var(--line);background:var(--card);
+  font-family:inherit;font-size:13.5px;font-weight:600;color:var(--ink2);cursor:pointer}
 #gate .note{font-size:11.5px;color:var(--ink3);margin-top:16px;line-height:1.7;max-width:320px}
 .toast{position:fixed;left:50%;bottom:calc(30px + var(--safeB));transform:translateX(-50%);z-index:60;background:rgba(28,25,48,.93);color:#fff;font-size:13.5px;padding:11px 18px;border-radius:999px;max-width:88%;text-align:center;animation:fade .16s}
 .sronly{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -682,10 +693,11 @@ function gate(){
   return '<div id="gate">'+
     '<div class="logo">'+svg(I.pin,30)+'</div>'+
     '<h1>行程速查</h1>'+
-    '<p>这个壳里没有任何数据。把行程文件导进来，内容只存在这台手机上，不上传、不同步。</p>'+
+    '<p>行程、凭证、地址，出门在外一个页面全查到。内容只存在你这台手机上，不上传、不同步、没有账号。</p>'+
     (S.err?'<div class="err">'+h(S.err)+'</div>':'')+
-    '<button class="btn" data-a="import">'+svg(I.dl,17)+' 导入行程文件</button>'+
-    '<div class="note">换手机或者清了浏览器数据，重新导一次就行。文件在「设置 → 导出」里随时能生成。</div>'+
+    '<button class="btn" data-a="newTrip">'+svg(I.plus,17)+' 新建一段旅程</button>'+
+    '<button class="btn2" data-a="import">'+svg(I.dl,16)+' 我有行程文件，导入</button>'+
+    '<div class="note">别人发你的行程文件，或者你换手机前导出的那份，走「导入」。</div>'+
   '</div>';
 }
 
@@ -1154,6 +1166,28 @@ const num=v=>{const n=parseFloat(String(v==null?'':v).replace(/[^\d.]/g,''));ret
 function defCur(){const t=T();return (t&&t.meta.country==='意大利')?'EUR':'CNY';}
 function spOk(q){return !!(String(q.item||'').trim()&&num(q.amount)>0);}
 
+/* 手填一整天太慢，给三个常见形状起个头。
+   只预置「主题 + 名字」，时间一律留空 —— 几点出发是每个人自己的事，猜不得。 */
+const TPL=[
+  {name:'飞机日',sub:'3 条',rows:[['移动','去机场'],['移动','航班'],['其他','酒店入住']]},
+  {name:'城市日',sub:'4 条',rows:[['吃饭','早餐'],['游玩','上午这一站'],['吃饭','午餐'],['游玩','下午这一站']]},
+  {name:'返程日',sub:'3 条',rows:[['其他','退房'],['移动','去机场'],['移动','返程航班']]}
+];
+function tplShow(){
+  if(!S.buf||S.buf.kind!=='item')return false;
+  if(S.arg&&S.arg.id)return false;                 // 编辑单条时不出现
+  const B=S.buf.rows;
+  if(B.length!==1)return false;
+  const r=B[0];
+  return !(r.place||'').trim()&&!r.start&&!(r.note||'').trim();   // 动过手就不再劝
+}
+function tplBar(){
+  if(!tplShow())return '';
+  return '<div class="tplbar"><span class="l">先起个头 <i>可选，套完再逐条改</i></span><div class="r">'+
+    TPL.map((t,i)=>'<button data-a="tplUse" data-v="'+i+'"><b>'+t.name+'</b><i>'+t.sub+'</i></button>').join('')+
+    '</div></div>';
+}
+
 /* ══════════ sheet ══════════ */
 function sheetHTML(){
   if(!S.sheet)return'';
@@ -1179,7 +1213,7 @@ function sheetHTML(){
 function shItem(){
   const t=T(),d=t.days[Math.min(S.day,t.days.length-1)];
   const edit=!!(S.arg&&S.arg.id);
-  const B=S.buf.rows,body=B.map((r,i)=>{
+  const B=S.buf.rows,body=tplBar()+B.map((r,i)=>{
     const ok=okRow('item',r),op=S.buf.open===i;
     const dur=durText(r.start,r.end);
     const pinned=!!(r.map||'').trim();
@@ -1706,6 +1740,9 @@ function ACT(a,v,k,x,el){
     save();return setS({sheet:'',buf:null,arg:null});}
 
   /* ── 批量缓冲区 ── */
+  case 'tplUse':{const t2=TPL[+v];
+    S.buf.rows=t2.rows.map(([th,pl])=>Object.assign(blank('item'),{theme:th,place:pl}));
+    S.buf.open=0;return render();}
   case 'bufAdd':snapBuf();S.buf.rows.push(blank(S.buf.kind));S.buf.open=S.buf.rows.length-1;return render();
   case 'bufDrop':snapBuf();S.buf.rows.splice(+v,1);if(!S.buf.rows.length)S.buf.rows=[blank(S.buf.kind)];
     if(S.buf.open>=S.buf.rows.length)S.buf.open=S.buf.rows.length-1;return render();
