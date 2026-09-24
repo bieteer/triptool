@@ -221,6 +221,13 @@ a{color:var(--violet-deep)}
 .escard .eh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 2px 8px}
 .escard .eh .t{font-size:11.5px;font-weight:600;color:var(--violet-deep);letter-spacing:.3px}
 .escard .eh .s{font-size:10px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.escard .ehb{width:100%;box-sizing:border-box;min-height:44px;display:flex;align-items:center;gap:8px;
+  padding:0 2px;background:none;border:none;font-family:inherit;cursor:pointer;text-align:left}
+.escard .ehb .t{font-size:11.5px;font-weight:600;color:var(--violet-deep);letter-spacing:.3px}
+.escard .ehb .s{flex:1;font-size:10.5px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.escard .ehb .cv{flex:0 0 auto;display:flex;color:var(--ink3);transition:transform .16s}
+.escard .ehb.on .cv{transform:rotate(180deg)}
+.escard .ehint{display:block;font-size:10px;color:var(--ink3);padding:0 2px 8px}
 .esempty{font-size:11.5px;color:var(--ink3);padding:10px 2px;line-height:1.6}
 
 /* 地址 */
@@ -541,7 +548,7 @@ function pic(k){return k&&IMGS[k]?IMGS[k]:'';}
 function T(){return DB.trips.find(t=>t.id===DB.cur)||null;}
 
 /* ══════════ 界面状态 ══════════ */
-const S={screen:'trips',tab:'plan',day:0,acat:'住宿',aopen:'',popen:'',menu:'',sheet:'',arg:null,open:'',err:'',vshow:null,wxTried:false,stk:'',buf:null,pick:''};
+const S={screen:'trips',tab:'plan',day:0,acat:'住宿',aopen:'',popen:'',menu:'',oAddr:false,oTran:false,oPack:false,sheet:'',arg:null,open:'',err:'',vshow:null,wxTried:false,stk:'',buf:null,pick:''};
 function setS(o){Object.assign(S,o);render();}
 const THEMES=['起床','游玩','吃饭','逛街','移动','睡觉','其他'];
 const CHIP={
@@ -879,6 +886,15 @@ function viewEss(){
   return '<div class="esswrap">'+essAddr(E)+essTransit(E)+essPack(t)+essSos(E)+
     '<button class="dash" style="margin-bottom:18px" data-a="sheet" data-v="ess">'+svg(I.plus,15)+' 添加到速查</button></div>';
 }
+// 三块默认收起。全平铺是一屏半到两屏，找东西全靠翻；
+// 收起后一屏就看全，右边留一行摘要够判断要不要展开。
+// 紧急联系不收 —— 真出事的时候不该还要先点一下。
+function essFold(k,label,stat){
+  const on=!!S['o'+k];
+  return '<button class="ehb'+(on?' on':'')+'" data-a="esec" data-v="'+k+'">'+
+    '<span class="t">'+h(label)+'</span><span class="s">'+h(stat)+'</span>'+
+    '<span class="cv">'+svg(I.down,14)+'</span></button>';
+}
 function essHead(l,r){
   return '<div class="eh"><span class="t">'+h(l)+'</span>'+(r?'<span class="s">'+h(r)+'</span>':'')+'</div>';
 }
@@ -886,7 +902,9 @@ function essHead(l,r){
 function essAddr(E){
   const P=E.places||[],cat=S.acat||ACATS[0];
   const rows=P.filter(p=>p.cat===cat);
-  return '<div class="escard p11">'+essHead('地址','长按条目可改可删')+
+  if(!S.oAddr)return '<div class="escard p11">'+essFold('Addr','地址',P.length+' 处')+'</div>';
+  return '<div class="escard p11">'+essFold('Addr','地址',P.length+' 处')+
+    '<span class="ehint">长按条目可改可删</span>'+
     '<div class="acats">'+ACATS.map(c=>{
       const on=c===cat;
       return '<button class="'+(on?'on':'')+'" data-a="acat" data-v="'+c+'">'+
@@ -928,14 +946,18 @@ function essTransit(E){
       '</div>';
     });
   });
-  return '<div class="escard">'+essHead('交通','')+
+  const head=essFold('Tran','交通',TR.length+' 班');
+  if(!S.oTran)return '<div class="escard">'+head+'</div>';
+  return '<div class="escard">'+head+
     (any?body:'<div class="esempty">还没有交通，航班、火车、当地票都能记这里。</div>')+'</div>';
 }
 /* 卡三 · 行前行李 */
 function essPack(t){
   const P=t.packing||[],st=packStat();
-  return '<div class="escard">'+essHead('行前行李','已备 '+st.done+' / '+st.all)+
-    '<div class="ptrack"><div class="pfill" style="width:'+(st.all?Math.round(st.done/st.all*100):0)+'%"></div></div>'+
+  const head=essFold('Pack','行前行李','已备 '+st.done+' / '+st.all)+
+    '<div class="ptrack"><div class="pfill" style="width:'+(st.all?Math.round(st.done/st.all*100):0)+'%"></div></div>';
+  if(!S.oPack)return '<div class="escard">'+head+'</div>';
+  return '<div class="escard">'+head+
     '<div class="plist">'+P.map(c=>{
       const op=S.popen===c.cat,dn=c.items.filter(x=>x.done).length,all=c.items.length>0&&dn===c.items.length;
       return '<div class="pcat'+(op?' open':'')+(all?' all':'')+'">'+
@@ -1644,6 +1666,7 @@ function ACT(a,v,k,x,el){
   case 'openTrip':DB.cur=v;save();window.__scrollTop=0;return setS({screen:'trip',tab:'plan',day:defaultDay(v),menu:''});
   case 'tab':window.__scrollTop=0;return setS({tab:v,menu:''});
   case 'day':window.__scrollTop=0;return setS({day:+v,menu:''});
+  case 'esec':return setS({['o'+v]:!S['o'+v],menu:''});
   case 'acat':return setS({acat:v,aopen:'',menu:''});
   case 'aopen':return setS({aopen:S.aopen===v?'':v,menu:''});
   case 'popen':return setS({popen:S.popen===v?'':v,menu:''});
