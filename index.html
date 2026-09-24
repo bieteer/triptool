@@ -544,7 +544,15 @@ function T(){return DB.trips.find(t=>t.id===DB.cur)||null;}
 const S={screen:'trips',tab:'plan',day:0,acat:'住宿',aopen:'',popen:'',menu:'',sheet:'',arg:null,open:'',err:'',vshow:null,wxTried:false,stk:'',buf:null,pick:''};
 function setS(o){Object.assign(S,o);render();}
 const THEMES=['起床','游玩','吃饭','逛街','移动','睡觉','其他'];
-const CHIP={'移动':['#F0EEF7','#6B6585'],'其他':['#EFEDE8','#7B7060'],'吃饭':['#FFF1E6','#9A5A1C'],'起床':['#FFF4D9','#8A6A12'],'睡觉':['#E6E2F7','#5B4BA8'],'住宿':['#E4F8F4','#0E7C6F']};
+const CHIP={
+  '起床':['#FDEFC4','#7E5B12'],   // 清晨的暖黄
+  '游玩':['#E8E1FF','#4B2FB8'],   // 主角，用品牌紫
+  '吃饭':['#FFE3D0','#9B4A17'],   // 暖橘
+  '逛街':['#FFDFEA','#9C3359'],   // 玫红
+  '移动':['#E9E7F0','#5F5A78'],   // 过渡，冷灰往后退
+  '睡觉':['#D9E2F8','#33447F'],   // 夜里的靛蓝
+  '其他':['#EDEAE2','#6B6152']    // 暖灰
+};
 function chipOf(th){const c=CHIP[th]||['#EFEBFF','#4B2FB8'];return 'background:'+c[0]+';color:'+c[1];}
 const CUR=['EUR','CNY','USD','JPY'];
 const CURNAME={EUR:'欧元',CNY:'人民币',USD:'美元',JPY:'日元'};
@@ -1934,6 +1942,14 @@ $('#pickimg').addEventListener('change',async e=>{
 });
 
 /* ══════════ 导入 / 导出 ══════════ */
+function fixThemes(t){
+  // 「住宿」「办事」这两类后来取消了，老文件里还有；统一归到「其他」
+  let n=0;
+  (t.days||[]).forEach(d=>(d.items||[]).forEach(it=>{
+    if(it.theme&&THEMES.indexOf(it.theme)<0){it.theme='其他';n++;}
+  }));
+  return n;
+}
 function normEss(E,sos){
   const o=Object.assign({places:[],transport:[],emergency:[]},E||{});
   // 老格式：快拨号码单独放在 trip.sos 里；合并成一份带 quick 的列表
@@ -1955,6 +1971,7 @@ function normalize(f){
     packing:f.packing||[],journal:f.journal||{},stickers:f.stickers||[],weather:f.weather||{},
     lastExport:f.lastExport||''};
 }
+function normalizeFixed(f){const t=normalize(f);fixThemes(t);return t;}
 function denormalize(t){
   const imgs={};
   const grab=k=>{if(k&&IMGS[k])imgs[k]=IMGS[k];};
@@ -2009,7 +2026,7 @@ $('#pick').addEventListener('change',e=>{
     else return setS({err:'这个文件不是行程速查导出的数据'});
     Object.assign(IMGS,j.images||{});
     list.forEach(one=>{Object.assign(IMGS,one.images||{});
-      const nt=normalize(one);
+      const nt=normalizeFixed(one);
       const i=DB.trips.findIndex(z=>z.id===nt.id);
       if(i>=0)DB.trips[i]=nt;else DB.trips.push(nt);});
     if(!DB.cur||!DB.trips.some(z=>z.id===DB.cur))DB.cur=DB.trips[0].id;
@@ -2026,8 +2043,11 @@ $('#pick').addEventListener('change',e=>{
 (async function boot(){
   try{const raw=localStorage.getItem(LS);if(raw)DB=JSON.parse(raw);}catch(e){}
   if(!DB||!Array.isArray(DB.trips))DB={trips:[],cur:''};
+  // 已经存在手机里的老数据也顺手迁一下
+  let fixed=0;DB.trips.forEach(t=>{fixed+=fixThemes(t);});
+  if(fixed)save();
   const old=localStorage.getItem('trip-quickref-v1');
-  if(old&&!DB.trips.length){try{const j=JSON.parse(old);if(j&&j.trip){DB.trips=[normalize(j)];DB.cur=DB.trips[0].id;save();}}catch(e){}}
+  if(old&&!DB.trips.length){try{const j=JSON.parse(old);if(j&&j.trip){DB.trips=[normalizeFixed(j)];DB.cur=DB.trips[0].id;save();}}catch(e){}}
   IMGS=(await idbGet('images'))||{};
   if(DB.trips.length&&DB.cur){S.screen=DB.trips.length>1?'trips':'trip';S.day=defaultDay(DB.cur);}
   render();

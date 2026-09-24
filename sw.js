@@ -1,7 +1,7 @@
 /* 行程速查 · Service Worker
    只缓存应用外壳（这几个文件里没有任何行程内容）。
    行程数据存在 localStorage / IndexedDB，本来就离线可读，不经过这里。 */
-const CACHE = 'trip-quickref-v7';
+const CACHE = 'trip-quickref-v8';
 const SHELL = [
   './',
   './index.html',
