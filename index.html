@@ -637,8 +637,16 @@ async function refreshRate(){
 </script>
 <script>
 /* ══════════ 渲染 ══════════ */
+const SCROLLERS=['#scroll','.sh-b','#detail .dbody','#show .pages'];
+let _keep=null;
 function render(){
   const app=$('#app');
+  // 重绘是把整块 innerHTML 换掉，新的滚动容器一律从 0 开始。
+  // 所以画之前先记下每个容器滚到哪，画完再放回去。
+  // 只有明确要回顶部的动作（切 tab、切天、进旅程）才事先把 __scrollTop 置 0。
+  _keep={};SCROLLERS.forEach(q=>{const el=$(q);if(el)_keep[q]=el.scrollTop;});
+  if(window.__scrollTop!=null)_keep['#scroll']=window.__scrollTop;
+  window.__scrollTop=null;
   if(!DB.trips.length){app.innerHTML=gate()+sheetHTML();afterRender();return;}
   if(S.screen==='trips'){
     app.innerHTML='<div id="scroll">'+viewTrips()+'</div>'+sheetHTML();
@@ -656,8 +664,8 @@ function render(){
   afterRender();
 }
 function afterRender(){
-  const sc=$('#scroll');
-  if(sc&&window.__scrollTop!=null){sc.scrollTop=window.__scrollTop;window.__scrollTop=null;}
+  if(_keep)SCROLLERS.forEach(q=>{const el=$(q);if(el&&_keep[q]!=null)el.scrollTop=_keep[q];});
+  _keep=null;
   const strip=$('.datestrip'),on=$('.dtab.on');
   if(strip&&on){strip.scrollLeft=Math.max(0,on.offsetLeft-(strip.clientWidth-on.clientWidth)/2);}
 }
@@ -1705,9 +1713,13 @@ function ACT(a,v,k,x,el){
 
   /* ── 编辑 / 删除 ── */
   case 'editItem':{const it=findItem(v);if(!it)return;
+    // 已经挂在这一程上的花费要摊出来给人看见。
+    // 原先这里给的是一行空的，人会以为还没记，照着再打一遍 —— 就变成两笔，总额多算。
+    const mine=t.spends.filter(z=>z.itemId===v)
+      .map(z=>({id:z.id,item:z.item,amount:String(z.amount),cur:z.cur,old:1}));
     bufInit('item',[{theme:it.theme,place:it.place,start:it.time,end:it.end||addMins(it.time,durMins(it.dur)),
       note:it.note||'',map:it.map||'',vou:(it.vouchers||[]).slice(),
-      sp:[{id:'p1',item:'',amount:'',cur:defCur()}]}]);
+      sp:mine.concat([{id:uid('p'),item:'',amount:'',cur:defCur()}])}]);
     return setS({sheet:'item',arg:{id:v},menu:'',err:''});}
   case 'delItem':{const d=findDayOf(v);if(d)d.items=d.items.filter(z=>z.id!==v);
     t.spends=t.spends.filter(z=>z.itemId!==v);save();return setS({menu:'',open:S.open===v?'':S.open});}
@@ -1788,7 +1800,18 @@ function bufSave(){
       const it=findItem(S.arg.id),r=rows[0];
       Object.assign(it,{theme:r.theme,place:r.place.trim(),time:r.start,end:r.end,
         dur:durText(r.start,r.end),note:r.note.trim(),map:(r.map||'').trim(),vouchers:r.vou.slice()});
-      money2(r,it.id);
+      // 表单里这几行就是这一程花费的全部：原有的改掉，清空或 × 掉的删掉，新填的加上。
+      const keep={};(r.sp||[]).forEach(q=>{if(q.old&&spOk(q))keep[q.id]=1;});
+      t.spends=t.spends.filter(z=>z.itemId!==it.id||keep[z.id]);
+      // 日期跟这一程走，不跟"当前选中哪天"走
+      const dd=(findDayOf(it.id)||d).date;
+      (r.sp||[]).forEach(q=>{
+        if(!spOk(q))return;
+        if(q.old){const sp=t.spends.find(z=>z.id===q.id);
+          if(sp){sp.item=String(q.item).trim();sp.amount=num(q.amount);sp.cur=q.cur;}}
+        else t.spends.push({id:uid('s'),date:dd,item:String(q.item).trim(),
+          amount:num(q.amount),cur:q.cur,itemId:it.id});
+      });
     }else{
       rows.forEach(r=>{
         const id=uid('i');
