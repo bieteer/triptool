@@ -958,17 +958,16 @@ function viewPlan(){
   '</div>';
   return wx+tl+foot;
 }
-/* 行程条的主标题 = 一句话简介。没填就退回主题名 —— 不退回涉及地点，那是地图用的。 */
+/* 行程条首行 = 标题，一眼说清这一程是干什么的。没填就退回主题名。 */
 function rowTitle(x){
-  const n=(x&&x.note||'').trim();
-  return n||((x&&x.theme)||'');
+  // 标题为空就显示主题名。不拿简介顶 —— 简介是补充说明，放首行看着很怪。
+  return (x&&x.place||'').trim()||((x&&x.theme)||'');
 }
-/* 注意点上行程条。最多两行，装不下的交给详情页。
-   多条用「·」串起来，让两行里尽量多塞几条。 */
+/* 第二块 = 注意点，最多两行，装不下的交给详情页。
+   行程条上就「标题 + 注意点」两样，简介不上来。 */
 function noteLines(x){
   const ns=(x&&x.notes||[]).map(z=>(typeof z==='string'?z:(z&&z.text)||'').trim()).filter(Boolean);
-  if(!ns.length)return '';
-  return h(ns.join('　·　'));
+  return ns.length?h(ns.join('　·　')):'';
 }
 function card(x,d,isToday,nowKey,now,TD,last){
   const state=d.date<TD?'past':(d.date>TD?'next':(x.id===nowKey?'now':(mins(x.time)<mins(now)?'past':'next')));
@@ -1407,8 +1406,8 @@ function shItem(){
           '<div><label>结束<span class="opt">选填</span></label>'+inp(i,'end',r.end,'','time')+'</div>'+
         '</div><div class="mini" data-durhint="'+i+'">'+(dur?'预计耗时 '+h(dur)+'，会自动算':'填完起止时间会自动算耗时')+'</div>'+
           (r.end?tzBlock(i,r):'')+'</div>'+
-        fld('一句话介绍',2,inp(i,'note',r.note,'选填'))+
-        fld('涉及地点',2,inp(i,'place',r.place,'景点 / 餐厅 / A → B'))+
+        fld('标题',2,inp(i,'place',r.place,'一眼看懂这一程干什么'))+
+        fld('一句话介绍',2,inp(i,'note',r.note,'选填，补充说明'))+
         fld('地图定位',2,inp(i,'map',r.map,'粘贴 Google 地图链接'),
           pinned?'<span style="color:var(--mint-deep)">已钉住，详情页点「在 Google 地图打开」直接跳这个位置</span>'
                 :(r.place.trim()?('留空也行 —— 详情页会按「'+h(r.place.trim().slice(0,16)+(r.place.length>16?'…':'')+' '+(t.meta.country||''))+'」到 Google 地图里搜'):'地点和链接都空着的话，详情页就没有地图入口'))+
