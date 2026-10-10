@@ -41,7 +41,7 @@ a{color:var(--violet-deep)}
 #navbar .in{display:flex;align-items:center;gap:2px;padding:4px 8px 0;min-height:42px}
 #navbar .back{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--violet-deep);flex:0 0 auto}
 #navbar .ttl{flex:1;min-width:0;font-size:14px;font-weight:600;color:var(--violet-deep);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#scroll{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(28px + var(--safeB))}
+#scroll{flex:1 1 auto;overflow-y:auto;overflow-anchor:none;-webkit-overflow-scrolling:touch;padding-bottom:calc(28px + var(--safeB))}
 
 /* ── 我的旅程 ── */
 .tlist{padding:4px 16px 0}
@@ -150,12 +150,15 @@ a{color:var(--violet-deep)}
 .card.now{background:var(--violet-hl);border-color:var(--violet)}
 .card.past{opacity:.66}
 .c-top{display:flex;align-items:flex-start;gap:9px}
-.c-place{flex:1;min-width:0;font-size:15px;font-weight:600;line-height:1.3;word-break:break-word}
+.c-place{flex:1;min-width:0;font-size:15px;font-weight:600;line-height:1.3;word-break:break-word;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .c-chip{flex:0 0 auto;font-size:12.5px;font-weight:700;letter-spacing:.2px;padding:4px 10px;border-radius:9px;background:var(--violet-tint);color:var(--violet-deep)}
+.c-tz{flex:0 0 auto;white-space:nowrap;font-size:10.5px;color:var(--mint-deep);background:#E6F7F4;border-radius:6px;padding:2px 6px}
+.c-notes{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  font-size:11.5px;line-height:1.5;color:var(--ink2);margin-top:3px}
 .c-note{font-size:12px;color:var(--ink2);line-height:1.45;margin-top:5px;word-break:break-word}
-.c-bot{display:flex;align-items:center;gap:6px;margin-top:6px}
-.c-dur{font-size:11px;color:var(--ink2);display:flex;align-items:center;gap:5px}
-.c-badges{display:flex;gap:6px;align-items:center;margin-left:auto}
+.c-bot{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;margin-top:6px}
+.c-dur{flex:0 0 auto;white-space:nowrap;font-size:11px;color:var(--ink2);display:flex;align-items:center;gap:5px}
+.c-badges{display:flex;gap:6px;align-items:center;margin-left:auto;flex:0 0 auto}
 .bdg{display:flex;align-items:center;gap:3px;font-size:10.5px;color:var(--ink3)}
 .c-cny{font-size:12.5px;font-weight:700;color:var(--mint-deep)}
 .c-go{color:var(--violet-line);flex:0 0 auto}
@@ -228,6 +231,18 @@ a{color:var(--violet-deep)}
 .escard .ehb .cv{flex:0 0 auto;display:flex;color:var(--ink3);transition:transform .16s}
 .escard .ehb.on .cv{transform:rotate(180deg)}
 .escard .ehint{display:block;font-size:10px;color:var(--ink3);padding:0 2px 8px}
+.pie{position:relative;display:flex;align-items:center;justify-content:center;padding:6px 0 10px}
+.pie .pct{position:absolute;display:flex;flex-direction:column;align-items:center;gap:1px;pointer-events:none}
+.pie .pct .big{font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-.3px}
+.pie .pct .lb{font-size:10px;color:var(--ink3)}
+.plegend{display:flex;flex-direction:column;gap:1px}
+.pl{display:flex;align-items:center;gap:8px;width:100%;min-height:40px;padding:0 2px;background:none;border:none;
+  font-family:inherit;cursor:pointer;text-align:left}
+.pl .sw{flex:0 0 10px;height:10px;border-radius:3px}
+.pl .nm{flex:0 0 auto;font-size:13px;font-weight:600;color:var(--ink)}
+.pl .pp{flex:1;font-size:11px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.pl .vv{flex:0 0 auto;font-size:13px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.pl .go{flex:0 0 auto;display:flex;color:var(--ink3)}
 .esempty{font-size:11.5px;color:var(--ink3);padding:10px 2px;line-height:1.6}
 
 /* 地址 */
@@ -327,7 +342,7 @@ a{color:var(--violet-deep)}
 .sh-h .t{flex:1;min-width:0;font-size:16px;font-weight:700}
 .sh-h .t em{display:block;font-style:normal;font-size:11px;color:var(--ink3);font-weight:400;margin-top:2px}
 .sh-h .x{width:32px;height:32px;border-radius:50%;background:var(--ground);display:flex;align-items:center;justify-content:center;color:var(--ink2);flex:0 0 auto}
-.sh-b{flex:1 1 auto;overflow-y:auto;padding:14px 16px 6px;-webkit-overflow-scrolling:touch}
+.sh-b{flex:1 1 auto;overflow-y:auto;padding:14px 16px 6px;-webkit-overflow-scrolling:touch;overflow-anchor:none}
 .tplbar{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
 .tplbar .l{font-size:10.5px;color:var(--ink2)}
 .tplbar .l i{font-style:normal;color:var(--ink3)}
@@ -390,6 +405,17 @@ a{color:var(--violet-deep)}
 .rowline .cny{font-size:11px;color:var(--ink3);padding-left:2px}
 .rowline .cny.ok{color:var(--mint-deep);font-weight:600}
 .sprow{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.spbox{padding:8px;border-radius:11px;background:var(--ground);border:1px solid var(--line);margin-bottom:7px}
+.tzmore{margin-top:7px;min-height:38px;padding:0 12px;border-radius:10px;border:1px dashed var(--violet-line);
+  background:var(--violet-hl);font-family:inherit;font-size:12.5px;font-weight:600;color:var(--violet-deep);cursor:pointer}
+.tzbox{margin-top:8px;padding:9px;border-radius:11px;background:var(--ground);border:1px solid var(--line)}
+.tzbox .mini{margin-top:6px}
+.tzoff{background:none;border:none;padding:0;font-family:inherit;font-size:11px;color:var(--violet-deep);
+  text-decoration:underline;cursor:pointer}
+.scats{display:flex;flex-wrap:wrap;gap:5px;margin:7px 0 2px}
+.scat{flex:0 0 auto;min-height:32px;padding:0 11px;border-radius:9px;border:1px solid var(--line);
+  background:var(--card);font-family:inherit;font-size:12.5px;font-weight:600;color:var(--ink2);cursor:pointer}
+.scat.on{font-weight:700}
 .sprow input[type=text]{flex:1;min-width:0;min-height:42px;padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:var(--card);font-size:13px;outline:none}
 .sprow input[inputmode=decimal]{flex:0 0 84px;width:84px;font-size:14px;font-weight:700}
 .sprow select{flex:0 0 76px;width:76px;min-height:42px;padding:8px 6px;border-radius:9px;border:1px solid var(--line);background:var(--card);font-size:12px;outline:none}
@@ -540,6 +566,60 @@ function wkd(iso){if(!iso)return'';return'日一二三四五六'[new Date(iso+'T
 function seasonOf(iso){const m=+((iso||'').slice(5,7));if(m>=3&&m<=5)return'春';if(m>=6&&m<=8)return'夏';if(m>=9&&m<=11)return'秋';if(m===12||m===1||m===2)return'冬';return'—';}
 function money(n){return'¥'+Number(n||0).toLocaleString('zh-CN',{maximumFractionDigits:0});}
 function nDays(a,b){if(!a||!b)return 0;return Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/864e5)+1;}
+/* ── 时区 ──
+   行程条上的时间一律是当地时间（你记的时候就是看着当地表记的），
+   所以时间本身不用换算，要换算的是「耗时」：两端在不同时区时，
+   直接相减会差掉时差。你那趟 Day 1 香港 08:55 → 伊斯坦布尔 15:10，
+   字面是 6 小时 15 分，真实飞了 11 小时 15 分。
+   偏移量交给浏览器的 Intl 算，夏令时才不会错，而且不用联网。 */
+const ZONES=[
+  ['Asia/Shanghai','中国'],['Asia/Hong_Kong','香港'],['Asia/Taipei','台湾'],
+  ['Asia/Tokyo','日本'],['Asia/Seoul','韩国'],['Asia/Singapore','新加坡'],
+  ['Asia/Bangkok','泰国'],['Asia/Kuala_Lumpur','马来西亚'],['Asia/Jakarta','印尼'],
+  ['Asia/Dubai','阿联酋'],['Asia/Istanbul','土耳其'],['Europe/Rome','意大利'],
+  ['Europe/Paris','法国'],['Europe/Madrid','西班牙'],['Europe/Berlin','德国'],
+  ['Europe/London','英国'],['Europe/Zurich','瑞士'],['Europe/Amsterdam','荷兰'],
+  ['Europe/Lisbon','葡萄牙'],['Europe/Athens','希腊'],['Europe/Moscow','俄罗斯'],
+  ['America/New_York','美东'],['America/Los_Angeles','美西'],['America/Chicago','美中'],
+  ['Australia/Sydney','悉尼'],['Pacific/Auckland','新西兰'],['Africa/Cairo','埃及']
+];
+const ZNAME={};ZONES.forEach(([z,n])=>ZNAME[z]=n);
+const CTZ={'意大利':'Europe/Rome','日本':'Asia/Tokyo','韩国':'Asia/Seoul','法国':'Europe/Paris',
+  '西班牙':'Europe/Madrid','德国':'Europe/Berlin','英国':'Europe/London','泰国':'Asia/Bangkok',
+  '土耳其':'Asia/Istanbul','美国':'America/New_York','中国':'Asia/Shanghai'};
+const _tzc={};
+function tzOffset(zone,dateISO){
+  if(!zone)return null;
+  const k=zone+'|'+dateISO;
+  if(k in _tzc)return _tzc[k];
+  let r=null;
+  try{
+    const d=new Date((dateISO||todayISO())+'T12:00:00Z');
+    const f=new Intl.DateTimeFormat('en-US',{timeZone:zone,hour12:false,
+      year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+    const o={};f.formatToParts(d).forEach(x=>{o[x.type]=x.value;});
+    const hh=o.hour==='24'?0:+o.hour;
+    r=(Date.UTC(+o.year,+o.month-1,+o.day,hh,+o.minute)-d.getTime())/60000;
+  }catch(e){r=null;}
+  _tzc[k]=r;return r;
+}
+/* 这一条的出发 / 到达时区。没单独设就跟着这一程所在旅程的默认走。 */
+function itemTZ(x){const t=T();return (x&&x.tz)||(t&&t.meta&&t.meta.tz)||'';}
+function itemTZEnd(x){return (x&&x.tzEnd)||itemTZ(x);}
+function tzLabel(z){return ZNAME[z]||z||'';}
+/* 真实耗时：两端各自减掉自己的时差，再相减 */
+function durReal(x,dateISO){
+  if(!x||!x.time||!x.end)return '';
+  const za=itemTZ(x),zb=itemTZEnd(x);
+  const oa=tzOffset(za,dateISO),ob=tzOffset(zb,dateISO);
+  if(oa==null||ob==null||oa===ob)return durText(x.time,x.end);
+  let a=mins(x.time)-oa,b=mins(x.end)-ob;
+  if(a<0||b<0)return durText(x.time,x.end);
+  while(b<a)b+=1440;
+  const d=b-a;if(d<=0)return '';
+  const H=Math.floor(d/60),M=d%60;
+  return (H?H+' 小时':'')+(H&&M?' ':'')+(M?M+' 分':'');
+}
 function durText(a,b){const d=mins(b)-mins(a);if(mins(a)<0||mins(b)<0||d<=0)return'';const H=Math.floor(d/60),M=d%60;return (H?H+' 小时':'')+(H&&M?' ':'')+(M?M+' 分':'');}
 function durMins(t){const H=/(\d+)\s*小时/.exec(String(t||'')),M=/(\d+)\s*分/.exec(String(t||''));return (H?+H[1]*60:0)+(M?+M[1]:0);}
 function addMins(t,d){if(!d||mins(t)<0)return'';const v=mins(t)+d;return pad(Math.floor(v/60)%24)+':'+pad(v%60);}
@@ -559,7 +639,7 @@ function pic(k){return k&&IMGS[k]?IMGS[k]:'';}
 function T(){return DB.trips.find(t=>t.id===DB.cur)||null;}
 
 /* ══════════ 界面状态 ══════════ */
-const S={screen:'trips',tab:'plan',day:0,acat:'住宿',aopen:'',popen:'',menu:'',oAddr:false,oTran:false,oPack:false,sheet:'',arg:null,open:'',err:'',vshow:null,wxTried:false,stk:'',buf:null,pick:''};
+const S={screen:'trips',tab:'plan',day:0,acat:'住宿',aopen:'',popen:'',menu:'',oPack:true,sheet:'',arg:null,open:'',err:'',vshow:null,wxTried:false,stk:'',buf:null,pick:''};
 function setS(o){Object.assign(S,o);render();}
 const THEMES=['起床','游玩','吃饭','逛街','移动','睡觉','其他'];
 const CHIP={
@@ -573,6 +653,36 @@ const CHIP={
 };
 function chipOf(th){const c=CHIP[th]||['#EFEBFF','#4B2FB8'];return 'background:'+c[0]+';color:'+c[1];}
 const CUR=['EUR','CNY','USD','JPY'];
+
+/* 花费类别。和行程主题是两条轴：主题说这一程在干什么，类别说这笔钱花在哪。
+   吃饭 / 游玩 / 其他 两边同名，少记一套；交通和购物故意和主题的「移动」「逛街」错开 —— 
+   花出去的钱和干了什么事本来就不是同一件事。 */
+const SCAT=['住宿','交通','吃饭','游玩','购物','其他'];
+const SCATC={'住宿':['#D9E2F8','#33447F'],'交通':['#E9E7F0','#5F5A78'],'吃饭':['#FFE3D0','#9B4A17'],
+             '游玩':['#E8E1FF','#4B2FB8'],'购物':['#FFDFEA','#9C3359'],'其他':['#EDEAE2','#6B6152']};
+/* 饼图用的实色，按类别顺序，亮度错开保证黑白打印也分得出 */
+const SPIE={'住宿':'#3B6FD4','交通':'#17A398','吃饭':'#DD6B20','游玩':'#8B5CF6','购物':'#D63384','其他':'#B07A12'};
+const CATKEY=[
+  ['住宿',/民宿|酒店|旅馆|住宿|房费|青旅|airbnb|hotel|hostel|城市税|退房|入住/i],
+  ['交通',/机票|航班|火车|高铁|地铁|公交|大巴|巴士|班车|打车|出租|的士|车费|车票|船票|渡轮|缆车|接机|送机|油费|停车|过路|寄存|bus|taxi|uber|italo|flix|alibus|metro/i],
+  ['吃饭',/早饭|早餐|午饭|午餐|晚饭|晚餐|夜宵|下午茶|咖啡|espresso|牛奶|奶茶|饮料|酒吧|冰淇淋|gelato|披萨|pizza|意面|甜点|面包|超市|便利店|麦当劳|星巴克|矿泉水|餐|饭|吃|水$/i],
+  ['游玩',/门票|导览|讲解|入场|预约|游船|潜水|滑雪|演出|门票|博物馆|美术馆|古城|遗址|教堂|城堡|竞技场|斗兽场|乐园|体验|课程|小团|包团|导游|tour|ticket|\d\s*张/i],
+  ['购物',/买|购|纪念品|伴手礼|特产|冰箱贴|明信片|礼物|公仔|玩偶|糖|巧克力|曲奇|橄榄油|柠檬酒|包|衣|鞋|化妆品|药妆|壶|画|香水/i]
+];
+function guessCat(txt){
+  const t=String(txt||'');
+  for(const [c,re] of CATKEY){if(re.test(t))return c;}
+  return '';
+}
+/* 老文件里的花费没有类别，导入和启动时按名目猜一遍。猜不出的归「其他」，长按能改。 */
+function fixSpendCats(t){
+  let n=0;
+  (t.spends||[]).forEach(x=>{
+    if(x.cat&&SCAT.indexOf(x.cat)>=0)return;
+    x.cat=guessCat(x.item)||'其他';n++;
+  });
+  return n;
+}
 const CURNAME={EUR:'欧元',CNY:'人民币',USD:'美元',JPY:'日元'};
 const VCAT={stay:'住宿',move:'交通',see:'游览',other:'其他'};
 const EMOJI=[
@@ -604,7 +714,7 @@ function vouUse(id,title){
   const tt=String(title||'').trim();
   t.days.forEach((d,di)=>d.items.forEach(it=>{
     if((it.vouchers||[]).indexOf(id)<0)return;
-    const nm=pName(it);
+    const nm=rowTitle(it);
     // 行程名和票名基本是同一个东西时就别再重复一遍，只留「第几天几点」
     const echo=tt&&nm&&(nm.indexOf(tt)>=0||tt.indexOf(nm)>=0||nm.indexOf(tt.slice(0,8))>=0);
     out.push('Day '+(di+1)+' '+(it.time||'')+(echo?'':' '+nm));
@@ -656,7 +766,7 @@ async function refreshRate(){
 <script>
 /* ══════════ 渲染 ══════════ */
 const SCROLLERS=['#scroll','.sh-b','#detail .dbody','#show .pages'];
-let _keep=null;
+let _keep=null,_bring=null;
 function render(){
   const app=$('#app');
   // 重绘是把整块 innerHTML 换掉，新的滚动容器一律从 0 开始。
@@ -684,6 +794,8 @@ function render(){
 function afterRender(){
   if(_keep)SCROLLERS.forEach(q=>{const el=$(q);if(el&&_keep[q]!=null)el.scrollTop=_keep[q];});
   _keep=null;
+  if(_bring){const el=document.querySelector(_bring);_bring=null;
+    if(el&&el.scrollIntoView)try{el.scrollIntoView({block:'nearest'});}catch(_){}}
   const strip=$('.datestrip'),on=$('.dtab.on');
   if(strip&&on){strip.scrollLeft=Math.max(0,on.offsetLeft-(strip.clientWidth-on.clientWidth)/2);}
 }
@@ -817,6 +929,18 @@ function viewPlan(){
   const items=d.items.slice().sort((a,b)=>mins(a.time)-mins(b.time));
   let nowKey='';
   if(isToday)items.forEach(x=>{if(mins(x.time)<=mins(now))nowKey=x.id;});
+  // 时区标记只认「这一条自己设过时区」。
+  // 跟着旅程默认走的不标 —— 整趟都在意大利，每条写「意大利时间」是废话；
+  // 更糟的是出发那天人还在深圳，跟着默认标会标错。
+  let prevTZ='';
+  items.forEach(x=>{
+    const za=x.tz||'',zb=x.tzEnd||za;
+    x._tz='';
+    if(!za)return;
+    if(za!==prevTZ)x._tz=tzLabel(za)+'时间';
+    if(zb&&zb!==za)x._tz=(x._tz||tzLabel(za)+'时间')+' → '+tzLabel(zb);
+    prevTZ=zb||za;
+  });
   const tl='<div class="tl" id="tl">'+(items.length?items.map((x,k)=>card(x,d,isToday,nowKey,now,TD,k===items.length-1)).join('')
     :'<div class="empty"><b>这天还空着</b>底下加一条，或者横划去看别的 tab。</div>')+'</div>';
   const jr=(t.journal||{})[d.date]||'';
@@ -834,6 +958,18 @@ function viewPlan(){
   '</div>';
   return wx+tl+foot;
 }
+/* 行程条的主标题 = 一句话简介。没填就退回主题名 —— 不退回涉及地点，那是地图用的。 */
+function rowTitle(x){
+  const n=(x&&x.note||'').trim();
+  return n||((x&&x.theme)||'');
+}
+/* 注意点上行程条。最多两行，装不下的交给详情页。
+   多条用「·」串起来，让两行里尽量多塞几条。 */
+function noteLines(x){
+  const ns=(x&&x.notes||[]).map(z=>(typeof z==='string'?z:(z&&z.text)||'').trim()).filter(Boolean);
+  if(!ns.length)return '';
+  return h(ns.join('　·　'));
+}
 function card(x,d,isToday,nowKey,now,TD,last){
   const state=d.date<TD?'past':(d.date>TD?'next':(x.id===nowKey?'now':(mins(x.time)<mins(now)?'past':'next')));
   const cny=itemCNY(x),nv=(x.vouchers||[]).length,nn=(x.notes||[]).length;
@@ -842,11 +978,12 @@ function card(x,d,isToday,nowKey,now,TD,last){
     '<div class="rrail"><span class="dot" style="background:'+(state==='past'?'var(--mint)':(state==='now'?'var(--violet)':'#D6D1E8'))+'"></span>'+(last?'':'<span class="line"></span>')+'</div>'+
     '<div class="rbody">'+
       '<button class="card '+state+'" data-a="openItem" data-v="'+x.id+'" data-lp="item:'+x.id+'">'+
-        '<span class="c-top"><span class="c-place">'+h(pName(x))+'</span>'+
+        '<span class="c-top"><span class="c-place">'+h(rowTitle(x))+'</span>'+
           '<span class="c-chip" style="'+chipOf(x.theme)+'">'+h(x.theme)+'</span></span>'+
-        (x.note?'<span class="c-note">'+h(x.note)+'</span>':'')+
+        (noteLines(x)?'<span class="c-notes">'+noteLines(x)+'</span>':'')+
         '<span class="c-bot">'+
           (x.dur?'<span class="c-dur">'+svg(I.clock,12)+'预计 '+h(x.dur)+'</span>':'')+
+          (x._tz?'<span class="c-tz">'+h(x._tz)+'</span>':'')+
           '<span class="c-badges">'+
             (nv?'<span class="bdg">'+svg(I.ticket,11)+nv+'</span>':'')+
             (nn?'<span class="bdg">'+svg(I.pen,11)+nn+'</span>':'')+
@@ -893,9 +1030,49 @@ function viewVou(){
 /* ── 速查 tab：一整页四张白卡，和原型一致 ── */
 const ACATS=['住宿','美食','购物','景点'];
 const TCATS=[['飞机',I.plane],['火车',I.train],['当地',I.bus]];
+/* 按类别汇总，金额从大到小 */
+function spendByCat(t){
+  const by={};SCAT.forEach(c=>by[c]=0);
+  (t.spends||[]).forEach(x=>{const c=SCAT.indexOf(x.cat)>=0?x.cat:'其他';by[c]+=toCNY(x.amount,x.cur);});
+  const tot=SCAT.reduce((a,c)=>a+by[c],0);
+  return {tot:tot,rows:SCAT.filter(c=>by[c]>0).map(c=>({cat:c,cny:by[c],pct:tot?by[c]/tot:0}))
+    .sort((a,b)=>b.cny-a.cny)};
+}
+/* 环形图。只负责「大致什么形状」—— 两块挨得近时眼睛分不出 31.8% 和 30.8%，
+   所以右边那张列表给确切数字，不靠图去比大小。 */
+function donut(rows){
+  const R=53,W=16,C=2*Math.PI*R,GAP=2.5;
+  let off=0,arcs='';
+  rows.forEach(r=>{
+    const len=Math.max(C*r.pct-GAP,0.5);
+    arcs+='<circle cx="70" cy="70" r="'+R+'" fill="none" stroke="'+SPIE[r.cat]+'" stroke-width="'+W+'"'+
+      ' stroke-dasharray="'+len.toFixed(2)+' '+(C-len).toFixed(2)+'"'+
+      ' stroke-dashoffset="'+(-off).toFixed(2)+'" stroke-linecap="butt"></circle>';
+    off+=C*r.pct;
+  });
+  return '<svg width="140" height="140" viewBox="0 0 140 140" style="transform:rotate(-90deg);flex:0 0 140px" aria-hidden="true">'+arcs+'</svg>';
+}
+function essSpend(t){
+  const g=spendByCat(t);
+  if(!g.rows.length)return '<div class="escard"><div class="eh"><span class="t">行程花费</span></div>'+
+    '<div class="esempty">还没记过花费。行程详情里「记一笔」，或者加行程时顺手填。</div></div>';
+  return '<div class="escard">'+
+    '<div class="eh"><span class="t">行程花费</span><span class="s">共 '+(t.spends||[]).length+' 笔</span></div>'+
+    '<div class="pie">'+donut(g.rows)+
+      '<div class="pct"><span class="big mono">'+money(g.tot)+'</span><span class="lb">总计</span></div>'+
+    '</div>'+
+    '<div class="plegend">'+g.rows.map(r=>
+      '<button class="pl" data-a="catList" data-v="'+h(r.cat)+'">'+
+        '<span class="sw" style="background:'+SPIE[r.cat]+'"></span>'+
+        '<span class="nm">'+h(r.cat)+'</span>'+
+        '<span class="pp mono">'+(r.pct*100).toFixed(1)+'%</span>'+
+        '<span class="vv mono">'+money(r.cny)+'</span>'+
+        '<span class="go">'+svg(I.go,13)+'</span></button>').join('')+'</div>'+
+  '</div>';
+}
 function viewEss(){
   const t=T(),E=t.essentials||{};
-  return '<div class="esswrap">'+essAddr(E)+essTransit(E)+essPack(t)+essSos(E)+
+  return '<div class="esswrap">'+essSpend(t)+essPack(t)+essSos(E)+
     '<button class="dash" style="margin-bottom:18px" data-a="sheet" data-v="ess">'+svg(I.plus,15)+' 添加到速查</button></div>';
 }
 // 三块默认收起。全平铺是一屏半到两屏，找东西全靠翻；
@@ -1031,7 +1208,7 @@ function detail(){
       '<div class="dhead">'+
         '<div class="l1"><span class="c-chip" style="'+chipOf(it.theme)+'">'+h(it.theme)+'</span>'+
           '<span class="when mono">'+h(it.time||'')+(end?' – '+h(end):'')+(it.dur?' · 预计 '+h(it.dur):'')+'</span></div>'+
-        '<div class="pl">'+h(pName(it))+'</div>'+
+        '<div class="pl">'+h(rowTitle(it))+'</div>'+
         (it.note?'<div class="nt">'+h(it.note)+'</div>':'')+
         '<button class="ed" data-a="editItem" data-v="'+it.id+'">'+svg(I.pen,12)+' 编辑这一程</button>'+
       '</div>'+
@@ -1128,8 +1305,8 @@ function saveBar(n,total,label,hint){
 <script>
 /* ══════════ 批量缓冲区 ══════════ */
 function blank(kind){
-  if(kind==='item')return{theme:'游玩',place:'',start:'',end:'',note:'',map:'',vou:[],sp:[{id:'p1',item:'',amount:'',cur:defCur()}]};
-  if(kind==='spend')return{item:'',amount:'',cur:(T()&&T().meta.country==='意大利')?'EUR':'CNY'};
+  if(kind==='item')return{theme:'游玩',place:'',start:'',end:'',note:'',map:'',tz:'',tzEnd:'',vou:[],sp:[{id:'p1',item:'',amount:'',cur:defCur(),scat:''}]};
+  if(kind==='spend')return{item:'',amount:'',cur:(T()&&T().meta.country==='意大利')?'EUR':'CNY',cat:''};
   if(kind==='note')return{text:''};
   if(kind==='vou')return{cat:'stay',title:'',sub:'',code:'',codeLabel:'确认号',who:'',note:'',addr:'',imgs:[]};
   if(kind==='place')return{cat:S.acat||'住宿',addr:'',name:'',note:'',date:''};
@@ -1143,7 +1320,7 @@ function putBuf(i,k,val){
   const r=S.buf&&S.buf.rows[i];if(!r)return;
   const m=/^sp(\d+)\.(\w+)$/.exec(k);
   if(!m){r[k]=val;return;}
-  if(!r.sp||!r.sp.length)r.sp=[{id:'p1',item:'',amount:'',cur:defCur()}];
+  if(!r.sp||!r.sp.length)r.sp=[{id:'p1',item:'',amount:'',cur:defCur(),scat:''}];
   if(r.sp[+m[1]])r.sp[+m[1]][m[2]]=val;
 }
 function snapBuf(){
@@ -1152,7 +1329,7 @@ function snapBuf(){
 }
 function okRow(kind,r){
   if(kind==='item')return!!(r.theme&&r.start);
-  if(kind==='spend')return!!(r.item.trim()&&parseFloat(String(r.amount).replace(/[^\d.]/g,''))>0);
+  if(kind==='spend')return!!(r.item.trim()&&parseFloat(String(r.amount).replace(/[^\d.]/g,''))>0&&r.cat);
   if(kind==='note')return!!r.text.trim();
   if(kind==='vou')return!!(r.title.trim());
   if(kind==='place')return!!r.addr.trim();
@@ -1165,6 +1342,8 @@ function readyN(){if(!S.buf)return 0;return S.buf.rows.filter(r=>okRow(S.buf.kin
 const num=v=>{const n=parseFloat(String(v==null?'':v).replace(/[^\d.]/g,''));return n>0?n:0;};
 function defCur(){const t=T();return (t&&t.meta.country==='意大利')?'EUR':'CNY';}
 function spOk(q){return !!(String(q.item||'').trim()&&num(q.amount)>0);}
+/* 存的时候一定有类别：选了就用选的，没选就按名目猜，再猜不出归「其他」 */
+function spCatOf(q){return q.scat||guessCat(q.item)||'其他';}
 
 /* 手填一整天太慢，给三个常见形状起个头。
    只预置「主题 + 名字」，时间一律留空 —— 几点出发是每个人自己的事，猜不得。 */
@@ -1204,6 +1383,7 @@ function sheetHTML(){
     case 'stk':return shStk();
     case 'omap':return shOmap();
     case 'settings':return shSettings();
+    case 'catList':return shCatList();
     case 'trip':return shTrip();
   }
   return'';
@@ -1225,7 +1405,8 @@ function shItem(){
         '<div class="f"><div class="row2">'+
           '<div><label>开始<span class="req">必填</span></label>'+inp(i,'start',r.start,'','time')+'</div>'+
           '<div><label>结束<span class="opt">选填</span></label>'+inp(i,'end',r.end,'','time')+'</div>'+
-        '</div><div class="mini" data-durhint="'+i+'">'+(dur?'预计耗时 '+h(dur)+'，会自动算':'填完起止时间会自动算耗时')+'</div></div>'+
+        '</div><div class="mini" data-durhint="'+i+'">'+(dur?'预计耗时 '+h(dur)+'，会自动算':'填完起止时间会自动算耗时')+'</div>'+
+          (r.end?tzBlock(i,r):'')+'</div>'+
         fld('一句话介绍',2,inp(i,'note',r.note,'选填'))+
         fld('涉及地点',2,inp(i,'place',r.place,'景点 / 餐厅 / A → B'))+
         fld('地图定位',2,inp(i,'map',r.map,'粘贴 Google 地图链接'),
@@ -1246,14 +1427,21 @@ function shItem(){
           }).join('')+'</div>':'')+
         '</div>'+
         (function(){
-          const sp=(r.sp&&r.sp.length)?r.sp:[{id:'p1',item:'',amount:'',cur:defCur()}];
+          const sp=(r.sp&&r.sp.length)?r.sp:[{id:'p1',item:'',amount:'',cur:defCur(),scat:''}];
           let sum=0,n=0;sp.forEach(q=>{if(spOk(q)){n++;sum+=toCNY(num(q.amount),q.cur);}});
           return '<div class="f"><label>'+svg(I.card,12)+' 这一程花了多少<span class="opt">选填</span></label>'+
-            sp.map((q,j)=>'<div class="sprow">'+
-              '<input data-bi="'+i+'" data-bk="sp'+j+'.item" type="text" value="'+h(q.item)+'" placeholder="'+(j===0?'事项，比如 门票 2 张':'再记一笔')+'">'+
-              '<input data-bi="'+i+'" data-bk="sp'+j+'.amount" type="text" inputmode="decimal" value="'+h(q.amount)+'" placeholder="0.00">'+
-              '<select data-bi="'+i+'" data-bk="sp'+j+'.cur">'+CUR.map(c=>'<option value="'+c+'"'+(c===q.cur?' selected':'')+'>'+CURNAME[c]+'</option>').join('')+'</select>'+
-              (sp.length>1?'<button class="rm" data-a="spDrop" data-v="'+i+'" data-x="'+j+'" aria-label="删掉这一笔">'+svg(I.x,12)+'</button>':'')+
+            sp.map((q,j)=>'<div class="spbox">'+
+              '<div class="sprow">'+
+                '<input data-bi="'+i+'" data-bk="sp'+j+'.item" type="text" value="'+h(q.item)+'" placeholder="'+(j===0?'事项，比如 门票 2 张':'再记一笔')+'">'+
+                (sp.length>1?'<button class="rm" data-a="spDrop" data-v="'+i+'" data-x="'+j+'" aria-label="删掉这一笔">'+svg(I.x,12)+'</button>':'')+
+              '</div>'+
+              '<div class="sprow" style="margin-bottom:0">'+
+                '<input style="flex:0 0 104px" data-bi="'+i+'" data-bk="sp'+j+'.amount" type="text" inputmode="decimal" value="'+h(q.amount)+'" placeholder="0.00">'+
+                '<select style="flex:1;min-width:0" data-bi="'+i+'" data-bk="sp'+j+'.cur">'+CUR.map(c=>'<option value="'+c+'"'+(c===q.cur?' selected':'')+'>'+CURNAME[c]+'</option>').join('')+'</select>'+
+                '<select style="flex:1;min-width:0" data-bi="'+i+'" data-bk="sp'+j+'.scat">'+
+                  '<option value="">归到哪类</option>'+
+                  SCAT.map(c=>'<option value="'+c+'"'+(c===(q.scat||'')?' selected':'')+'>'+c+'</option>').join('')+'</select>'+
+              '</div>'+
             '</div>').join('')+
             '<div class="sprow" style="margin-bottom:0">'+
               '<button class="spadd" data-a="spAdd" data-v="'+i+'">'+svg(I.plus,12)+' 再记一笔</button>'+
@@ -1292,11 +1480,12 @@ function shSpend(){
       '<span style="display:flex;gap:6px">'+
         '<span style="flex:0 0 116px">'+inp(i,'amount',r.amount,'0.00')+'</span>'+
         '<span style="flex:1;min-width:0">'+curSel(i,r.cur)+'</span></span>'+
-      '<span class="cny'+(ok?' ok':'')+'">'+(ok?'≈ '+money(toCNY(num(r.amount),r.cur)):'填了金额这里出人民币')+'</span></span>'+
+      catChips(i,r.cat)+
+      '<span class="cny'+(ok?' ok':'')+'">'+(ok?'≈ '+money(toCNY(num(r.amount),r.cur)):(r.cat?'填了金额这里出人民币':'还要选一个类别'))+'</span></span>'+
       (B.length>1?'<button class="rm" data-a="bufDrop" data-v="'+i+'" aria-label="删掉这一笔">'+svg(I.x,13)+'</button>':'')+
     '</div>';
   }).join('');
-  const title=edit?'改这一笔':(scope?(pName(scope)+' 记一笔'):('Day '+(Math.min(S.day,t.days.length-1)+1)+' 记一笔'));
+  const title=edit?'改这一笔':(scope?(rowTitle(scope)+' 记一笔'):('Day '+(Math.min(S.day,t.days.length-1)+1)+' 记一笔'));
   return wrap(title,scope?'记在这一程上':'',body+(edit?'':moreBtn('再记一笔'))+
     '<div class="hint" id="sumline">'+(n?('这次一共 '+money(sum)):'填了金额这里出合计')+'</div>',
     saveBar(n,B.length,edit?'保存修改':(n>1?('保存 '+n+' 笔'):'保存'),
@@ -1363,7 +1552,7 @@ function shVou(){
 /* 速查 */
 function shEss(){
   const kind=S.buf.kind,B=S.buf.rows;
-  const KINDS=[['place','地址'],['tr','交通'],['pk','行李'],['em','紧急联系']];
+  const KINDS=[['pk','行李'],['em','紧急联系']];
   const head='<div class="fchips" style="margin-bottom:13px">'+KINDS.map(([k,l])=>
     '<button class="'+(kind===k?'on':'')+'" data-a="essKind" data-v="'+k+'">'+l+'</button>').join('')+'</div>';
   const t=T();
@@ -1443,7 +1632,7 @@ function shDaySpend(){
     const sp=spendsOfItem(it.id);if(!sp.length)return;cnt+=sp.length;
     const sum=sp.reduce((s,x)=>s+toCNY(x.amount,x.cur),0);
     body+='<div class="dsgrp"><div class="gh"><span class="cp" style="'+chipOf(it.theme)+'">'+h(it.theme)+'</span>'+
-      '<span class="t">'+h(it.time||'')+' '+h(pName(it))+'</span><span class="v mono">'+money(sum)+'</span></div>'+
+      '<span class="t">'+h(it.time||'')+' '+h(rowTitle(it))+'</span><span class="v mono">'+money(sum)+'</span></div>'+
       sp.map(x=>spLine(x)).join('')+'</div>';
   });
   const loose=looseOfDate(d.date);
@@ -1459,6 +1648,47 @@ function shDaySpend(){
     '<div class="stot"><span class="g"><span class="l">Day '+(t.days.indexOf(d)+1)+' 合计</span>'+
     '<span class="v mono">'+money(spentOn(d.date))+'</span></span>'+
     '<button class="btn" data-a="sheet" data-v="spend">'+svg(I.plus,14)+' 记一笔</button></div>');
+}
+/* 只把选中的那颗 chip 点亮，不碰别的 DOM —— 重画会把输入焦点和 iOS 键盘一起弄没 */
+function paintCat(i,cat){
+  document.querySelectorAll('[data-a=spCat][data-v="'+i+'"]').forEach(b=>{
+    const on=b.dataset.x===cat,col=SCATC[b.dataset.x];
+    b.className='scat'+(on?' on':'');
+    b.style.cssText=on?('background:'+col[0]+';color:'+col[1]+';border-color:'+col[0]):'';
+  });
+  const sv=document.querySelector('[data-a=bufSave]');
+  if(sv){const n=readyN();sv.className='btn'+(n>0?'':' dim');}
+}
+/* 跨时区的那几条（基本就是航班）。开了之后两端各选一个地方，耗时按真实时长算。 */
+function tzSel(i,k,val){
+  const d=T()&&T().meta&&T().meta.tz;
+  return '<select data-bi="'+i+'" data-bk="'+k+'">'+
+    '<option value="">跟旅程默认'+(d?'（'+h(tzLabel(d))+'）':'')+'</option>'+
+    ZONES.map(([z,n])=>'<option value="'+z+'"'+(z===val?' selected':'')+'>'+n+'</option>').join('')+'</select>';
+}
+function tzBlock(i,r){
+  const on=!!(r.tz||r.tzEnd);
+  if(!on)return '<button class="tzmore" data-a="bufSet" data-v="'+i+'" data-k="tz" data-x="'+
+    (T()&&T().meta.tz||'Asia/Shanghai')+'">+ 这一程跨时区</button>';
+  const za=r.tz||'',zb=r.tzEnd||'';
+  const oa=tzOffset(za||(T()&&T().meta.tz),''),ob=tzOffset(zb||za||(T()&&T().meta.tz),'');
+  const diff=(oa!=null&&ob!=null&&oa!==ob);
+  return '<div class="tzbox">'+
+    '<div class="row2">'+
+      '<div><label>出发地时区</label>'+tzSel(i,'tz',za)+'</div>'+
+      '<div><label>到达地时区</label>'+tzSel(i,'tzEnd',zb)+'</div>'+
+    '</div>'+
+    '<div class="mini">'+(diff?('相差 '+Math.round(Math.abs(ob-oa)/60)+' 小时，耗时已经按真实时长算'):'两端同一个时区，按字面算')+
+      ' · <button class="tzoff" data-a="tzClear" data-v="'+i+'">不跨时区</button></div>'+
+  '</div>';
+}
+/* 类别一排 chip。打字时按名目猜一个预选上，猜错点一下换掉。 */
+function catChips(i,cur){
+  return '<span class="scats">'+SCAT.map(c=>{
+    const on=c===cur,col=SCATC[c];
+    return '<button class="scat'+(on?' on':'')+'" data-a="spCat" data-v="'+i+'" data-x="'+c+'"'+
+      (on?' style="background:'+col[0]+';color:'+col[1]+';border-color:'+col[0]+'"':'')+'>'+c+'</button>';
+  }).join('')+'</span>';
 }
 function spLine(x){
   return '<div class="srow lprow" data-lp="sp:'+x.id+'"><span class="d"></span>'+
@@ -1480,6 +1710,27 @@ function shTripSpend(){
     '<span class="g"><span class="l">合计</span><span class="v mono">'+money(spentTotal())+'</span></span></div>'+
     '<div class="hint">金额自动累加，不能手动改；要改某一笔就长按那条花费。'+
     (r.EUR?'<br>汇率 1 EUR ≈ '+Number(r.EUR).toFixed(3)+' 元'+(t.meta.rateAsOf?'（'+t.meta.rateAsOf+'）':''):'')+'</div>','');
+}
+/* 某一类花在哪了。按天分组，天内按金额从大到小。 */
+function shCatList(){
+  const t=T(),cat=(S.arg&&S.arg.cat)||'其他';
+  const rows=(t.spends||[]).filter(x=>(SCAT.indexOf(x.cat)>=0?x.cat:'其他')===cat);
+  const tot=rows.reduce((a,x)=>a+toCNY(x.amount,x.cur),0);
+  const byDate={};rows.forEach(x=>{(byDate[x.date]=byDate[x.date]||[]).push(x);});
+  const idx={};t.days.forEach((d,i)=>idx[d.date]=i+1);
+  const body=Object.keys(byDate).sort().map(dt=>{
+    const list=byDate[dt].slice().sort((a,b)=>toCNY(b.amount,b.cur)-toCNY(a.amount,a.cur));
+    const sum=list.reduce((a,x)=>a+toCNY(x.amount,x.cur),0);
+    return '<div class="dsgrp"><div class="gh">'+
+      '<span class="cp" style="background:'+SPIE[cat]+'22;color:'+SPIE[cat]+'">Day '+(idx[dt]||'?')+'</span>'+
+      '<span class="t">'+mdSlash(dt)+'</span><span class="v mono">'+money(sum)+'</span></div>'+
+      list.map(x=>spLine(x)).join('')+'</div>';
+  }).join('');
+  return wrap(cat,rows.length+' 笔 · 占总花费 '+(spentTotal()?(tot/spentTotal()*100).toFixed(1):0)+'%',
+    (body||'<div class="esempty">这一类还没有记过。</div>')+
+    '<div class="stot" style="margin-top:12px;padding-top:12px;border-top:2px solid var(--ink)">'+
+    '<span class="g"><span class="l">'+h(cat)+'合计</span><span class="v mono">'+money(tot)+'</span></span></div>'+
+    '<div class="hint">长按任意一笔可以改类别或删掉。</div>','');
 }
 /* 当天记录 */
 function shJournal(){
@@ -1604,6 +1855,21 @@ document.addEventListener('change',e=>{
   if(!el||!S.buf)return;
   const i=+el.dataset.bi,k=el.dataset.bk;
   putBuf(i,k,el.value);
+  if(k==='item'&&S.buf.rows[i]&&!S.buf.rows[i].cat){
+    const g=guessCat(el.value);
+    if(g){S.buf.rows[i].cat=g;paintCat(i,g);}
+  }
+  // 行程表单里的花费行：同样按名目猜一个，直接选进下拉
+  const m=/^sp(\d+)\.item$/.exec(k);
+  if(m&&S.buf.rows[i]){
+    const q=(S.buf.rows[i].sp||[])[+m[1]];
+    if(q&&!q.scat){
+      const g=guessCat(el.value)||'';
+      if(g){q.scat=g;
+        const sel=document.querySelector('[data-bi="'+i+'"][data-bk="sp'+m[1]+'.scat"]');
+        if(sel)sel.value=g;}
+    }
+  }
   // 改时间不能重画：iOS 上时间选择器还开着，一重画就被关掉、值也没了
   if(S.sheet==='item'&&(k==='start'||k==='end')){
     const r=S.buf.rows[i],d=durText(r.start,r.end);
@@ -1701,6 +1967,7 @@ function ACT(a,v,k,x,el){
   case 'tab':window.__scrollTop=0;return setS({tab:v,menu:''});
   case 'day':window.__scrollTop=0;return setS({day:+v,menu:''});
   case 'esec':return setS({['o'+v]:!S['o'+v],menu:''});
+  case 'catList':return setS({sheet:'catList',arg:{cat:v},menu:''});
   case 'acat':return setS({acat:v,aopen:'',menu:''});
   case 'aopen':return setS({aopen:S.aopen===v?'':v,menu:''});
   case 'popen':return setS({popen:S.popen===v?'':v,menu:''});
@@ -1719,7 +1986,7 @@ function ACT(a,v,k,x,el){
     else if(v==='spend')bufInit('spend'),S.arg=x?{itemId:x}:null;
     else if(v==='note')bufInit('note');
     else if(v==='vou')bufInit('vou');
-    else if(v==='ess')bufInit('place');
+    else if(v==='ess')bufInit('pk',null,((T().packing||[])[0]||{}).cat||'');
     else if(v==='omap')bufInit('omap',[{map:(findItem(S.open)||{}).map||''}]);
     else S.buf=null;
     return setS({sheet:v,err:'',pick:'',menu:''});
@@ -1735,6 +2002,7 @@ function ACT(a,v,k,x,el){
     if(r.end<r.start)return setS({err:'回来的日期不能早于出发'});
     if(S.arg&&S.arg.id){const tt=DB.trips.find(z=>z.id===S.arg.id);
       Object.assign(tt.meta,{title:r.title.trim(),start:r.start,end:r.end,participants:r.participants,country:r.country});
+      if(!tt.meta.tz)tt.meta.tz=CTZ[(r.country||'').trim()]||'';
       reDays(tt);}
     else{const nt=newTrip(r);DB.trips.push(nt);DB.cur=nt.id;save();return setS({sheet:'',buf:null,arg:null,screen:'trip',tab:'plan',day:0});}
     save();return setS({sheet:'',buf:null,arg:null});}
@@ -1743,17 +2011,21 @@ function ACT(a,v,k,x,el){
   case 'tplUse':{const t2=TPL[+v];
     S.buf.rows=t2.rows.map(([th,pl])=>Object.assign(blank('item'),{theme:th,place:pl}));
     S.buf.open=0;return render();}
-  case 'bufAdd':snapBuf();S.buf.rows.push(blank(S.buf.kind));S.buf.open=S.buf.rows.length-1;return render();
+  case 'bufAdd':snapBuf();S.buf.rows.push(blank(S.buf.kind));S.buf.open=S.buf.rows.length-1;
+    _bring='.sh-b > :last-child';return render();
   case 'bufDrop':snapBuf();S.buf.rows.splice(+v,1);if(!S.buf.rows.length)S.buf.rows=[blank(S.buf.kind)];
     if(S.buf.open>=S.buf.rows.length)S.buf.open=S.buf.rows.length-1;return render();
   case 'bufOpen':snapBuf();S.buf.open=+v;return render();
   case 'bufFold':snapBuf();S.buf.open=-1;return render();
   case 'bufSet':snapBuf();S.buf.rows[+v][k]=x;return render();
+  case 'tzClear':{snapBuf();const r=S.buf.rows[+v];r.tz='';r.tzEnd='';return render();}
+  case 'spCat':{snapBuf();S.buf.rows[+v].cat=x;return render();}
   case 'bufQuick':snapBuf();S.buf.rows[+v].quick=!S.buf.rows[+v].quick;return render();
   case 'pkCat':snapBuf();S.buf.cat=v;return render();
-  case 'spAdd':{snapBuf();const r=S.buf.rows[+v];r.sp=(r.sp||[]).concat([{id:uid('p'),item:'',amount:'',cur:defCur()}]);return render();}
+  case 'spAdd':{snapBuf();const r=S.buf.rows[+v];r.sp=(r.sp||[]).concat([{id:uid('p'),item:'',amount:'',cur:defCur(),scat:''}]);
+    _bring='.spbox:last-of-type';return render();}
   case 'spDrop':{snapBuf();const r=S.buf.rows[+v];r.sp.splice(+x,1);
-    if(!r.sp.length)r.sp=[{id:'p1',item:'',amount:'',cur:defCur()}];return render();}
+    if(!r.sp.length)r.sp=[{id:'p1',item:'',amount:'',cur:defCur(),scat:''}];return render();}
   case 'essKind':snapBuf();bufInit(v,null,v==='pk'?(((T().packing||[])[0]||{}).cat||''):'');return render();
   case 'bufSave':return bufSave();
 
@@ -1776,10 +2048,10 @@ function ACT(a,v,k,x,el){
     // 已经挂在这一程上的花费要摊出来给人看见。
     // 原先这里给的是一行空的，人会以为还没记，照着再打一遍 —— 就变成两笔，总额多算。
     const mine=t.spends.filter(z=>z.itemId===v)
-      .map(z=>({id:z.id,item:z.item,amount:String(z.amount),cur:z.cur,old:1}));
+      .map(z=>({id:z.id,item:z.item,amount:String(z.amount),cur:z.cur,scat:z.cat||guessCat(z.item)||'其他',old:1}));
     bufInit('item',[{theme:it.theme,place:it.place,start:it.time,end:it.end||addMins(it.time,durMins(it.dur)),
-      note:it.note||'',map:it.map||'',vou:(it.vouchers||[]).slice(),
-      sp:mine.concat([{id:uid('p'),item:'',amount:'',cur:defCur()}])}]);
+      note:it.note||'',map:it.map||'',tz:it.tz||'',tzEnd:it.tzEnd||'',vou:(it.vouchers||[]).slice(),
+      sp:mine.concat([{id:uid('p'),item:'',amount:'',cur:defCur(),scat:''}])}]);
     return setS({sheet:'item',arg:{id:v},menu:'',err:''});}
   case 'delItem':{const d=findDayOf(v);if(d)d.items=d.items.filter(z=>z.id!==v);
     t.spends=t.spends.filter(z=>z.itemId!==v);save();return setS({menu:'',open:S.open===v?'':S.open});}
@@ -1809,7 +2081,7 @@ function ACT(a,v,k,x,el){
     return setS({sheet:'note',arg:{idx:+v},menu:'',err:''});}
   case 'delNote':{const it=findItem(S.open);it.notes.splice(+v,1);save();return setS({menu:''});}
   case 'editSpend':{const sp=t.spends.find(z=>z.id===v);
-    bufInit('spend',[{item:sp.item,amount:String(sp.amount),cur:sp.cur}]);
+    bufInit('spend',[{item:sp.item,amount:String(sp.amount),cur:sp.cur,cat:sp.cat||guessCat(sp.item)||'其他'}]);
     return setS({sheet:'spend',arg:{id:v,itemId:sp.itemId||''},menu:'',err:''});}
   case 'delSpend':t.spends=t.spends.filter(z=>z.id!==v);save();return setS({menu:''});
 
@@ -1854,12 +2126,14 @@ function bufSave(){
     const money2=(r,itemId)=>(r.sp||[]).forEach(q=>{
       if(!spOk(q))return;
       t.spends.push({id:uid('s'),date:d.date,item:String(q.item).trim(),
-        amount:num(q.amount),cur:q.cur,itemId:itemId});
+        amount:num(q.amount),cur:q.cur,cat:spCatOf(q),itemId:itemId});
     });
     if(edit){
       const it=findItem(S.arg.id),r=rows[0];
       Object.assign(it,{theme:r.theme,place:r.place.trim(),time:r.start,end:r.end,
-        dur:durText(r.start,r.end),note:r.note.trim(),map:(r.map||'').trim(),vouchers:r.vou.slice()});
+        dur:durText(r.start,r.end),note:r.note.trim(),map:(r.map||'').trim(),vouchers:r.vou.slice(),
+        tz:r.tz||'',tzEnd:r.tzEnd||''});
+      it.dur=durReal(it,d.date)||it.dur;
       // 表单里这几行就是这一程花费的全部：原有的改掉，清空或 × 掉的删掉，新填的加上。
       const keep={};(r.sp||[]).forEach(q=>{if(q.old&&spOk(q))keep[q.id]=1;});
       t.spends=t.spends.filter(z=>z.itemId!==it.id||keep[z.id]);
@@ -1868,16 +2142,18 @@ function bufSave(){
       (r.sp||[]).forEach(q=>{
         if(!spOk(q))return;
         if(q.old){const sp=t.spends.find(z=>z.id===q.id);
-          if(sp){sp.item=String(q.item).trim();sp.amount=num(q.amount);sp.cur=q.cur;}}
+          if(sp){sp.item=String(q.item).trim();sp.amount=num(q.amount);sp.cur=q.cur;sp.cat=spCatOf(q);}}
         else t.spends.push({id:uid('s'),date:dd,item:String(q.item).trim(),
-          amount:num(q.amount),cur:q.cur,itemId:it.id});
+          amount:num(q.amount),cur:q.cur,cat:spCatOf(q),itemId:it.id});
       });
     }else{
       rows.forEach(r=>{
         const id=uid('i');
-        d.items.push({id:id,time:r.start,end:r.end,theme:r.theme,place:r.place.trim(),
+        const nit={id:id,time:r.start,end:r.end,theme:r.theme,place:r.place.trim(),
           note:r.note.trim(),dur:durText(r.start,r.end),addr:'',map:(r.map||'').trim(),
-          vouchers:r.vou.slice(),notes:[],spends:[]});
+          tz:r.tz||'',tzEnd:r.tzEnd||'',vouchers:r.vou.slice(),notes:[],spends:[]};
+        nit.dur=durReal(nit,d.date)||nit.dur;
+        d.items.push(nit);
         money2(r,id);
       });
     }
@@ -1887,11 +2163,11 @@ function bufSave(){
     const scope=S.arg&&S.arg.itemId?S.arg.itemId:'';
     if(edit){
       const sp=t.spends.find(z=>z.id===S.arg.id),r=rows[0];
-      Object.assign(sp,{item:r.item.trim(),amount:num(r.amount),cur:r.cur});
+      Object.assign(sp,{item:r.item.trim(),amount:num(r.amount),cur:r.cur,cat:r.cat});
     }else{
       const date=scope?(findDayOf(scope)||d).date:d.date;
       rows.forEach(r=>t.spends.push({id:uid('s'),date:date,item:r.item.trim(),
-        amount:num(r.amount),cur:r.cur,itemId:scope}));
+        amount:num(r.amount),cur:r.cur,cat:r.cat,itemId:scope}));
     }
   }
   else if(kind==='note'){
@@ -1966,7 +2242,7 @@ function newTrip(r){
     d=new Date(d.getTime()+864e5);
   }
   return {id:uid('t'),created:Date.now(),
-    meta:{title:r.title.trim(),country:r.country.trim(),start:r.start,end:r.end,
+    meta:{title:r.title.trim(),country:r.country.trim(),tz:CTZ[r.country.trim()]||'',start:r.start,end:r.end,
       participants:r.participants.trim(),cities:[],routeImage:'',sos:[],
       rate:{CNY:1,EUR:7.7,USD:7.1,JPY:0.048},rateAsOf:'',spots:{}},
     days:days,vouchers:[],spends:[],
@@ -2054,7 +2330,9 @@ function normalize(f){
     packing:f.packing||[],journal:f.journal||{},stickers:f.stickers||[],weather:f.weather||{},
     lastExport:f.lastExport||''};
 }
-function normalizeFixed(f){const t=normalize(f);fixThemes(t);return t;}
+function normalizeFixed(f){const t=normalize(f);fixThemes(t);fixSpendCats(t);
+  if(!t.meta.tz)t.meta.tz=CTZ[(t.meta.country||'').trim()]||'';
+  return t;}
 function denormalize(t){
   const imgs={};
   const grab=k=>{if(k&&IMGS[k])imgs[k]=IMGS[k];};
@@ -2127,7 +2405,7 @@ $('#pick').addEventListener('change',e=>{
   try{const raw=localStorage.getItem(LS);if(raw)DB=JSON.parse(raw);}catch(e){}
   if(!DB||!Array.isArray(DB.trips))DB={trips:[],cur:''};
   // 已经存在手机里的老数据也顺手迁一下
-  let fixed=0;DB.trips.forEach(t=>{fixed+=fixThemes(t);});
+  let fixed=0;DB.trips.forEach(t=>{fixed+=fixThemes(t);fixed+=fixSpendCats(t);});
   if(fixed)save();
   const old=localStorage.getItem('trip-quickref-v1');
   if(old&&!DB.trips.length){try{const j=JSON.parse(old);if(j&&j.trip){DB.trips=[normalizeFixed(j)];DB.cur=DB.trips[0].id;save();}}catch(e){}}
