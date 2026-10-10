@@ -152,7 +152,6 @@ a{color:var(--violet-deep)}
 .c-top{display:flex;align-items:flex-start;gap:9px}
 .c-place{flex:1;min-width:0;font-size:15px;font-weight:600;line-height:1.3;word-break:break-word;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .c-chip{flex:0 0 auto;font-size:12.5px;font-weight:700;letter-spacing:.2px;padding:4px 10px;border-radius:9px;background:var(--violet-tint);color:var(--violet-deep)}
-.c-tz{flex:0 0 auto;white-space:nowrap;font-size:10.5px;color:var(--mint-deep);background:#E6F7F4;border-radius:6px;padding:2px 6px}
 .c-notes{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
   font-size:11.5px;line-height:1.5;color:var(--ink2);margin-top:3px}
 .c-note{font-size:12px;color:var(--ink2);line-height:1.45;margin-top:5px;word-break:break-word}
@@ -935,18 +934,6 @@ function viewPlan(){
   const items=d.items.slice().sort((a,b)=>mins(a.time)-mins(b.time));
   let nowKey='';
   if(isToday)items.forEach(x=>{if(mins(x.time)<=mins(now))nowKey=x.id;});
-  // 时区标记只认「这一条自己设过时区」。
-  // 跟着旅程默认走的不标 —— 整趟都在意大利，每条写「意大利时间」是废话；
-  // 更糟的是出发那天人还在深圳，跟着默认标会标错。
-  let prevTZ='';
-  items.forEach(x=>{
-    const za=x.tz||'',zb=x.tzEnd||za;
-    x._tz='';
-    if(!za)return;
-    if(za!==prevTZ)x._tz=tzLabel(za)+'时间';
-    if(zb&&zb!==za)x._tz=(x._tz||tzLabel(za)+'时间')+' → '+tzLabel(zb);
-    prevTZ=zb||za;
-  });
   const tl='<div class="tl" id="tl">'+(items.length?items.map((x,k)=>card(x,d,isToday,nowKey,now,TD,k===items.length-1)).join('')
     :'<div class="empty"><b>这天还空着</b>底下加一条，或者横划去看别的 tab。</div>')+'</div>';
   const jr=(t.journal||{})[d.date]||'';
@@ -988,7 +975,6 @@ function card(x,d,isToday,nowKey,now,TD,last){
         (noteLines(x)?'<span class="c-notes">'+noteLines(x)+'</span>':'')+
         '<span class="c-bot">'+
           (x.dur?'<span class="c-dur">'+svg(I.clock,12)+'预计 '+h(x.dur)+'</span>':'')+
-          (x._tz?'<span class="c-tz">'+h(x._tz)+'</span>':'')+
           '<span class="c-badges">'+
             (nv?'<span class="bdg">'+svg(I.ticket,11)+nv+'</span>':'')+
             (nn?'<span class="bdg">'+svg(I.pen,11)+nn+'</span>':'')+
